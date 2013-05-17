@@ -39,6 +39,8 @@ struct TablaPid {
 	int retorno;
 };
 extern bool listPages[NumPhysPages];
+extern int MaxEmptyPages();
+extern int GetFirstEmptyPage();
 extern Machine* machine;	// user program memory and registers
 class SynchConsole;
 extern SynchConsole* synchconsole;

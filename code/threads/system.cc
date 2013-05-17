@@ -314,3 +314,26 @@ GetThreadFromTable (int pid)
 }
 
 #endif
+
+int 
+MaxEmptyPages()
+{
+    int n = 0;
+    for (int i = 0; i < NumPhysPages; ++i)
+    {
+        if (listPages[i])
+            n++;
+    }
+    return n;
+}
+
+int
+GetFirstEmptyPage()
+{
+    for (int i = 0; i < NumPhysPages; ++i)
+    {
+        if (listPages[i])
+            return i;
+    }
+    return -1;
+}
