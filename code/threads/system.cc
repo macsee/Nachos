@@ -332,8 +332,10 @@ GetFirstEmptyPage()
 {
     for (int i = 0; i < NumPhysPages; ++i)
     {
-        if (listPages[i])
+        if (listPages[i]){
+            listPages[i] = false;
             return i;
+        }    
     }
     return -1;
 }

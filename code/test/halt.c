@@ -15,7 +15,7 @@
 int
 main()
 {	
-	char buffer[128];
+	/*char buffer[128];
 	Create("file1");
 	int file_id = Open("file1");
 	Write("Hello World\n",12,file_id);
@@ -25,7 +25,7 @@ main()
 	//file_id = Open(buffer);
 	//Read(buffer, 15, file_id );
 	//Close(file_id);
-	Write(buffer,14,ConsoleOutput);
+	Write(buffer,14,ConsoleOutput);*/
 	Exec("../test/halt2");
     Halt();
     /* not reached */

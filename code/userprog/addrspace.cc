@@ -83,6 +83,16 @@ AddrSpace::AddrSpace(OpenFile *executable)
 
     DEBUG('a', "Initializing address space, num pages %d, size %d\n", 
 					numPages, size);
+
+    // then, copy in the code and data segments into memory
+    
+    int sizeCode = noffH.code.size;
+    int restanteCode = sizeCode;
+    int sizeData = noffH.initData.size;
+    int restanteData = sizeData;
+    int comienzo = 0;
+    int direccion = 0;
+
 // first, set up the translation 
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++) {
@@ -94,12 +104,48 @@ AddrSpace::AddrSpace(OpenFile *executable)
 	pageTable[i].readOnly = false;  // if the code segment was entirely on 
 					// a separate page, we could set its 
 					// pages to be read-only
+    bzero(&machine->mainMemory[pageTable[i].physicalPage * PageSize], PageSize);
+
+    if (restanteCode > 0) {
+        DEBUG('a', "Initializing code segment, at 0x%x, size %d\n", noffH.code.virtualAddr, noffH.code.size);
+
+        direccion = (pageTable[i].physicalPage)*PageSize + noffH.code.virtualAddr;
+
+        if (restanteCode <= PageSize)
+            sizeCode = restanteCode;
+        else 
+            sizeCode = PageSize;
+
+        restanteCode = restanteCode - sizeCode;
+        comienzo = i*PageSize + noffH.code.inFileAddr;
+
+        executable->ReadAt(&(machine->mainMemory[direccion]),sizeCode, comienzo);
     }
+    if (restanteCode == 0 && restanteData > 0) {
+        DEBUG('a', "Initializing data segment, at 0x%x, size %d\n", noffH.initData.virtualAddr, noffH.initData.size);
+
+        direccion = (pageTable[i].physicalPage)*PageSize + sizeCode + noffH.initData.virtualAddr;
+
+        if (restanteData <= PageSize)
+            sizeData = restanteData;
+        else 
+            sizeData = PageSize - sizeCode;
+
+        restanteData = restanteData - sizeData;
+        comienzo = i*PageSize + noffH.initData.inFileAddr;
+
+        executable->ReadAt(&(machine->mainMemory[direccion]),sizeData, comienzo);
+    }
+
+    
+    
+}
     
 // zero out the entire address space, to zero the unitialized data segment 
 // and the stack segment
-    bzero(machine->mainMemory, size);
 
+    
+/*
 // then, copy in the code and data segments into memory
     if (noffH.code.size > 0) {
         DEBUG('a', "Initializing code segment, at 0x%x, size %d\n", 
@@ -112,7 +158,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
 			noffH.initData.virtualAddr, noffH.initData.size);
         executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
 			noffH.initData.size, noffH.initData.inFileAddr);
-    }
+    }*/
 }
 
 //----------------------------------------------------------------------
