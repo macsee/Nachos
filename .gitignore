@@ -1,0 +1,5 @@
+# Ignorar archivos compilados
+*.o
+
+# Ignorar archivos compilados cruzados
+*.coff
