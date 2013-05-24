@@ -93,6 +93,46 @@ writeBuffToUsr(char *str, int usrAddr, int byteCount)
     ASSERT(machine->WriteMem(usrAddr + i, 1, (int) str[i]));
     i++;
   }
+}
+
+void
+RunProcess (void* arg) 
+{        
+    AddrSpace* space = (AddrSpace*) arg;   // Recuperando ejecutable guardado en space.
+    OpenFile* exec = space->getExec();
+    NoffHeader noffH = space->getNoffH();
+
+    int codeSize = noffH.code.size;               // Recuperando noffH.code.size 
+    int codeVirtAddr = noffH.code.virtualAddr;       // Recuperando noffH.code.virtualAddr
+    int codeinFileAddr = noffH.code.inFileAddr;   // Recuperando noffH.code.inFileAddr
+    // Escribiendo la parte de codigo del ejecutable en la memoria de usuario
+
+    char* code = new char[codeSize];
+    exec->ReadAt(code,codeSize, codeinFileAddr);
+
+    writeBuffToUsr(code, codeVirtAddr, codeSize);
+    delete code;
+
+    // Terminada la copia de codigo a memoria de usuario
+
+    int dataSize = noffH.initData.size;
+    int dataVirtAddr = noffH.initData.virtualAddr;
+    int datainFileAddr = noffH.initData.inFileAddr;
+
+
+    char* data = new char[dataSize];
+    exec->ReadAt(data,dataSize, datainFileAddr);
+    writeBuffToUsr (data, dataVirtAddr, dataSize);
+    delete data;
+
+    currentThread->space->InitRegisters(); 
+    currentThread->space->RestoreState();
+
+    machine->Run();     // jump to the user progam
+                        // machine->Run never returns;
+          // the address space exits
+          // by doing the syscall "exit"
+
 } 
 
 //----------------------------------------------------------------------
@@ -216,9 +256,6 @@ ExceptionHandler(ExceptionType which)
         buffer = new char[arg2];
         readBuffFromUsr(arg1, buffer, arg2);
 
-        if (strlen(buffer) < arg2) // Para evitar que se intente escribir en el archivo un tamaño más grande que la cadena
-              arg2 = strlen(buffer);
-
         if (fd.consola) {
             for (int i = 0; i < arg2; i++) {
               synchconsole->WriteToConsole(buffer[i]);
@@ -290,7 +327,7 @@ ExceptionHandler(ExceptionType which)
 //////////////////////////////////////////////////////////// EXEC ////////////////////////////////////////////////      
       case SC_Exec : {
         DEBUG('a', "Exec, initiated by user program.\n");
-
+    
         buffer = new char[128];
         readStrFromUsr(arg1, buffer);
 
@@ -305,20 +342,19 @@ ExceptionHandler(ExceptionType which)
         }
 
         DEBUG('f', "Ejecutando el archivo %s\n", buffer);
+    
+        Thread* thread = new Thread(buffer);    
 
         space = new AddrSpace(executable);    
-        currentThread->space = space;
+        thread->space = space;
 
-        delete executable;      // close file
+        //space->InitRegisters(); 
+        //space->RestoreState();
+
+        thread->Fork(RunProcess, (void*) space);
+
+        //delete executable;      // close file
         delete buffer;
-
-        space->InitRegisters();   // set the initial register values
-        space->RestoreState();    // load page table register
-	
-        machine->Run();     // jump to the user progam
-                            // machine->Run never returns;
-              // the address space exits
-              // by doing the syscall "exit"
         
         //machine->WriteRegister(2, (int)space);
         INCREMENTAR_PC;

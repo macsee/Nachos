@@ -17,9 +17,9 @@ main()
 {	
 	/*char buffer[128];
 	Create("file1");
-	int file_id = Open("file1");
-	Write("Hello World\n",12,file_id);
-	Close(file_id);
+	int file_id = Open("file1");*/
+	Write("Hello World\n",12,ConsoleOutput);
+	/*Close(file_id);
 	file_id = Open("file1");
 	Read(buffer, 15, file_id );
 	//file_id = Open(buffer);

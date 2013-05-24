@@ -19,7 +19,8 @@
 // 	Run a user program.  Open the executable, load it into
 //	memory, and jump to it.
 //----------------------------------------------------------------------
-
+void
+RunProcess (void* arg);
 void
 StartProcess(const char *filename)
 {
@@ -33,12 +34,16 @@ StartProcess(const char *filename)
     space = new AddrSpace(executable);    
     currentThread->space = space;
 
-    delete executable;			// close file
+    space->InitRegisters(); 
+    space->RestoreState();
 
-    space->InitRegisters();		// set the initial register values
-    space->RestoreState();		// load page table register
-
-    machine->Run();			// jump to the user progam
+    RunProcess((void*)space);
+    // delete executable;			// close file
+// 
+    //space->InitRegisters();		// set the initial register values
+    //space->RestoreState();		// load page table register
+// 
+    // machine->Run();			// jump to the user progam
     ASSERT(false);			// machine->Run never returns;
 					// the address space exits
 					// by doing the syscall "exit"

@@ -18,7 +18,6 @@
 #include "copyright.h"
 #include "system.h"
 #include "addrspace.h"
-#include "noff.h"
 
 //----------------------------------------------------------------------
 // SwapHeader
@@ -59,7 +58,6 @@ SwapHeader (NoffHeader *noffH)
 
 AddrSpace::AddrSpace(OpenFile *executable)
 {
-    NoffHeader noffH;
     unsigned int i, size;
 
     executable->ReadAt((char *)&noffH, sizeof(noffH), 0);
@@ -67,6 +65,8 @@ AddrSpace::AddrSpace(OpenFile *executable)
 		(WordToHost(noffH.noffMagic) == NOFFMAGIC))
     	SwapHeader(&noffH);
     ASSERT(noffH.noffMagic == NOFFMAGIC);
+
+    exec = executable;
 
 // how big is address space?
     size = noffH.code.size + noffH.initData.size + noffH.uninitData.size 
@@ -86,13 +86,6 @@ AddrSpace::AddrSpace(OpenFile *executable)
 
     // then, copy in the code and data segments into memory
     
-    int sizeCode = noffH.code.size;
-    int restanteCode = sizeCode;
-    int sizeData = noffH.initData.size;
-    int restanteData = sizeData;
-    int comienzo = 0;
-    int direccion = 0;
-
 // first, set up the translation 
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++) {
@@ -106,39 +99,6 @@ AddrSpace::AddrSpace(OpenFile *executable)
 					// pages to be read-only
     bzero(&machine->mainMemory[pageTable[i].physicalPage * PageSize], PageSize);
 
-    if (restanteCode > 0) {
-        DEBUG('a', "Initializing code segment, at 0x%x, size %d\n", noffH.code.virtualAddr, noffH.code.size);
-
-        direccion = (pageTable[i].physicalPage)*PageSize + noffH.code.virtualAddr;
-
-        if (restanteCode <= PageSize)
-            sizeCode = restanteCode;
-        else 
-            sizeCode = PageSize;
-
-        restanteCode = restanteCode - sizeCode;
-        comienzo = i*PageSize + noffH.code.inFileAddr;
-
-        executable->ReadAt(&(machine->mainMemory[direccion]),sizeCode, comienzo);
-    }
-    if (restanteCode == 0 && restanteData > 0) {
-        DEBUG('a', "Initializing data segment, at 0x%x, size %d\n", noffH.initData.virtualAddr, noffH.initData.size);
-
-        direccion = (pageTable[i].physicalPage)*PageSize + sizeCode + noffH.initData.virtualAddr;
-
-        if (restanteData <= PageSize)
-            sizeData = restanteData;
-        else 
-            sizeData = PageSize - sizeCode;
-
-        restanteData = restanteData - sizeData;
-        comienzo = i*PageSize + noffH.initData.inFileAddr;
-
-        executable->ReadAt(&(machine->mainMemory[direccion]),sizeData, comienzo);
-    }
-
-    
-    
 }
     
 // zero out the entire address space, to zero the unitialized data segment 
