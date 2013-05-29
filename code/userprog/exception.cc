@@ -175,26 +175,30 @@ ExceptionHandler(ExceptionType which)
             case SC_Exit : 
             {
                 // Eliminar el PID
-                RemoveThreadFromTable(currentThread->getPid()); 
+                //RemoveThreadFromTable(currentThread->getPid()); 
                 // Vacias los espacios de memoria correspondientes
                 // se puede poner el delete de space en el destructor de Thread y solo llamar a la 
                 // funcion FInish()
-                delete currentThread->space;
-
+                //delete currentThread->space;
+                printf("El valor de retorno de Exit para el thread %s es: %d\n",currentThread->getName(), arg1 );
                 // Eliminar el Thread
+                // SetRetornoInTable (currentThread->getPid(), arg1);
+                TablaPid tbPid = GetThreadFromTable(currentThread->getPid());
+                printf("PID: %d - RETORNO: %d\n", currentThread->getPid(), tbPid.retorno );
+                tbPid.retorno = arg1;
                 currentThread->Finish();
-
+                break;
                 // Que se hace con el estatus de exit
             }
             //////////////////////////// JOIN ///////////////////////////////////////////////////
             case SC_Join : 
             {
                 TablaPid tbPid = GetThreadFromTable(arg1);
-                tbPid.thread->SaveUserState();
+                //tbPid.thread->SaveUserState();
                 tbPid.thread->Join();
-                tbPid.thread->RestoreUserState();
-                printf("ESTOY EN JOIN\n");
-                
+                machine->WriteRegister(2, tbPid.retorno);
+                //tbPid.thread->RestoreUserState();
+                printf("Join retorna %d del thread %s\n", tbPid.retorno, tbPid.thread->getName() );
                 // Eliminar el PID
                 //RemoveThreadFromTable(currentThread->getPid()); 
                 // Vacias los espacios de memoria correspondientes
@@ -206,6 +210,7 @@ ExceptionHandler(ExceptionType which)
                 //currentThread->Finish();
 
                 // Que se hace con el estatus de exit
+                break;
             }
             case SC_Halt : 
             {        
@@ -393,7 +398,7 @@ ExceptionHandler(ExceptionType which)
                 thread->Fork(RunProcess, (void*) space);
 
                 //delete executable;      // close file
-                delete buffer;
+                //delete buffer;
                 int pid = AddThreadToTable(thread);
                 machine->WriteRegister(2, pid);
                 break;

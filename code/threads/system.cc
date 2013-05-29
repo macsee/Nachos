@@ -258,10 +258,9 @@ AddThreadToTable (Thread* t)
 {
 	TablaPid tpid;
     int i = 0;
-
     std::vector<TablaPid>:: iterator it;
 
-    for( it = PidTable.begin(); it != PidTable.end() ; it++ ) {
+    for( it = PidTable.begin(); it < PidTable.end() ; it++ ) {
         if (it->thread == NULL) { 
             // it es un puntero a elementos de un vector, en este caso, a FileDescriptors (fd). Para Mauro
             it->thread = t;
@@ -293,7 +292,6 @@ RemoveThreadFromTable (int pid)
     }
 
     PidTable[pid].thread = NULL;
-    PidTable[pid].retorno = NULL;
     return true;
 }
 
@@ -301,12 +299,12 @@ TablaPid
 GetThreadFromTable (int pid)
 {
     if (  pid < 0 || pid >= PidTable.size() ) {
-        DEBUG('f', "Error al intentar remover thread. PID %d inexistente\n", pid);
+        DEBUG('f', "Error al intentar obtener thread. PID %d inexistente\n", pid);
 		ASSERT(false);
     }
 
     if ( PidTable[pid].thread == NULL ) {
-        DEBUG('f', "Error al intentar remover thread. PID %d no valido\n", pid);
+        DEBUG('f', "Error al intentar obtener thread. PID %d no valido\n", pid);
 		ASSERT(false);
     }
 
@@ -315,6 +313,16 @@ GetThreadFromTable (int pid)
     }
 }
 
+void
+SetRetornoInTable (int pid, int ret)
+{
+    if (  pid < 0 || pid >= PidTable.size() ) {
+        DEBUG('f', "Error al intentar setear retorno en thread. PID %d inexistente\n", pid);
+        ASSERT(false);
+    }
+
+    PidTable[pid].retorno = ret;    
+}
 #endif
 
 // int 

@@ -31,6 +31,6 @@ main()
 	Write(buffer,size,ConsoleOutput);
 	//Exec("../test/file_test");
     //Halt();
-    //Exit(0);
+    Exit(12);
     /* not reached */
 }

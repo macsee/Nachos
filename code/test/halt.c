@@ -16,6 +16,7 @@ int
 main()
 {	
 	int pid = 0;
+	char* ret;
 	/*char buffer[128];
 	Create("file1");
 	int file_id = Open("file1");*/
@@ -28,8 +29,9 @@ main()
 	//Close(file_id);
 	Write(buffer,14,ConsoleOutput);*/
 	pid = Exec("../test/halt2");
-	Join(pid);
-	Write("Terminando Halt\n",17,ConsoleOutput);
+	ret =(char*)Join(pid);
+	Write("Finalizando Halt\n",18,ConsoleOutput);
     //Halt();
     /* not reached */
+	Exit(1);
 }

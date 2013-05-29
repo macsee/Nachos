@@ -85,8 +85,16 @@ Thread::~Thread()
     DEBUG('t', "Deleting thread \"%s\"\n", name);
 
     ASSERT(this != currentThread);
+
+ #ifdef USER_PROGRAM
+     //RemoveThreadFromTable(currentThread->getPid()); 
+     delete space;
+ #endif
+
     if (stack != NULL)
         DeallocBoundedArray((char *) stack, StackSize * sizeof(HostMemoryAddress));
+
+
 }
 
 //----------------------------------------------------------------------
