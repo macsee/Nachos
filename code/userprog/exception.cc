@@ -107,6 +107,9 @@ RunProcess (void* arg)
     int codeinFileAddr = noffH.code.inFileAddr;   // Recuperando noffH.code.inFileAddr
     // Escribiendo la parte de codigo del ejecutable en la memoria de usuario
 
+    currentThread->space->InitRegisters(); 
+    currentThread->space->RestoreState();
+
     char* code = new char[codeSize];
     exec->ReadAt(code,codeSize, codeinFileAddr);
 
@@ -124,9 +127,6 @@ RunProcess (void* arg)
     exec->ReadAt(data,dataSize, datainFileAddr);
     writeBuffToUsr (data, dataVirtAddr, dataSize);
     delete data;
-
-    currentThread->space->InitRegisters(); 
-    currentThread->space->RestoreState();
 
     machine->Run();     // jump to the user progam
                         // machine->Run never returns;
@@ -161,210 +161,251 @@ RunProcess (void* arg)
 void
 ExceptionHandler(ExceptionType which)
 {
-  char* buffer = NULL;
-  int type = machine->ReadRegister(2);
+    char* buffer = NULL;
+    int type = machine->ReadRegister(2);
 
-  int arg1 = machine->ReadRegister(4);
-  int arg2 = machine->ReadRegister(5);
-  int arg3 = machine->ReadRegister(6);
+    int arg1 = machine->ReadRegister(4);
+    int arg2 = machine->ReadRegister(5);
+    int arg3 = machine->ReadRegister(6);
   
-  if (which == SyscallException) {
-    switch ( type ) {
-      case SC_Halt :        
-        DEBUG('a', "Shutdown, initiated by user program.\n");
-        interrupt->Halt();
-        break;
+    if (which == SyscallException) {
+        switch ( type ) 
+        {
+            //////////////////////////// EXIT ///////////////////////////////////////////////////
+            case SC_Exit : 
+            {
+                // Eliminar el PID
+                RemoveThreadFromTable(currentThread->getPid()); 
+                // Vacias los espacios de memoria correspondientes
+                // se puede poner el delete de space en el destructor de Thread y solo llamar a la 
+                // funcion FInish()
+                delete currentThread->space;
 
-      case SC_Create : {
-        DEBUG('a', "Create file, initiated by user program.\n");
+                // Eliminar el Thread
+                currentThread->Finish();
 
-        buffer = new char[128];
-        readStrFromUsr(arg1, buffer);
+                // Que se hace con el estatus de exit
+            }
+            //////////////////////////// JOIN ///////////////////////////////////////////////////
+            case SC_Join : 
+            {
+                TablaPid tbPid = GetThreadFromTable(arg1);
+                tbPid.thread->SaveUserState();
+                tbPid.thread->Join();
+                tbPid.thread->RestoreUserState();
+                printf("ESTOY EN JOIN\n");
+                
+                // Eliminar el PID
+                //RemoveThreadFromTable(currentThread->getPid()); 
+                // Vacias los espacios de memoria correspondientes
+                // se puede poner el delete de space en el destructor de Thread y solo llamar a la 
+                // funcion FInish()
+                //delete currentThread->space;
 
-		    ASSERT (fileSystem->Create(buffer, 128));
+                // Eliminar el Thread
+                //currentThread->Finish();
 
-        DEBUG('f', "Se creó el archivo %s\n", buffer);
+                // Que se hace con el estatus de exit
+            }
+            case SC_Halt : 
+            {        
+                DEBUG('a', "Shutdown, initiated by user program.\n");
+                interrupt->Halt();
+                break;
+            }
 
-        delete buffer;
-		    INCREMENTAR_PC;
-        break;
-        //    writeStrToUsr("Hola", addrStr);
-        //    readBuffFromUsr(addrStr, buffer, 10);
-      }
-////////////////////////////////////////////////////////// OPEN ///////////////////////////////////////////////////
-      case SC_Open : {
-        DEBUG('a', "Open file, initiated by user program.\n");
+            case SC_Create : 
+            {
+                DEBUG('a', "Create file, initiated by user program.\n");
 
-        buffer = new char[128];
-        readStrFromUsr(arg1, buffer);
-        int fd;
+                buffer = new char[128];
+                readStrFromUsr(arg1, buffer);
 
-        OpenFile* of = fileSystem->Open(buffer);
+        		ASSERT (fileSystem->Create(buffer, 128));
 
-        if (of == NULL) {
-          fd = -1;
-          DEBUG('f', "No pudo abrirse el archivo %s\n", buffer);
-        }  
-        else {
-          fd = currentThread->AddFileToTable(of);
-          DEBUG('f', "Abriendo archivo %s con file id = %d\n", buffer, fd);
-        }
-          
-        machine->WriteRegister(2, fd);
+                DEBUG('f', "Se creó el archivo %s\n", buffer);
 
-        delete buffer;
-        INCREMENTAR_PC;
-        break;
-      }
-////////////////////////////////////////////////////////// CLOSE ///////////////////////////////////////////////////
-      case SC_Close : {
-        DEBUG('a', "Close file, initiated by user program.\n");
+                delete buffer;
+        		    
+                break;
+                //    writeStrToUsr("Hola", addrStr);
+                //    readBuffFromUsr(addrStr, buffer, 10);
+            }
+            //////////////////////////// OPEN ///////////////////////////////////////////////////
+            case SC_Open : 
+            {
+                DEBUG('a', "Open file, initiated by user program.\n");
 
-        ASSERT (arg3 >= 0);
+                buffer = new char[128];
+                readStrFromUsr(arg1, buffer);
+                int fd;
 
-        ASSERT(currentThread->RemoveFileFromTable(arg1));
+                OpenFile* of = fileSystem->Open(buffer);
 
-        //if (!currentThread->RemoveFileFromTable(arg1))
-        //  DEBUG('f', "El file id: %d no existe\n", arg1);
-        //else {
-        DEBUG('f', "Cerrando el archivo con file id = %d\n", arg1);
-        //}
-      
-        INCREMENTAR_PC;
-        break;
-      }
-////////////////////////////////////////////////////////// WRITE ///////////////////////////////////////////////////
-      case SC_Write : {
-        DEBUG('a', "Write, initiated by user program.\n");
+                if (of == NULL) {
+                    fd = -1;
+                    DEBUG('f', "No pudo abrirse el archivo %s\n", buffer);
+                }  
+                else {
+                    fd = currentThread->AddFileToTable(of);
+                    DEBUG('f', "Abriendo archivo %s con file id = %d\n", buffer, fd);
+                }
+                  
+                machine->WriteRegister(2, fd);
 
-        ASSERT (arg3 >= 0);
+                delete buffer;
+                
+                break;
+            }
+            ///////////////////////// CLOSE ///////////////////////////////////////////////////
+            case SC_Close : 
+            {
+                DEBUG('a', "Close file, initiated by user program.\n");
 
-        FileDescriptor fd = currentThread->GetFileIDFromTable(arg3);
+                ASSERT (arg3 >= 0);
 
-        if (fd.modo == FD_R) {
-            DEBUG('f', "No se puede escribir en un dispositivo de lectura\n");
-            INCREMENTAR_PC;
-            break;
-        }
+                ASSERT(currentThread->RemoveFileFromTable(arg1));
 
-        if (!fd.valido) {
-            DEBUG('f', "El file id: %d no existe\n", arg3);
-            INCREMENTAR_PC;
-            break;
-        }
+                //if (!currentThread->RemoveFileFromTable(arg1))
+                //  DEBUG('f', "El file id: %d no existe\n", arg1);
+                //else {
+                DEBUG('f', "Cerrando el archivo con file id = %d\n", arg1);
+                //}
+                break;
+            }
+            /////////////////////////// WRITE ///////////////////////////////////////////////////
+            case SC_Write : 
+            {
+                DEBUG('a', "Write, initiated by user program.\n");
 
-        buffer = new char[arg2];
-        readBuffFromUsr(arg1, buffer, arg2);
+                ASSERT (arg3 >= 0);
 
-        if (fd.consola) {
-            for (int i = 0; i < arg2; i++) {
-              synchconsole->WriteToConsole(buffer[i]);
+                FileDescriptor fd = currentThread->GetFileIDFromTable(arg3);
+
+                if (fd.modo == FD_R) {
+                    DEBUG('f', "No se puede escribir en un dispositivo de lectura\n");
+                    
+                    break;
+                }
+
+                if (!fd.valido) {
+                    DEBUG('f', "El file id: %d no existe\n", arg3);
+                    
+                    break;
+                }
+
+                buffer = new char[arg2];
+                readBuffFromUsr(arg1, buffer, arg2);
+
+                if (fd.consola) {
+                    for (int i = 0; i < arg2; i++) {
+                      synchconsole->WriteToConsole(buffer[i]);
+                    }
+                }
+                else {  ///////////////////// LEYENDO DESDE ARCHIVO
+                    DEBUG('f', "Escribiendo en archivo con file id = %d\n", arg3);
+                    fd.openfile->Write(buffer, arg2);
+                }
+
+                delete buffer;
+                
+                break;
+            }
+            //////////////////////////////////////////// READ /////////////////////////////////////////////////       
+            case SC_Read : 
+            {
+                DEBUG('a', "Read file, initiated by user program.\n");
+
+                if (arg3 < 0) { //por si se produjo algún otro error
+                    machine->WriteRegister(2, -1);
+                    break;
+                }
+
+                FileDescriptor fd = currentThread->GetFileIDFromTable(arg3);
+                int bytes_leidos;
+
+                if (fd.modo == FD_W) {
+                    DEBUG('f', "No se puede leer de un dispositivo de escritura\n");
+                    machine->WriteRegister(2, -1);
+                    
+                    break;
+                }
+
+                if (!fd.valido) {
+                    DEBUG('f', "El file id: %d no es valido\n", arg3);
+                    machine->WriteRegister(2, -1);
+                    
+                    break;
+                }
+
+                buffer = new char[arg2];
+
+                if (fd.consola) {
+                    char ch;
+                    int i = 0;
+                    while (i < arg2) {
+                        ch = synchconsole->ReadFromConsole();
+                        buffer[i] = ch;
+                        i++;
+                    }
+                    writeBuffToUsr(buffer, arg1, arg2);
+                    bytes_leidos = strlen(buffer);
+                }
+                else {  ///////////////////// LEYENDO DESDE ARCHIVO
+                    DEBUG('f', "Leyendo del archivo con file id = %d\n", arg3);
+                    bytes_leidos = fd.openfile->Read(buffer, arg2);
+                    writeBuffToUsr(buffer, arg1, arg2);
+                    printf("%d bytes leídos\n", bytes_leidos);
+                }
+
+                delete buffer;
+                machine->WriteRegister(2, bytes_leidos);
+                
+                break;
+            }
+            /////////////////////////////// EXEC ////////////////////////////////////////////////      
+            case SC_Exec : 
+            {
+                DEBUG('a', "Exec, initiated by user program.\n");
+            
+                buffer = new char[128];
+                readStrFromUsr(arg1, buffer);
+
+                OpenFile *executable = fileSystem->Open(buffer);
+                AddrSpace *space;
+
+                if (executable == NULL) {
+                    DEBUG('f', "No es posible ejecutar el archivo %s\n", buffer);
+                    machine->WriteRegister(2, -1);
+                    break;
+                }
+
+                DEBUG('f', "Ejecutando el archivo %s\n", buffer);
+            
+                Thread* thread = new Thread(buffer, true);    
+
+                space = new AddrSpace(executable);    
+                thread->space = space;
+
+                //space->InitRegisters(); 
+                //space->RestoreState();
+
+                thread->Fork(RunProcess, (void*) space);
+
+                //delete executable;      // close file
+                delete buffer;
+                int pid = AddThreadToTable(thread);
+                machine->WriteRegister(2, pid);
+                break;
+            }
+            /////////////////////// DEFAULT ///////////////////////////////////////////////////
+            default : 
+            {
+                printf("Unexpected user mode exception %d %d\n", which, type);
+                ASSERT(false);
+                break;                
             }
         }
-        else {  ///////////////////// LEYENDO DESDE ARCHIVO
-            DEBUG('f', "Escribiendo en archivo con file id = %d\n", arg3);
-            fd.openfile->Write(buffer, arg2);
-        }
-
-        delete buffer;
         INCREMENTAR_PC;
-        break;
-      }
-////////////////////////////////////////////////////////// READ /////////////////////////////////////////////////       
-      case SC_Read : {
-        DEBUG('a', "Read file, initiated by user program.\n");
-
-        if (arg3 < 0) { //por si se produjo algún otro error
-          machine->WriteRegister(2, -1);
-          INCREMENTAR_PC;
-          break;
-        }
-
-        FileDescriptor fd = currentThread->GetFileIDFromTable(arg3);
-        int bytes_leidos;
-
-        if (fd.modo == FD_W) {
-            DEBUG('f', "No se puede leer de un dispositivo de escritura\n");
-            machine->WriteRegister(2, -1);
-            INCREMENTAR_PC;
-            break;
-        }
-
-        if (!fd.valido) {
-            DEBUG('f', "El file id: %d no es valido\n", arg3);
-            machine->WriteRegister(2, -1);
-            INCREMENTAR_PC;
-            break;
-        }
-
-        buffer = new char[arg2];
-
-        if (fd.consola) {
-            char ch;
-            int i = 0;
-            while (i < arg2) {
-              ch = synchconsole->ReadFromConsole();
-              buffer[i] = ch;
-              i++;
-            }
-            writeBuffToUsr(buffer, arg1, arg2);
-            bytes_leidos = strlen(buffer);
-        }
-        else {  ///////////////////// LEYENDO DESDE ARCHIVO
-            
-            DEBUG('f', "Leyendo del archivo con file id = %d\n", arg3);
-            bytes_leidos = fd.openfile->Read(buffer, arg2);
-            writeBuffToUsr(buffer, arg1, arg2);
-            printf("%d bytes leídos\n", bytes_leidos);
-            
-        }
-
-        delete buffer;
-        machine->WriteRegister(2, bytes_leidos);
-        INCREMENTAR_PC;
-        break;
-      }
-//////////////////////////////////////////////////////////// EXEC ////////////////////////////////////////////////      
-      case SC_Exec : {
-        DEBUG('a', "Exec, initiated by user program.\n");
-    
-        buffer = new char[128];
-        readStrFromUsr(arg1, buffer);
-
-        OpenFile *executable = fileSystem->Open(buffer);
-        AddrSpace *space;
-
-        if (executable == NULL) {
-          DEBUG('f', "No es posible ejecutar el archivo %s\n", buffer);
-          machine->WriteRegister(2, -1);
-          INCREMENTAR_PC;
-          break;
-        }
-
-        DEBUG('f', "Ejecutando el archivo %s\n", buffer);
-    
-        Thread* thread = new Thread(buffer);    
-
-        space = new AddrSpace(executable);    
-        thread->space = space;
-
-        //space->InitRegisters(); 
-        //space->RestoreState();
-
-        thread->Fork(RunProcess, (void*) space);
-
-        //delete executable;      // close file
-        delete buffer;
-        
-        //machine->WriteRegister(2, (int)space);
-        INCREMENTAR_PC;
-        break;
-      }
-////////////////////////////////////////////////////////// DEFAULT ///////////////////////////////////////////////////
-      default :
-        printf("Unexpected user mode exception %d %d\n", which, type);
-        ASSERT(false);
-        break;                
     }
-  }
 }

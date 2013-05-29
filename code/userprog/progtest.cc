@@ -34,8 +34,8 @@ StartProcess(const char *filename)
     space = new AddrSpace(executable);    
     currentThread->space = space;
 
-    space->InitRegisters(); 
-    space->RestoreState();
+    // space->InitRegisters(); 
+    // space->RestoreState();
 
     RunProcess((void*)space);
     // delete executable;			// close file

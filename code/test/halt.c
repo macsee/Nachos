@@ -15,10 +15,11 @@
 int
 main()
 {	
+	int pid = 0;
 	/*char buffer[128];
 	Create("file1");
 	int file_id = Open("file1");*/
-	Write("Hello World\n",12,ConsoleOutput);
+	Write("Soy Halt\n",12,ConsoleOutput);
 	/*Close(file_id);
 	file_id = Open("file1");
 	Read(buffer, 15, file_id );
@@ -26,7 +27,9 @@ main()
 	//Read(buffer, 15, file_id );
 	//Close(file_id);
 	Write(buffer,14,ConsoleOutput);*/
-	Exec("../test/halt2");
-    Halt();
+	pid = Exec("../test/halt2");
+	Join(pid);
+	Write("Terminando Halt\n",17,ConsoleOutput);
+    //Halt();
     /* not reached */
 }

@@ -56,7 +56,7 @@ main.o: ../threads/main.cc ../threads/copyright.h ../threads/utility.h \
  ../threads/list.h ../threads/puerto.h ../machine/machine.h \
  ../threads/utility.h ../machine/translate.h ../machine/disk.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
  /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
@@ -115,8 +115,8 @@ scheduler.o: ../threads/scheduler.cc ../threads/copyright.h \
  ../threads/thread.h ../threads/synch.h ../threads/puerto.h \
  ../machine/machine.h ../threads/utility.h ../machine/translate.h \
  ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
- /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -174,8 +174,8 @@ synch.o: ../threads/synch.cc ../threads/copyright.h ../threads/synch.h \
  ../threads/system.h ../threads/thread.h ../threads/puerto.h \
  ../machine/machine.h ../threads/utility.h ../machine/translate.h \
  ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
- /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -233,8 +233,9 @@ system.o: ../threads/system.cc ../threads/copyright.h ../threads/system.h \
  ../threads/thread.h ../threads/synch.h ../threads/list.h \
  ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
  ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -292,8 +293,8 @@ thread.o: ../threads/thread.cc ../threads/copyright.h ../threads/thread.h \
  ../threads/synch.h ../threads/list.h ../threads/puerto.h \
  ../machine/machine.h ../threads/utility.h ../machine/translate.h \
  ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
- /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -378,8 +379,9 @@ threadtest.o: ../threads/threadtest.cc ../threads/copyright.h \
  ../threads/thread.h ../threads/synch.h ../threads/list.h \
  ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
  ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -438,7 +440,7 @@ interrupt.o: ../machine/interrupt.cc ../threads/copyright.h \
  ../threads/list.h ../threads/puerto.h ../machine/machine.h \
  ../threads/utility.h ../machine/translate.h ../machine/disk.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
  /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
@@ -537,8 +539,9 @@ sysdep.o: ../machine/sysdep.cc ../threads/copyright.h \
  ../threads/thread.h ../threads/synch.h ../threads/list.h \
  ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
  ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -622,7 +625,7 @@ timer.o: ../machine/timer.cc ../threads/copyright.h ../machine/timer.h \
  ../threads/synch.h ../threads/list.h ../threads/puerto.h \
  ../machine/machine.h ../machine/translate.h ../machine/disk.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
  /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
@@ -681,8 +684,9 @@ preemptive.o: ../threads/preemptive.cc ../threads/preemptive.h \
  ../threads/thread.h ../threads/synch.h ../threads/list.h \
  ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
  ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -764,8 +768,8 @@ puerto.o: ../threads/puerto.cc ../threads/synch.h ../threads/copyright.h \
  ../threads/system.h ../threads/thread.h ../threads/puerto.h \
  ../machine/machine.h ../threads/utility.h ../machine/translate.h \
  ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
- /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -823,8 +827,9 @@ addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
  ../threads/thread.h ../threads/synch.h ../threads/list.h \
  ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
  ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -852,7 +857,7 @@ addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h ../userprog/addrspace.h ../bin/noff.h
+ ../threads/synch.h ../userprog/addrspace.h
 bitmap.o: ../userprog/bitmap.cc ../threads/copyright.h \
  ../userprog/bitmap.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
@@ -909,8 +914,9 @@ exception.o: ../userprog/exception.cc ../threads/copyright.h \
  ../threads/thread.h ../threads/synch.h ../threads/list.h \
  ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
  ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -968,8 +974,9 @@ progtest.o: ../userprog/progtest.cc ../threads/copyright.h \
  ../threads/thread.h ../threads/synch.h ../threads/list.h \
  ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
  ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -1028,7 +1035,7 @@ console.o: ../machine/console.cc ../threads/copyright.h \
  ../threads/synch.h ../threads/list.h ../threads/puerto.h \
  ../machine/machine.h ../machine/translate.h ../machine/disk.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
  /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
@@ -1088,7 +1095,7 @@ machine.o: ../machine/machine.cc ../threads/copyright.h \
  ../threads/utility.h ../threads/thread.h ../threads/synch.h \
  ../threads/list.h ../threads/puerto.h ../machine/machine.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
  /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
@@ -1148,8 +1155,8 @@ mipssim.o: ../machine/mipssim.cc ../threads/copyright.h \
  ../threads/system.h ../threads/utility.h ../threads/thread.h \
  ../threads/synch.h ../threads/list.h ../threads/puerto.h \
  ../machine/machine.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
- /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
@@ -1205,10 +1212,10 @@ translate.o: ../machine/translate.cc ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../threads/system.h \
- ../threads/utility.h ../threads/thread.h ../threads/synch.h \
- ../threads/list.h ../threads/puerto.h ../machine/machine.h \
- ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../threads/system.h ../threads/utility.h ../threads/thread.h \
+ ../threads/synch.h ../threads/list.h ../threads/puerto.h \
+ ../machine/machine.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
  /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
@@ -1267,8 +1274,9 @@ synchconsole.o: ../filesys/synchconsole.cc ../filesys/synchconsole.h \
  ../threads/thread.h ../threads/synch.h ../threads/list.h \
  ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
  ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \

@@ -24,7 +24,6 @@ Timer *timer;				// the hardware timer device,
 // 2007, Jose Miguel Santos Espino
 PreemptiveScheduler* preemptiveScheduler = NULL;
 const long long DEFAULT_TIME_SLICE = 50000;
-bool listPages[NumPhysPages];
 
 #ifdef FILESYS_NEEDED
 FileSystem  *fileSystem;
@@ -38,6 +37,7 @@ SynchDisk   *synchDisk;
 Machine *machine;	// user program memory and registers
 SynchConsole *synchconsole;
 std::vector<TablaPid> PidTable;
+BitMap* listPages;
 #endif
 
 #ifdef NETWORK
@@ -92,9 +92,9 @@ Initialize(int argc, char **argv)
     const char* debugArgs = "";
     bool randomYield = false;
 
-	for (int i=0; i<sizeof(listPages); i++) {
-		listPages[i] = true;
-	}
+	// for (int i=0; i<sizeof(listPages); i++) {
+	// 	listPages[i] = true;
+	// }
 // 2007, Jose Miguel Santos Espino
     bool preemptiveScheduling = false;
     long long timeSlice;
@@ -198,6 +198,7 @@ Initialize(int argc, char **argv)
 #ifdef USER_PROGRAM
     machine = new Machine(debugUserProg);	// this must come first
 	synchconsole = new SynchConsole(NULL,NULL);
+    listPages = new BitMap(NumPhysPages);   
 #endif
 
 #ifdef FILESYS
@@ -274,6 +275,7 @@ AddThreadToTable (Thread* t)
     tpid.retorno = NULL;
 
 	PidTable.push_back(tpid);
+    t->setPid(i);
     return i;
 }
 
@@ -315,27 +317,27 @@ GetThreadFromTable (int pid)
 
 #endif
 
-int 
-MaxEmptyPages()
-{
-    int n = 0;
-    for (int i = 0; i < NumPhysPages; ++i)
-    {
-        if (listPages[i])
-            n++;
-    }
-    return n;
-}
+// int 
+// MaxEmptyPages()
+// {
+//     int n = 0;
+//     for (int i = 0; i < NumPhysPages; ++i)
+//     {
+//         if (listPages[i])
+//             n++;
+//     }
+//     return n;
+// }
 
-int
-GetFirstEmptyPage()
-{
-    for (int i = 0; i < NumPhysPages; ++i)
-    {
-        if (listPages[i]){
-            listPages[i] = false;
-            return i;
-        }    
-    }
-    return -1;
-}
+// int
+// GetFirstEmptyPage()
+// {
+//     for (int i = 0; i < NumPhysPages; ++i)
+//     {
+//         if (listPages[i]){
+//             listPages[i] = false;
+//             return i;
+//         }    
+//     }
+//     return -1;
+// }

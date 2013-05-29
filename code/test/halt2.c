@@ -13,7 +13,7 @@
 #include "syscall.h"
 
 int
-mainF()
+main()
 {	
 	char buffer[128];
 	int size;
@@ -30,6 +30,7 @@ mainF()
 	//Close(file_id);
 	Write(buffer,size,ConsoleOutput);
 	//Exec("../test/file_test");
-    Halt();
+    //Halt();
+    //Exit(0);
     /* not reached */
 }

@@ -168,7 +168,10 @@ private:
 	std::vector<FileDescriptor> tablaDesc;      // Tabla de desctiptores
 	int userRegisters[NumTotalRegs];	// user-level CPU register state
 
+    int pid;
 public:
+    void setPid(int i) { pid = i; }
+    int getPid() { return pid; }
 	int AddFileToTable (OpenFile* op);
 	bool RemoveFileFromTable (OpenFileId of);
 	FileDescriptor GetFileIDFromTable (OpenFileId fd);
