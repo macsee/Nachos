@@ -88,6 +88,9 @@ Thread::~Thread()
 
     if (stack != NULL)
         DeallocBoundedArray((char *) stack, StackSize * sizeof(HostMemoryAddress));
+    #ifdef USER_PROGRAM
+        delete space;
+    #endif
 
 
 }
@@ -177,7 +180,7 @@ Thread::Finish ()
 {
     interrupt->SetLevel(IntOff);
     ASSERT(this == currentThread);
-
+    
     DEBUG('t', "Finishing thread \"%s\"\n", getName());
 
     if (joinable) {
@@ -186,12 +189,14 @@ Thread::Finish ()
     }
 
     #ifdef USER_PROGRAM
-        RemoveThreadFromTable(currentThread->getPid()); 
-        delete space;
+        RemoveThreadFromTable(pid);
+        if (!MoreThreadsToRun ()) {
+            stats->Print();
+            Cleanup();
+        }
         // Chequear si no quedan más threads en la lista de threads antes de hacer Cleanup
-        stats->Print();
-        Cleanup(); 
     #endif
+
     threadToBeDestroyed = currentThread;
     Sleep(); // invokes SWITCH
     // not reached

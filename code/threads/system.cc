@@ -325,6 +325,20 @@ SetRetornoInTable (int pid, int ret)
 
     PidTable[pid].retorno = ret;    
 }
+
+bool
+MoreThreadsToRun ()
+{
+    std::vector<TablaPid>:: iterator it;
+    bool resultado = false;
+    for( it = PidTable.begin(); it < PidTable.end() ; it++) {
+        if (it->thread != NULL) {
+            resultado = true;
+        }
+    }
+    return resultado;    
+}
+
 #endif
 
 // int 

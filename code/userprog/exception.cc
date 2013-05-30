@@ -195,13 +195,13 @@ ExceptionHandler(ExceptionType which)
                 
                 TablaPid tbPid = GetThreadFromTable(arg1);
                 DEBUG('f', ">>>>>>>>>>>>>>>> Haciendo JOIN sobre thread con PID = %d\n", arg1);
-                currentThread->SaveUserState(); // guardo el status del currentThread antes de hacer el join y pasar al otro thread
+                //currentThread->SaveUserState(); // guardo el status del currentThread antes de hacer el join y pasar al otro thread
 
                 tbPid.thread->Join();
 
                 int retorno = PidTable[arg1].retorno; //retorno del Pid anterior 
 
-                currentThread->RestoreUserState(); //restauro lo que había guardado una vez que volvi
+                //currentThread->RestoreUserState(); //restauro lo que había guardado una vez que volvi
                 DEBUG('f', ">>>>>>>>>>>>>>>> Retorno de JOIN : %d\n", retorno);
                 machine->WriteRegister(2, retorno);
                 //tbPid.thread->RestoreUserState();
