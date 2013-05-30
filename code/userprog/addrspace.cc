@@ -133,6 +133,7 @@ AddrSpace::~AddrSpace()
         listPages->Clear(pageTable[i].physicalPage);
     }
     delete pageTable;
+    delete exec; // Agregado para borrar el executable
 }
 
 //----------------------------------------------------------------------

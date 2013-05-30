@@ -188,6 +188,9 @@ Thread::Finish ()
     #ifdef USER_PROGRAM
         RemoveThreadFromTable(currentThread->getPid()); 
         delete space;
+        // Chequear si no quedan más threads en la lista de threads antes de hacer Cleanup
+        stats->Print();
+        Cleanup(); 
     #endif
     threadToBeDestroyed = currentThread;
     Sleep(); // invokes SWITCH

@@ -85,7 +85,8 @@ main.o: ../threads/main.cc ../threads/copyright.h ../threads/utility.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
 scheduler.o: ../threads/scheduler.cc ../threads/copyright.h \
  ../threads/scheduler.h ../threads/list.h ../threads/utility.h \
  ../machine/sysdep.h ../threads/copyright.h /usr/include/stdlib.h \
@@ -144,7 +145,8 @@ scheduler.o: ../threads/scheduler.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/system.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
 synch.o: ../threads/synch.cc ../threads/copyright.h ../threads/synch.h \
  ../threads/list.h ../threads/utility.h ../machine/sysdep.h \
  ../threads/copyright.h /usr/include/stdlib.h /usr/include/features.h \
@@ -203,7 +205,8 @@ synch.o: ../threads/synch.cc ../threads/copyright.h ../threads/synch.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
 system.o: ../threads/system.cc ../threads/copyright.h ../threads/system.h \
  ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
  /usr/include/stdlib.h /usr/include/features.h \
@@ -263,7 +266,8 @@ system.o: ../threads/system.cc ../threads/copyright.h ../threads/system.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h ../threads/preemptive.h
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h ../threads/preemptive.h
 thread.o: ../threads/thread.cc ../threads/copyright.h ../threads/thread.h \
  ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
  /usr/include/stdlib.h /usr/include/features.h \
@@ -323,7 +327,7 @@ thread.o: ../threads/thread.cc ../threads/copyright.h ../threads/thread.h \
  ../threads/system.h ../threads/scheduler.h ../machine/interrupt.h \
  ../threads/list.h ../machine/stats.h ../machine/timer.h \
  ../filesys/synchconsole.h ../threads/system.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 utility.o: ../threads/utility.cc ../threads/copyright.h \
  ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
  /usr/include/stdlib.h /usr/include/features.h \
@@ -409,7 +413,8 @@ threadtest.o: ../threads/threadtest.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
 interrupt.o: ../machine/interrupt.cc ../threads/copyright.h \
  ../machine/interrupt.h ../threads/list.h ../threads/copyright.h \
  ../threads/utility.h ../machine/sysdep.h /usr/include/stdlib.h \
@@ -468,7 +473,8 @@ interrupt.o: ../machine/interrupt.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/range_access.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../machine/stats.h ../machine/timer.h \
- ../filesys/synchconsole.h ../machine/console.h ../threads/synch.h
+ ../filesys/synchconsole.h ../machine/console.h ../threads/synch.h \
+ ../userprog/bitmap.h ../filesys/openfile.h
 sysdep.o: ../machine/sysdep.cc ../threads/copyright.h \
  /usr/include/stdio.h /usr/include/features.h \
  /usr/include/i386-linux-gnu/bits/predefs.h \
@@ -568,7 +574,8 @@ sysdep.o: ../machine/sysdep.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/range_access.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../machine/stats.h ../machine/timer.h \
- ../filesys/synchconsole.h ../machine/console.h ../threads/synch.h
+ ../filesys/synchconsole.h ../machine/console.h ../threads/synch.h \
+ ../userprog/bitmap.h ../filesys/openfile.h
 stats.o: ../machine/stats.cc ../threads/copyright.h ../threads/utility.h \
  ../threads/copyright.h ../machine/sysdep.h /usr/include/stdlib.h \
  /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
@@ -654,7 +661,7 @@ timer.o: ../machine/timer.cc ../threads/copyright.h ../machine/timer.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 preemptive.o: ../threads/preemptive.cc ../threads/preemptive.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h ../threads/copyright.h /usr/include/stdlib.h \
@@ -714,7 +721,8 @@ preemptive.o: ../threads/preemptive.cc ../threads/preemptive.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h /usr/include/unistd.h \
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h /usr/include/unistd.h \
  /usr/include/i386-linux-gnu/bits/posix_opt.h \
  /usr/include/i386-linux-gnu/bits/environments.h \
  /usr/include/i386-linux-gnu/bits/confname.h /usr/include/getopt.h \
@@ -797,7 +805,8 @@ puerto.o: ../threads/puerto.cc ../threads/synch.h ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
 addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
@@ -857,7 +866,8 @@ addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h ../userprog/addrspace.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../userprog/addrspace.h
 bitmap.o: ../userprog/bitmap.cc ../threads/copyright.h \
  ../userprog/bitmap.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
@@ -944,7 +954,8 @@ exception.o: ../userprog/exception.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h ../userprog/syscall.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../userprog/syscall.h
 progtest.o: ../userprog/progtest.cc ../threads/copyright.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
@@ -1004,7 +1015,8 @@ progtest.o: ../userprog/progtest.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h ../userprog/addrspace.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../userprog/addrspace.h
 console.o: ../machine/console.cc ../threads/copyright.h \
  ../machine/console.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
@@ -1064,7 +1076,7 @@ console.o: ../machine/console.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 machine.o: ../machine/machine.cc ../threads/copyright.h \
  ../machine/machine.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
@@ -1124,7 +1136,7 @@ machine.o: ../machine/machine.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 mipssim.o: ../machine/mipssim.cc ../threads/copyright.h \
  ../machine/machine.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
@@ -1184,7 +1196,7 @@ mipssim.o: ../machine/mipssim.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 translate.o: ../machine/translate.cc ../threads/copyright.h \
  ../machine/machine.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
@@ -1244,7 +1256,7 @@ translate.o: ../machine/translate.cc ../threads/copyright.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 synchconsole.o: ../filesys/synchconsole.cc ../filesys/synchconsole.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h ../threads/copyright.h /usr/include/stdlib.h \
@@ -1303,8 +1315,8 @@ synchconsole.o: ../filesys/synchconsole.cc ../filesys/synchconsole.h \
  /usr/include/c++/4.7/bits/range_access.h \
  /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
- ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../machine/timer.h ../filesys/synchconsole.h ../userprog/bitmap.h \
+ ../filesys/openfile.h ../machine/console.h ../threads/synch.h
 # DEPENDENCIES MUST END AT END OF FILE
 # IF YOU PUT STUFF HERE IT WILL GO AWAY
 # see make depend above
