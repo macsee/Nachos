@@ -275,6 +275,7 @@ AddThreadToTable (Thread* t)
 
 	PidTable.push_back(tpid);
     t->setPid(i);
+    DEBUG('f', ">>>>>>>>>>>>>>>> Se crea thread con PID = %d\n", i);
     return i;
 }
 
@@ -282,16 +283,17 @@ bool
 RemoveThreadFromTable (int pid)
 {
     if (  pid < 0 || pid >= PidTable.size() ) {
-        DEBUG('f', "Error al intentar remover thread. PID %d inexistente\n", pid);
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar remover thread. PID %d inexistente\n", pid);
         return false;
     }
 
     if ( PidTable[pid].thread == NULL ) {
-        DEBUG('f', "Error al intentar remover thread. PID %d no valido\n", pid);
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar remover thread. PID %d no valido\n", pid);
         return false;
     }
 
     PidTable[pid].thread = NULL;
+    DEBUG('f', ">>>>>>>>>>>>>>>> Se elimina thread con PID = %d\n", pid);
     return true;
 }
 
@@ -299,12 +301,12 @@ TablaPid
 GetThreadFromTable (int pid)
 {
     if (  pid < 0 || pid >= PidTable.size() ) {
-        DEBUG('f', "Error al intentar obtener thread. PID %d inexistente\n", pid);
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar obtener thread. PID %d inexistente\n", pid);
 		ASSERT(false);
     }
 
     if ( PidTable[pid].thread == NULL ) {
-        DEBUG('f', "Error al intentar obtener thread. PID %d no valido\n", pid);
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar obtener thread. PID %d no valido\n", pid);
 		ASSERT(false);
     }
 
@@ -317,7 +319,7 @@ void
 SetRetornoInTable (int pid, int ret)
 {
     if (  pid < 0 || pid >= PidTable.size() ) {
-        DEBUG('f', "Error al intentar setear retorno en thread. PID %d inexistente\n", pid);
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar setear retorno en thread. PID %d inexistente\n", pid);
         ASSERT(false);
     }
 

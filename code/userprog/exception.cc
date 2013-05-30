@@ -180,25 +180,31 @@ ExceptionHandler(ExceptionType which)
                 // se puede poner el delete de space en el destructor de Thread y solo llamar a la 
                 // funcion FInish()
                 //delete currentThread->space;
-                printf("El valor de retorno de Exit para el thread %s es: %d\n",currentThread->getName(), arg1 );
                 // Eliminar el Thread
-                // SetRetornoInTable (currentThread->getPid(), arg1);
+                SetRetornoInTable (currentThread->getPid(), arg1);
                 TablaPid tbPid = GetThreadFromTable(currentThread->getPid());
-                printf("PID: %d - RETORNO: %d\n", currentThread->getPid(), tbPid.retorno );
-                tbPid.retorno = arg1;
+                DEBUG('f', ">>>>>>>>>>>>>>>> EXIT de thread con PID = %d. Retorno %d\n", currentThread->getPid(), tbPid.retorno);
                 currentThread->Finish();
+                //Cleanup(); 
                 break;
                 // Que se hace con el estatus de exit
             }
             //////////////////////////// JOIN ///////////////////////////////////////////////////
             case SC_Join : 
             {
+                
                 TablaPid tbPid = GetThreadFromTable(arg1);
-                //tbPid.thread->SaveUserState();
+                DEBUG('f', ">>>>>>>>>>>>>>>> Haciendo JOIN sobre thread con PID = %d\n", arg1);
+                currentThread->SaveUserState(); // guardo el status del currentThread antes de hacer el join y pasar al otro thread
+
                 tbPid.thread->Join();
-                machine->WriteRegister(2, tbPid.retorno);
+
+                int retorno = PidTable[arg1].retorno; //retorno del Pid anterior 
+
+                currentThread->RestoreUserState(); //restauro lo que había guardado una vez que volvi
+                DEBUG('f', ">>>>>>>>>>>>>>>> Retorno de JOIN : %d\n", retorno);
+                machine->WriteRegister(2, retorno);
                 //tbPid.thread->RestoreUserState();
-                printf("Join retorna %d del thread %s\n", tbPid.retorno, tbPid.thread->getName() );
                 // Eliminar el PID
                 //RemoveThreadFromTable(currentThread->getPid()); 
                 // Vacias los espacios de memoria correspondientes

@@ -36,7 +36,7 @@ StartProcess(const char *filename)
 
     // space->InitRegisters(); 
     // space->RestoreState();
-
+    int pid = AddThreadToTable(currentThread);
     RunProcess((void*)space);
     // delete executable;			// close file
 // 

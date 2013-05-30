@@ -86,11 +86,6 @@ Thread::~Thread()
 
     ASSERT(this != currentThread);
 
- #ifdef USER_PROGRAM
-     //RemoveThreadFromTable(currentThread->getPid()); 
-     delete space;
- #endif
-
     if (stack != NULL)
         DeallocBoundedArray((char *) stack, StackSize * sizeof(HostMemoryAddress));
 
@@ -190,6 +185,10 @@ Thread::Finish ()
         DEBUG('t', "Finishing thread Joinable  \"%s\"\n", getName());       
     }
 
+    #ifdef USER_PROGRAM
+        RemoveThreadFromTable(currentThread->getPid()); 
+        delete space;
+    #endif
     threadToBeDestroyed = currentThread;
     Sleep(); // invokes SWITCH
     // not reached
