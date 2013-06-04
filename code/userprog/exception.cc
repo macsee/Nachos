@@ -182,8 +182,8 @@ ExceptionHandler(ExceptionType which)
                 //delete currentThread->space;
                 // Eliminar el Thread
                 SetRetornoInTable (currentThread->getPid(), arg1);
-                TablaPid tbPid = GetThreadFromTable(currentThread->getPid());
-                DEBUG('f', ">>>>>>>>>>>>>>>> EXIT de thread con PID = %d. Retorno %d\n", currentThread->getPid(), tbPid.retorno);
+                TablaPid *tbPid = GetThreadFromTable(currentThread->getPid());
+                DEBUG('f', ">>>>>>>>>>>>>>>> EXIT de thread con PID = %d. Retorno %d\n", currentThread->getPid(), tbPid->retorno);
                 currentThread->Finish();
                 //Cleanup(); 
                 break;
@@ -193,13 +193,14 @@ ExceptionHandler(ExceptionType which)
             case SC_Join : 
             {
                 
-                TablaPid tbPid = GetThreadFromTable(arg1);
+                TablaPid *tbPid = GetThreadFromTable(arg1);
                 DEBUG('f', ">>>>>>>>>>>>>>>> Haciendo JOIN sobre thread con PID = %d\n", arg1);
                 //currentThread->SaveUserState(); // guardo el status del currentThread antes de hacer el join y pasar al otro thread
 
-                tbPid.thread->Join();
+                tbPid->thread->Join();
+                int retorno = tbPid->retorno;
 
-                int retorno = PidTable[arg1].retorno; //retorno del Pid anterior 
+                //int retorno = PidTable[arg1].retorno; //retorno del Pid anterior 
 
                 //currentThread->RestoreUserState(); //restauro lo que había guardado una vez que volvi
                 DEBUG('f', ">>>>>>>>>>>>>>>> Retorno de JOIN : %d\n", retorno);

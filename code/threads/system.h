@@ -42,7 +42,7 @@ struct TablaPid {
 };
 extern int AddThreadToTable (Thread* t);
 extern bool RemoveThreadFromTable (int pid);
-extern TablaPid GetThreadFromTable (int pid);
+extern TablaPid* GetThreadFromTable (int pid);
 extern void SetRetornoInTable (int pid, int ret);
 extern bool MoreThreadsToRun ();
 

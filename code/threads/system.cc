@@ -71,7 +71,7 @@ extern void Cleanup();
 static void
 TimerInterruptHandler(void* dummy)
 {
-    if (interrupt->getStatus() != IdleMode)
+    //if (interrupt->getStatus() != IdleMode)
         interrupt->YieldOnReturn();
 }
 
@@ -257,9 +257,8 @@ int
 AddThreadToTable (Thread* t)
 {
 	TablaPid tpid;
-    int i = 0;
     std::vector<TablaPid>:: iterator it;
-
+/*
     for( it = PidTable.begin(); it < PidTable.end() ; it++ ) {
         if (it->thread == NULL) { 
             // it es un puntero a elementos de un vector, en este caso, a FileDescriptors (fd). Para Mauro
@@ -269,20 +268,20 @@ AddThreadToTable (Thread* t)
         }
         i++;
     }    
-
+*/
     tpid.thread = t;
     tpid.retorno = NULL;
 
 	PidTable.push_back(tpid);
-    t->setPid(i);
-    DEBUG('f', ">>>>>>>>>>>>>>>> Se crea thread con PID = %d\n", i);
-    return i;
+    t->setPid(PidTable.size()-1);
+    DEBUG('f', ">>>>>>>>>>>>>>>> Se crea thread con PID = %d\n", PidTable.size()-1);
+    return PidTable.size()-1;
 }
 
 bool
 RemoveThreadFromTable (int pid)
 {
-    if (  pid < 0 || pid >= PidTable.size() ) {
+    if (  pid < 0 || pid > PidTable.size() ) {
         DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar remover thread. PID %d inexistente\n", pid);
         return false;
     }
@@ -297,10 +296,10 @@ RemoveThreadFromTable (int pid)
     return true;
 }
 
-TablaPid 
+TablaPid* 
 GetThreadFromTable (int pid)
 {
-    if (  pid < 0 || pid >= PidTable.size() ) {
+    if (  pid < 0 || pid > PidTable.size() ) {
         DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar obtener thread. PID %d inexistente\n", pid);
 		ASSERT(false);
     }
@@ -311,7 +310,7 @@ GetThreadFromTable (int pid)
     }
 
     else {
-        return PidTable[pid];
+        return &PidTable[pid];
     }
 }
 
