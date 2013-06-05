@@ -34,7 +34,7 @@ CPP = /lib/cpp
 INCDIR =-I../userprog -I../threads
 CFLAGS = -G 0 -c $(INCDIR) -mips1
 
-all: halt shell matmult sort halt2 test halt3
+all: halt shell matmult sort halt2 test halt3 lasa lasb
 
 start.o: start.s ../userprog/syscall.h
 	$(CPP) $(CPPFLAGS) start.s > strt.s
@@ -84,6 +84,17 @@ matmult: matmult.o start.o
 	$(LD) $(LDFLAGS) start.o matmult.o -o matmult.coff
 	../bin/coff2noff matmult.coff matmult
 
+lasa.o: lasa.c
+	$(CC) $(CFLAGS) -c lasa.c
+lasa: lasa.o start.o
+	$(LD) $(LDFLAGS) start.o lasa.o -o lasa.coff
+	../bin/coff2noff lasa.coff lasa
+
+lasb.o: lasb.c
+	$(CC) $(CFLAGS) -c lasb.c
+lasb: lasb.o start.o
+	$(LD) $(LDFLAGS) start.o lasb.o -o lasb.coff
+	../bin/coff2noff lasb.coff lasb
 
 # Estas reglas sirven para compilar programas simples,
 # que consistan en un único fuente.

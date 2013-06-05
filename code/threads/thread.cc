@@ -21,6 +21,7 @@
 #include "puerto.h"
 #include "system.h"
 #include "list.h"
+#include "userfunctions.h"
 
 // this is put at the top of the execution stack,
 // for detecting stack overflows
@@ -128,6 +129,7 @@ Thread::Fork(VoidFunctionPtr func, void* arg)
 #endif
 
     StackAllocate(func, arg);
+    printf("Stack en: %d\n", &stack );
 
     IntStatus oldLevel = interrupt->SetLevel(IntOff);
     scheduler->ReadyToRun(this);	// ReadyToRun assumes that interrupts
@@ -445,6 +447,27 @@ Thread::GetFileIDFromTable (OpenFileId of)
     else {
         return tablaDesc[of];
     }
+}
+
+void 
+Thread::SetArgs(int argc, int argv)
+{
+    args = new char*[argc];
+    char* ptr = new char[128];
+
+    printf("El stack pointer esta %d\n", stack);
+
+    readStrFromUsr(argv, ptr);
+    int i = 0;
+    ptr = strtok(ptr," ");
+    while(ptr != NULL)
+    {
+        args[i] = ptr;
+        ptr = strtok(NULL, " ");
+        printf("EL ARGUMENTO %d, es %s\n", i, args[i]);
+        i++; 
+    }
+
 }
 
 #endif

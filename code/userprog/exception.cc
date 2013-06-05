@@ -25,7 +25,7 @@
 #include "system.h"
 #include "syscall.h"
 #include "synchconsole.h"
-
+#include "userfunctions.h"
 
 class Thread;
 
@@ -41,59 +41,6 @@ class Thread;
 	pc += 4;								\
 	machine->WriteRegister(NextPCReg, pc);	
 
-
-void 
-readStrFromUsr(int usrAddr, char* outStr)
-{
-  int i = 0;
-  int value = 1;
-
-  while (value != '\0')
-  {
-    ASSERT(machine->ReadMem(usrAddr + i, 1, &value));
-    outStr[i] = (char)value;
-    i++;
-  }
-}
-
-void 
-readBuffFromUsr(int usrAddr, char *outBuff, int byteCount)
-{
-  int i = 0;
-  int value = 1;
-
-  while (i < byteCount)
-  {
-    ASSERT(machine->ReadMem(usrAddr + i, 1, &value));
-    outBuff[i] = (char)value;
-    i++;  
-  }
-}
-
-void 
-writeStrToUsr(char *str, int usrAddr)
-{
-  int i = 0;
-
-  while (str[i] != '\0')
-  {
-    ASSERT(machine->WriteMem(usrAddr + i, 1, (int) str[i]));
-    i++;
-  }
-  ASSERT(machine->WriteMem(usrAddr + i, 1, '\0'));
-}
-
-void 
-writeBuffToUsr(char *str, int usrAddr, int byteCount)
-{
-  int i = 0;
-
-  while (i < byteCount)
-  {
-    ASSERT(machine->WriteMem(usrAddr + i, 1, (int) str[i]));
-    i++;
-  }
-}
 
 void
 RunProcess (void* arg) 
@@ -398,6 +345,10 @@ ExceptionHandler(ExceptionType which)
 
                 space = new AddrSpace(executable);    
                 thread->space = space;
+
+                if (arg2 > 0) {
+                    thread->SetArgs(arg2, arg3);
+                }
 
                 //space->InitRegisters(); 
                 //space->RestoreState();

@@ -71,7 +71,7 @@ extern void Cleanup();
 static void
 TimerInterruptHandler(void* dummy)
 {
-    //if (interrupt->getStatus() != IdleMode)
+    if (interrupt->getStatus() != IdleMode)
         interrupt->YieldOnReturn();
 }
 
@@ -173,7 +173,8 @@ Initialize(int argc, char **argv)
     stats = new Statistics();			// collect statistics
     interrupt = new Interrupt;			// start up interrupt handling
     scheduler = new Scheduler();		// initialize the ready queue
-    if (randomYield)				// start the timer (if needed)
+    //if (randomYield)				// start the timer (if needed)
+    // Comentado para crear cambios de contexto utilizando el timer
         timer = new Timer(TimerInterruptHandler, 0, randomYield);
 
     threadToBeDestroyed = NULL;
