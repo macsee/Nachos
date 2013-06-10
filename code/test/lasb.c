@@ -1,12 +1,11 @@
 #include "syscall.h"
 
 int
-main()
+main(int argc, char** argv)
 {	
+	char* algo = argv[0];
 	int i = 0;
-	while(i < 10) {
-		Write("b\n", 1, ConsoleOutput);
-		i++;
-	}
+	Write("Soy lasb\n",10,1);
+	Write(algo,4,1);
 	Exit(66);
 }

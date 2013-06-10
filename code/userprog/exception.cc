@@ -75,6 +75,48 @@ RunProcess (void* arg)
     writeBuffToUsr (data, dataVirtAddr, dataSize);
     delete data;
 
+    int sp = PageSize*currentThread->space->getNumPages();
+    int argc = currentThread->getArgc();
+    char** argv = currentThread->getArgv();
+    int local_addr[argc];
+    int dir;
+
+    machine->WriteRegister(4, argc);
+
+    printf("El stack en el comienzo esta en : %d\n", sp);
+    
+     for (int i = argc-1; i >= 0; i--)
+    {
+        printf("El argumento nro %d, es %s\n", i, argv[i]);
+        sp -= strlen(argv[i])+1; //hacemos lugar para copiar el arg i-esimo
+        writeStrToUsr(argv[i], sp); //copiamos a mem el arg i-esimo
+        local_addr[i] = sp; //direccion donde comienza el arg i-esimo
+        printf("El stack esta ahora en: %d\n", sp);
+    }
+
+    for ( int i = argc-1; i >= 0; i-- ) 
+    {
+        sp -= 4; // hacemos lugar para escribir la direccion de memoria donde se encuentra el arg i-esimo
+        machine->WriteMem(sp, 4, local_addr[i]); // escribimos la direccion de memoria del arg i-esimo
+        printf("Direccion de arg%d = %d\n", i, local_addr[i]);
+    }
+
+    machine->WriteRegister(5, local_addr[0]);
+
+    if (argc > 0) { 
+        //machine->WriteRegister(5, *local_addr);
+        char var;
+        machine->ReadMem(1397, 1, &dir);
+        
+        //readStrFromUsr(1397,var);
+        printf("Mem : %c\n", dir);
+
+        for (int i = 0; i < NumTotalRegs; i++)
+           DEBUG('j', "registers[%d] = %d\n", i, machine->ReadRegister(i) );
+
+        for (int i = 0; i < MemorySize; i++)
+           DEBUG('j',"MainMemory[%d] = %c - %d\n", i, machine->mainMemory[i], machine->mainMemory[i]);
+    }  
     machine->Run();     // jump to the user progam
                         // machine->Run never returns;
           // the address space exits

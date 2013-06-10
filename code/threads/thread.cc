@@ -129,7 +129,6 @@ Thread::Fork(VoidFunctionPtr func, void* arg)
 #endif
 
     StackAllocate(func, arg);
-    printf("Stack en: %d\n", &stack );
 
     IntStatus oldLevel = interrupt->SetLevel(IntOff);
     scheduler->ReadyToRun(this);	// ReadyToRun assumes that interrupts
@@ -450,24 +449,51 @@ Thread::GetFileIDFromTable (OpenFileId of)
 }
 
 void 
-Thread::SetArgs(int argc, int argv)
+Thread::SetArgs(int arg1, int arg2)
 {
-    args = new char*[argc];
-    char* ptr = new char[128];
+   argv = new char*[argc];
+   argc = arg1;
+   int dir;
 
-    printf("El stack pointer esta %d\n", stack);
+    machine->ReadMem(arg2, 4, &dir);
+    printf("LALALA : %d\n", dir);
 
-    readStrFromUsr(argv, ptr);
+   for (int i = 0; i < argc; ++i)
+   {
+       machine->ReadMem(arg2 + 4*i, 4, &dir);
+       // printf("dir%d: %d\n", i, dir);
+       char* ptr = new char[128];
+       readStrFromUsr(dir, ptr);
+       // printf("Ptr%d: %s\n", i, ptr);
+       argv[i] = ptr;
+   }
+
+   
+}
+/*
     int i = 0;
     ptr = strtok(ptr," ");
+
     while(ptr != NULL)
     {
         args[i] = ptr;
         ptr = strtok(NULL, " ");
-        printf("EL ARGUMENTO %d, es %s\n", i, args[i]);
+        //printf("EL ARGUMENTO %d, es %s\n", i, args[i]);
+        //sp -= strlen(args[i])+1; //hacemos lugar para copiar el arg i-esimo
+        //writeStrToUsr(args[i], sp); //copiamos a mem el arg i-esimo
+        //local_addr[i] = sp; //direccion donde comienza el arg i-esimo
         i++; 
     }
+    /*
+    machine->WriteRegister(4,argc);
 
-}
+    for ( i = 0;i < argc; i++ ) 
+    {
+        sp -= 4; // hacemos lugar para escribir la direccion de memoria donde se encuentra el arg i-esimo
+        machine->WriteMem(sp, 4, local_addr[i]); // escribimos la direccion de memoria del arg i-esimo
+        machine->WriteRegister(5+i,sp);
+    }
+    
+    sp -= 16;*/
 
 #endif

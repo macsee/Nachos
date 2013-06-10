@@ -40,6 +40,9 @@ class AddrSpace {
       return exec;
     } 
 
+    int getNumPages () {
+      return numPages;
+    }
   private:
     TranslationEntry *pageTable;	// Assume linear page table translation
 					// for now!

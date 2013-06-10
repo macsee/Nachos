@@ -169,7 +169,8 @@ private:
 	int userRegisters[NumTotalRegs];	// user-level CPU register state
 
     int pid;
-    char** args;
+    char** argv;
+    int argc;
 public:
     void setPid(int i) { pid = i; }
     int getPid() { return pid; }
@@ -181,6 +182,9 @@ public:
     void RestoreUserState();		// restore user-level register state
 
     void SetArgs(int argc, int argv);
+    int getArgc() { return argc; }
+    char** getArgv() { return argv; }
+    void setArgc(int i) { argc = i;}
     AddrSpace *space;			// User code this thread is running.
 #endif
 };
