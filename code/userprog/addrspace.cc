@@ -74,7 +74,7 @@ AddrSpace::AddrSpace(OpenFile *executable)
 						// to leave room for the stack
     numPages = divRoundUp(size, PageSize);
     size = numPages * PageSize;
-  
+    
     ASSERT(numPages <= listPages->NumClear());
     //ASSERT(numPages <= NumPhysPages);		// check we're not trying
 						// to run anything too big --

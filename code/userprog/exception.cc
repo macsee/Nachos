@@ -83,33 +83,28 @@ RunProcess (void* arg)
 
     machine->WriteRegister(4, argc);
 
-    printf("El stack en el comienzo esta en : %d\n", sp);
+    //printf("El stack en el comienzo esta en : %d\n", sp);
     
      for (int i = argc-1; i >= 0; i--)
     {
-        printf("El argumento nro %d, es %s\n", i, argv[i]);
+        //printf("El argumento nro %d, es %s\n", i, argv[i]);
         sp -= strlen(argv[i])+1; //hacemos lugar para copiar el arg i-esimo
         writeStrToUsr(argv[i], sp); //copiamos a mem el arg i-esimo
         local_addr[i] = sp; //direccion donde comienza el arg i-esimo
-        printf("El stack esta ahora en: %d\n", sp);
+        //printf("El stack esta ahora en: %d\n", sp);
     }
+    sp-=sp%4; // ESTO ES PARA QUE FUNCIONE TODO!!!! Necesito que el stack esté apuntando a una dirección que sea múltiplo de 4.
 
     for ( int i = argc-1; i >= 0; i-- ) 
     {
         sp -= 4; // hacemos lugar para escribir la direccion de memoria donde se encuentra el arg i-esimo
         machine->WriteMem(sp, 4, local_addr[i]); // escribimos la direccion de memoria del arg i-esimo
-        printf("Direccion de arg%d = %d\n", i, local_addr[i]);
+        //printf("Direccion de arg%d = %d\n", i, local_addr[i]);
     }
 
-    machine->WriteRegister(5, local_addr[0]);
+    machine->WriteRegister(5, sp);
 
-    if (argc > 0) { 
-        //machine->WriteRegister(5, *local_addr);
-        char var;
-        machine->ReadMem(1397, 1, &dir);
-        
-        //readStrFromUsr(1397,var);
-        printf("Mem : %c\n", dir);
+    if (argc > 0) {
 
         for (int i = 0; i < NumTotalRegs; i++)
            DEBUG('j', "registers[%d] = %d\n", i, machine->ReadRegister(i) );
@@ -117,12 +112,13 @@ RunProcess (void* arg)
         for (int i = 0; i < MemorySize; i++)
            DEBUG('j',"MainMemory[%d] = %c - %d\n", i, machine->mainMemory[i], machine->mainMemory[i]);
     }  
+    machine->WriteRegister(StackReg, sp-16);
     machine->Run();     // jump to the user progam
                         // machine->Run never returns;
           // the address space exits
           // by doing the syscall "exit"
 
-} 
+}  
 
 //----------------------------------------------------------------------
 // ExceptionHandler
@@ -356,7 +352,7 @@ ExceptionHandler(ExceptionType which)
                     DEBUG('f', "Leyendo del archivo con file id = %d\n", arg3);
                     bytes_leidos = fd.openfile->Read(buffer, arg2);
                     writeBuffToUsr(buffer, arg1, arg2);
-                    printf("%d bytes leídos\n", bytes_leidos);
+                    //printf("%d bytes leídos\n", bytes_leidos);
                 }
 
                 delete buffer;

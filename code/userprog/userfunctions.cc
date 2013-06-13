@@ -54,3 +54,13 @@ writeBuffToUsr(char *str, int usrAddr, int byteCount)
     i++;
   }
 }
+
+void 
+printMainMemory()
+{
+  for (int i = 0; i < NumTotalRegs; i++)
+    DEBUG('j', "registers[%d] = %d\n", i, machine->ReadRegister(i));
+
+  for (int i = 0; i < MemorySize; i++)
+    DEBUG('j',"MainMemory[%d] = %c - %d\n", i, machine->mainMemory[i], machine->mainMemory[i]);
+}

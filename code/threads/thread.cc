@@ -49,6 +49,8 @@ Thread::Thread(const char* threadName, bool isJoinable, int prioridad)
         joinPuerto = new Puerto("Puerto Apache");
 	
 #ifdef USER_PROGRAM
+    argc = 0;
+    
 	space = NULL;
 
     FileDescriptor console_in;
@@ -455,8 +457,8 @@ Thread::SetArgs(int arg1, int arg2)
    argc = arg1;
    int dir;
 
-    machine->ReadMem(arg2, 4, &dir);
-    printf("LALALA : %d\n", dir);
+    //machine->ReadMem(arg2, 4, &dir);
+    //printf("LALALA : %d\n", dir);
 
    for (int i = 0; i < argc; ++i)
    {
