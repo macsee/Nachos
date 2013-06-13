@@ -19,7 +19,7 @@ main()
 	/*char buffer[128];
 	Create("file1");
 	int file_id = Open("file1");*/
-	Write("Soy Halt\n",12,ConsoleOutput);
+	// Write("Soy Halt\n",12,ConsoleOutput);
 	/*Close(file_id);
 	file_id = Open("file1");
 	Read(buffer, 15, file_id );
@@ -31,6 +31,11 @@ main()
 	// ret ='a'+Join(pid);
 	// Write("Finalizando Halt\n",18,ConsoleOutput);
 	// Write(&ret,1,ConsoleOutput);
+	char *argv[] = {"../userprog/file12\0","../userprog/file12\0","../userprog/file12\0","../userprog/file12\0"};
+	//char** i = &h;
+	
+	int pid = Exec("../test/cat", 4, argv, 1);
+	Join(pid);
     Halt();
     /* not reached */
 	// Exit(1);

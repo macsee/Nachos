@@ -152,6 +152,7 @@ ExceptionHandler(ExceptionType which)
     int arg1 = machine->ReadRegister(4);
     int arg2 = machine->ReadRegister(5);
     int arg3 = machine->ReadRegister(6);
+    int arg4 = machine->ReadRegister(7);
   
     if (which == SyscallException) {
         switch ( type ) 
@@ -379,7 +380,12 @@ ExceptionHandler(ExceptionType which)
 
                 DEBUG('f', "Ejecutando el archivo %s\n", buffer);
             
-                Thread* thread = new Thread(buffer, true);    
+                Thread* thread;
+                
+                if (arg4 == 0) 
+                    thread = new Thread(buffer);
+                else
+                    thread = new Thread(buffer, true);        
 
                 space = new AddrSpace(executable);    
                 thread->space = space;

@@ -3,7 +3,7 @@
 int
 main(int argc, char** argv)
 {	
-	char buffer[128];
+	char buffer[1024];
 	int i;
 	for (i = 0; i < argc; i++) {
 		int file_id = Open(argv[i]);
