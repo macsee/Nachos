@@ -3,16 +3,21 @@
 int
 main(int argc, char** argv)
 {	
-	char buffer[128];
+	char buffer;
+
+	if (argc < 2) {
+		Write("Modo de uso: cp [origen] [destino]\n", 35, ConsoleOutput);
+		Exit(-1);
+	}	
+
 	Create(argv[1]);
 	int origen = Open(argv[0]);
 	int destino = Open(argv[1]);
 
-	if (origen == destino)
-		Write("Los archivos son iguales", 24, ConsoleOutput);
-	else if (origen < 0)
-		Write("El archivo de origen no existe", 30, ConsoleOutput);
-
+	if (origen < 0) {
+		Write("El archivo de origen no existe\n", 31, ConsoleOutput);
+		Exit(-1);
+	}	
 	else {
 		while ( Read(buffer, 1, origen ) != 0 ) {
 			Write(buffer,1,destino);

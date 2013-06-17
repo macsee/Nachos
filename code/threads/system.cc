@@ -302,12 +302,12 @@ GetThreadFromTable (int pid)
 {
     if (  pid < 0 || pid > PidTable.size() ) {
         DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar obtener thread. PID %d inexistente\n", pid);
-		ASSERT(false);
+		return NULL;
     }
 
     if ( PidTable[pid].thread == NULL ) {
         DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar obtener thread. PID %d no valido\n", pid);
-		ASSERT(false);
+		return NULL;
     }
 
     else {

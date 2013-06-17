@@ -176,7 +176,7 @@ public:
     int getPid() { return pid; }
 	int AddFileToTable (OpenFile* op);
 	bool RemoveFileFromTable (OpenFileId of);
-	FileDescriptor GetFileIDFromTable (OpenFileId fd);
+	FileDescriptor* GetFileIDFromTable (OpenFileId fd);
 
     void SaveUserState();		// save user-level register state
     void RestoreUserState();		// restore user-level register state

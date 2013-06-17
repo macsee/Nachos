@@ -79,7 +79,7 @@ RunProcess (void* arg)
     int argc = currentThread->getArgc();
     char** argv = currentThread->getArgv();
     int local_addr[argc];
-    int dir;
+    //int dir;
 
     machine->WriteRegister(4, argc);
 
@@ -168,8 +168,8 @@ ExceptionHandler(ExceptionType which)
                 //delete currentThread->space;
                 // Eliminar el Thread
                 SetRetornoInTable (currentThread->getPid(), arg1);
-                TablaPid *tbPid = GetThreadFromTable(currentThread->getPid());
-                DEBUG('f', ">>>>>>>>>>>>>>>> EXIT de thread con PID = %d. Retorno %d\n", currentThread->getPid(), tbPid->retorno);
+                //TablaPid *tbPid = GetThreadFromTable(currentThread->getPid());
+                DEBUG('f', "EXIT: thread con PID = %d hace EXIT. Retorno %d\n", currentThread->getPid(), arg1);
                 currentThread->Finish();
                 //Cleanup(); 
                 break;
@@ -180,7 +180,14 @@ ExceptionHandler(ExceptionType which)
             {
                 
                 TablaPid *tbPid = GetThreadFromTable(arg1);
-                DEBUG('f', ">>>>>>>>>>>>>>>> Haciendo JOIN sobre thread con PID = %d\n", arg1);
+                
+                if (tbPid == NULL) {
+                    machine->WriteRegister(2, -1);
+                    DEBUG('f', "JOIN[Error]: Error en pid: %d", arg1);
+                    break;
+                }
+                    
+                DEBUG('f', "JOIN: Se aplica sobre thread con pid = %d\n", arg1);
                 //currentThread->SaveUserState(); // guardo el status del currentThread antes de hacer el join y pasar al otro thread
 
                 tbPid->thread->Join();
@@ -189,7 +196,7 @@ ExceptionHandler(ExceptionType which)
                 //int retorno = PidTable[arg1].retorno; //retorno del Pid anterior 
 
                 //currentThread->RestoreUserState(); //restauro lo que había guardado una vez que volvi
-                DEBUG('f', ">>>>>>>>>>>>>>>> Retorno de JOIN : %d\n", retorno);
+                DEBUG('f', "JOIN: Retorno: %d\n", retorno);
                 machine->WriteRegister(2, retorno);
                 //tbPid.thread->RestoreUserState();
                 // Eliminar el PID
@@ -219,9 +226,18 @@ ExceptionHandler(ExceptionType which)
                 buffer = new char[128];
                 readStrFromUsr(arg1, buffer);
 
-        		ASSERT (fileSystem->Create(buffer, 128));
+                if (buffer == NULL) {
+                    DEBUG('f', "CREATE[Error]: Error al crear archivo: %s\n", buffer);
+                    break;   
+                }    
+        		//ASSERT (fileSystem->Create(buffer, 128));
 
-                DEBUG('f', "Se creó el archivo %s\n", buffer);
+                if (!fileSystem->Create(buffer, 128)) {
+                    DEBUG('f', "CREATE[Error]: No se puede crear el archivo\n");
+                    break;
+                }
+
+                DEBUG('f', "CREATE: Se creó el archivo: %s\n", buffer);
 
                 delete buffer;
         		    
@@ -238,15 +254,18 @@ ExceptionHandler(ExceptionType which)
                 readStrFromUsr(arg1, buffer);
                 int fd;
 
+                if (buffer == NULL)
+                    break;
+
                 OpenFile* of = fileSystem->Open(buffer);
 
                 if (of == NULL) {
                     fd = -1;
-                    DEBUG('f', "No pudo abrirse el archivo %s\n", buffer);
+                    DEBUG('f', "OPEN[Error]: No pudo abrirse el archivo %s\n", buffer);
                 }  
                 else {
                     fd = currentThread->AddFileToTable(of);
-                    DEBUG('f', "Abriendo archivo %s con file id = %d\n", buffer, fd);
+                    DEBUG('f', "OPEN: Abriendo archivo %s con file id = %d\n", buffer, fd);
                 }
                   
                 machine->WriteRegister(2, fd);
@@ -260,15 +279,20 @@ ExceptionHandler(ExceptionType which)
             {
                 DEBUG('a', "Close file, initiated by user program.\n");
 
-                ASSERT (arg3 >= 0);
+                //ASSERT (arg3 >= 0);
 
-                ASSERT(currentThread->RemoveFileFromTable(arg1));
+                if (arg1 < 0) { //por si se produjo algún otro error
+                    DEBUG('f', "CLOSE[Error]: Error desconocido\n");
+                    break;
+                }
 
-                //if (!currentThread->RemoveFileFromTable(arg1))
-                //  DEBUG('f', "El file id: %d no existe\n", arg1);
-                //else {
-                DEBUG('f', "Cerrando el archivo con file id = %d\n", arg1);
-                //}
+                //ASSERT(currentThread->RemoveFileFromTable(arg1));
+
+                if (!currentThread->RemoveFileFromTable(arg1))
+                    DEBUG('f', "CLOSE[Error]: Error en file id: %d\n", arg1);
+                else
+                    DEBUG('f', "CLOSE: Cerrando el archivo con file id = %d\n", arg1);
+
                 break;
             }
             /////////////////////////// WRITE ///////////////////////////////////////////////////
@@ -276,33 +300,47 @@ ExceptionHandler(ExceptionType which)
             {
                 DEBUG('a', "Write, initiated by user program.\n");
 
-                ASSERT (arg3 >= 0);
+                //ASSERT (arg3 >= 0);
 
-                FileDescriptor fd = currentThread->GetFileIDFromTable(arg3);
-
-                if (fd.modo == FD_R) {
-                    DEBUG('f', "No se puede escribir en un dispositivo de lectura\n");
-                    
+                if (arg3 < 0) { //por si se produjo algún otro error
+                    DEBUG('f', "WRITE: Error desconocido\n");
                     break;
                 }
 
-                if (!fd.valido) {
-                    DEBUG('f', "El file id: %d no existe\n", arg3);
+                FileDescriptor* fd = currentThread->GetFileIDFromTable(arg3);
+
+                if (fd == NULL) {
+                    DEBUG('f', "WRITE[Error]: Error en file id\n");
                     
                     break;
                 }
-
+                 
+                if (fd->modo == FD_R) {
+                    DEBUG('f', "WRITE[Error]: No se puede escribir en un dispositivo de lectura\n");
+                    
+                    break;
+                }
+/*
+                if (!fd->valido) {
+                    DEBUG('f', "WRITE[Error]: El file id: %d no existe\n", arg3);
+                    
+                    break;
+                }
+*/
                 buffer = new char[arg2];
                 readBuffFromUsr(arg1, buffer, arg2);
 
-                if (fd.consola) {
+                if (buffer == NULL)
+                    break;
+
+                if (fd->consola) {
                     for (int i = 0; i < arg2; i++) {
                       synchconsole->WriteToConsole(buffer[i]);
                     }
                 }
                 else {  ///////////////////// LEYENDO DESDE ARCHIVO
-                    DEBUG('f', "Escribiendo en archivo con file id = %d\n", arg3);
-                    fd.openfile->Write(buffer, arg2);
+                    DEBUG('f', "WRITE: Escribiendo en archivo con file id = %d\n", arg3);
+                    fd->openfile->Write(buffer, arg2);
                 }
 
                 delete buffer;
@@ -319,26 +357,33 @@ ExceptionHandler(ExceptionType which)
                     break;
                 }
 
-                FileDescriptor fd = currentThread->GetFileIDFromTable(arg3);
+                FileDescriptor* fd = currentThread->GetFileIDFromTable(arg3);
+
+                if (fd == NULL) {
+                    DEBUG('f', "READ[Error]: Error en file id\n");
+                    machine->WriteRegister(2, -1);
+                    break;
+                }
+
                 int bytes_leidos;
 
-                if (fd.modo == FD_W) {
-                    DEBUG('f', "No se puede leer de un dispositivo de escritura\n");
+                if (fd->modo == FD_W) {
+                    DEBUG('f', "READ[Error]: No se puede leer de un dispositivo de escritura\n");
                     machine->WriteRegister(2, -1);
                     
                     break;
                 }
-
-                if (!fd.valido) {
-                    DEBUG('f', "El file id: %d no es valido\n", arg3);
+/*
+                if (!fd->valido) {
+                    DEBUG('f', "READ[Error]: El file id: %d no es valido\n", arg3);
                     machine->WriteRegister(2, -1);
                     
                     break;
                 }
-
+*/
                 buffer = new char[arg2];
 
-                if (fd.consola) {
+                if (fd->consola) {
                     char ch;
                     int i = 0;
                     while (i < arg2) {
@@ -350,8 +395,8 @@ ExceptionHandler(ExceptionType which)
                     bytes_leidos = strlen(buffer);
                 }
                 else {  ///////////////////// LEYENDO DESDE ARCHIVO
-                    DEBUG('f', "Leyendo del archivo con file id = %d\n", arg3);
-                    bytes_leidos = fd.openfile->Read(buffer, arg2);
+                    DEBUG('f', "READ: Leyendo del archivo con file id = %d\n", arg3);
+                    bytes_leidos = fd->openfile->Read(buffer, arg2);
                     writeBuffToUsr(buffer, arg1, arg2);
                     //printf("%d bytes leídos\n", bytes_leidos);
                 }
@@ -369,21 +414,24 @@ ExceptionHandler(ExceptionType which)
                 buffer = new char[128];
                 readStrFromUsr(arg1, buffer);
 
+                if (buffer == NULL)
+                    break;
+
                 OpenFile *executable = fileSystem->Open(buffer);
                 AddrSpace *space;
 
                 if (executable == NULL) {
-                    DEBUG('f', "No es posible ejecutar el archivo %s\n", buffer);
+                    DEBUG('f', "EXEC[Error]: No es posible ejecutar el programa %s\n", buffer);
                     machine->WriteRegister(2, -1);
                     break;
                 }
 
-                DEBUG('f', "Ejecutando el archivo %s\n", buffer);
+                DEBUG('f', "EXEC: Ejecutando el prgrama %s\n", buffer);
             
                 Thread* thread;
                 
                 if (arg4 == 0) 
-                    thread = new Thread(buffer);
+                    thread = new Thread(buffer, false);
                 else
                     thread = new Thread(buffer, true);        
 

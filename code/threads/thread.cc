@@ -21,8 +21,9 @@
 #include "puerto.h"
 #include "system.h"
 #include "list.h"
+# ifdef USER_PROGRAM
 #include "userfunctions.h"
-
+#endif
 // this is put at the top of the execution stack,
 // for detecting stack overflows
 const unsigned STACK_FENCEPOST = 0xdeadbeef;
@@ -431,22 +432,25 @@ Thread::RemoveFileFromTable (OpenFileId of)
     }
 
     tablaDesc[of].valido = false;
+    delete tablaDesc[of].openfile;
     tablaDesc[of].openfile = NULL;
     return true;
 }
 
-FileDescriptor 
+FileDescriptor* 
 Thread::GetFileIDFromTable (OpenFileId of)
 {
     if (  of < 0 || of >= tablaDesc.size() ) {
         DEBUG('f', "Error al intentar obtener archivo de la tabla de descriptores. File id %d inexistente\n", of);
+        return NULL;
     }
 
     else if ( !tablaDesc[of].valido ) {
         DEBUG('f', "Error al intentar obtener archivo de la tabla de descriptores. File id %d no valido\n", of);
+        return NULL;
     }
     else {
-        return tablaDesc[of];
+        return &tablaDesc[of];
     }
 }
 
@@ -472,30 +476,5 @@ Thread::SetArgs(int arg1, int arg2)
 
    
 }
-/*
-    int i = 0;
-    ptr = strtok(ptr," ");
-
-    while(ptr != NULL)
-    {
-        args[i] = ptr;
-        ptr = strtok(NULL, " ");
-        //printf("EL ARGUMENTO %d, es %s\n", i, args[i]);
-        //sp -= strlen(args[i])+1; //hacemos lugar para copiar el arg i-esimo
-        //writeStrToUsr(args[i], sp); //copiamos a mem el arg i-esimo
-        //local_addr[i] = sp; //direccion donde comienza el arg i-esimo
-        i++; 
-    }
-    /*
-    machine->WriteRegister(4,argc);
-
-    for ( i = 0;i < argc; i++ ) 
-    {
-        sp -= 4; // hacemos lugar para escribir la direccion de memoria donde se encuentra el arg i-esimo
-        machine->WriteMem(sp, 4, local_addr[i]); // escribimos la direccion de memoria del arg i-esimo
-        machine->WriteRegister(5+i,sp);
-    }
-    
-    sp -= 16;*/
 
 #endif

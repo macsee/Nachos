@@ -24,7 +24,6 @@ main()
 		    Read(&buffer[i], 1, input); 
 		} while( buffer[i++] != '\n' );
 
-		Write("prompt\n", 7, output);
 		buffer[--i] = '\0';
 
 		if( i > 0 ) {
@@ -48,15 +47,9 @@ main()
 				Halt();
 			}
 			
-			Write("Ejecutando:\n",12,1);
-			Write(proc,12,1);
-			int k;
-			for (k = 0; k < argc; k++) {
-				Write(argv[k],12,1);	
-			}
-			
 			if (argc >= 1) {
 				if (buffer[0] != '&') {
+					//Write("Llamando Exec!\n",15,ConsoleOutput);
 					newProc = Exec(proc, argc, argv,1);
 					Join(newProc);					
 				}
@@ -66,14 +59,14 @@ main()
 			}
 			else {
 				if (buffer[0] != '&') {
+					//Write("Llamando Exec!\n",15,ConsoleOutput);
 					newProc = Exec(proc, 0, (char**)'\0', 1);
 					Join(newProc);
 				}	
 				else
 					newProc = Exec(proc, 0, (char**)'\0', 0);		
 			}
-			
-			proc = "";
+			argc = 0;
 			
 	    }
 	}

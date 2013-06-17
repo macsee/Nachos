@@ -10,9 +10,15 @@ readStrFromUsr(int usrAddr, char* outStr)
 
   while (value != '\0')
   {
-    ASSERT(machine->ReadMem(usrAddr + i, 1, &value));
-    outStr[i] = (char)value;
-    i++;
+    if (machine->ReadMem(usrAddr + i, 1, &value)) {
+      outStr[i] = (char)value;
+      i++;  
+    }
+    else {
+      DEBUG('f', "readStrFromUsr: Error al leer de memoria: %d\n", usrAddr);
+      outStr = NULL;
+      break;
+    }  
   }
 }
 
@@ -24,9 +30,15 @@ readBuffFromUsr(int usrAddr, char *outBuff, int byteCount)
 
   while (i < byteCount)
   {
-    ASSERT(machine->ReadMem(usrAddr + i, 1, &value));
-    outBuff[i] = (char)value;
-    i++;  
+    if (machine->ReadMem(usrAddr + i, 1, &value)) {
+      outBuff[i] = (char)value;
+      i++;
+    }
+    else {
+      DEBUG('f', "readBuffFromUsr: Error al leer de memoria: %d\n", usrAddr);
+      outBuff = NULL;
+      break;
+    }  
   }
 }
 
@@ -37,10 +49,15 @@ writeStrToUsr(char *str, int usrAddr)
 
   while (str[i] != '\0')
   {
-    ASSERT(machine->WriteMem(usrAddr + i, 1, (int) str[i]));
-    i++;
+    if (machine->WriteMem(usrAddr + i, 1, (int) str[i]))
+      i++;
+    else {
+      DEBUG('f', "writeStrToUsr: Error al escribir en memoria: %d\n", usrAddr);
+      break;
+    }
   }
-  ASSERT(machine->WriteMem(usrAddr + i, 1, '\0'));
+
+  machine->WriteMem(usrAddr + i, 1, '\0');
 }
 
 void 
@@ -50,8 +67,12 @@ writeBuffToUsr(char *str, int usrAddr, int byteCount)
 
   while (i < byteCount)
   {
-    ASSERT(machine->WriteMem(usrAddr + i, 1, (int) str[i]));
-    i++;
+    if (machine->WriteMem(usrAddr + i, 1, (int) str[i]))
+      i++;
+    else {
+      DEBUG('f', "writeBuffToUsr: Error al escribir en memoria: %d\n", usrAddr);
+      break;
+    }
   }
 }
 
