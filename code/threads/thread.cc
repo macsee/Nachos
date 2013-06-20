@@ -21,7 +21,9 @@
 #include "puerto.h"
 #include "system.h"
 #include "list.h"
-
+# ifdef USER_PROGRAM
+#include "userfunctions.h"
+#endif
 // this is put at the top of the execution stack,
 // for detecting stack overflows
 const unsigned STACK_FENCEPOST = 0xdeadbeef;
@@ -48,6 +50,8 @@ Thread::Thread(const char* threadName, bool isJoinable, int prioridad)
         joinPuerto = new Puerto("Puerto Apache");
 	
 #ifdef USER_PROGRAM
+    argc = 0;
+    
 	space = NULL;
 
     FileDescriptor console_in;
@@ -85,8 +89,14 @@ Thread::~Thread()
     DEBUG('t', "Deleting thread \"%s\"\n", name);
 
     ASSERT(this != currentThread);
+
     if (stack != NULL)
         DeallocBoundedArray((char *) stack, StackSize * sizeof(HostMemoryAddress));
+    #ifdef USER_PROGRAM
+        delete space;
+    #endif
+
+
 }
 
 //----------------------------------------------------------------------
@@ -174,13 +184,22 @@ Thread::Finish ()
 {
     interrupt->SetLevel(IntOff);
     ASSERT(this == currentThread);
-
+    
     DEBUG('t', "Finishing thread \"%s\"\n", getName());
 
     if (joinable) {
         joinPuerto->Send(1); // Necesitamos enviar un numero distinto de cero
         DEBUG('t', "Finishing thread Joinable  \"%s\"\n", getName());       
     }
+
+    #ifdef USER_PROGRAM
+        RemoveThreadFromTable(pid);
+        if (!MoreThreadsToRun ()) {
+            stats->Print();
+            Cleanup();
+        }
+        // Chequear si no quedan más threads en la lista de threads antes de hacer Cleanup
+    #endif
 
     threadToBeDestroyed = currentThread;
     Sleep(); // invokes SWITCH
@@ -413,23 +432,49 @@ Thread::RemoveFileFromTable (OpenFileId of)
     }
 
     tablaDesc[of].valido = false;
+    delete tablaDesc[of].openfile;
     tablaDesc[of].openfile = NULL;
     return true;
 }
 
-FileDescriptor 
+FileDescriptor* 
 Thread::GetFileIDFromTable (OpenFileId of)
 {
     if (  of < 0 || of >= tablaDesc.size() ) {
         DEBUG('f', "Error al intentar obtener archivo de la tabla de descriptores. File id %d inexistente\n", of);
+        return NULL;
     }
 
     else if ( !tablaDesc[of].valido ) {
         DEBUG('f', "Error al intentar obtener archivo de la tabla de descriptores. File id %d no valido\n", of);
+        return NULL;
     }
     else {
-        return tablaDesc[of];
+        return &tablaDesc[of];
     }
+}
+
+void 
+Thread::SetArgs(int arg1, int arg2)
+{
+   argv = new char*[argc];
+   argc = arg1;
+   int dir;
+
+    //machine->ReadMem(arg2, 4, &dir);
+    //printf("LALALA : %d\n", dir);
+
+   for (int i = 0; i < argc; ++i)
+   {
+       machine->ReadMem(arg2 + 4*i, 4, &dir);
+       // printf("dir%d: %d\n", i, dir);
+       char* ptr = new char[128];
+       readStrFromUsr(dir, ptr);
+       // printf("Ptr%d: %s\n", i, ptr);
+       argv[i] = ptr;
+   }
+
+   
 }
 
 #endif

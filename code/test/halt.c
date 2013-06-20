@@ -15,18 +15,28 @@
 int
 main()
 {	
-	char buffer[128];
+	// int pid = 0, ret;
+	/*char buffer[128];
 	Create("file1");
-	int file_id = Open("file1");
-	Write("Hello World\n",12,file_id);
-	Close(file_id);
+	int file_id = Open("file1");*/
+	// Write("Soy Halt\n",12,ConsoleOutput);
+	/*Close(file_id);
 	file_id = Open("file1");
 	Read(buffer, 15, file_id );
 	//file_id = Open(buffer);
 	//Read(buffer, 15, file_id );
 	//Close(file_id);
-	Write(buffer,14,ConsoleOutput);
-	Exec("../test/halt2");
+	Write(buffer,14,ConsoleOutput);*/
+	// pid = Exec("../test/test");
+	// ret ='a'+Join(pid);
+	// Write("Finalizando Halt\n",18,ConsoleOutput);
+	// Write(&ret,1,ConsoleOutput);
+	char *argv[] = {"../userprog/file12\0","../userprog/file12\0","../userprog/file12\0","../userprog/file12\0"};
+	//char** i = &h;
+	
+	int pid = Exec("../test/cat", 4, argv, 1);
+	Join(pid);
     Halt();
     /* not reached */
+	// Exit(1);
 }

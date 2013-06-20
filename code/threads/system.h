@@ -18,6 +18,7 @@
 #include <vector>
 
 
+
 // Initialization and cleanup routines
 extern void Initialize(int argc, char **argv); 	// Initialization,
 // called before anything else
@@ -34,13 +35,20 @@ extern Timer *timer;				// the hardware alarm clock
 #ifdef USER_PROGRAM
 #include "machine.h"
 #include "synchconsole.h"
+#include "bitmap.h"
 struct TablaPid {
 	Thread* thread;
 	int retorno;
 };
-extern bool listPages[NumPhysPages];
-extern int MaxEmptyPages();
-extern int GetFirstEmptyPage();
+extern int AddThreadToTable (Thread* t);
+extern bool RemoveThreadFromTable (int pid);
+extern TablaPid* GetThreadFromTable (int pid);
+extern void SetRetornoInTable (int pid, int ret);
+extern bool MoreThreadsToRun ();
+
+extern BitMap* listPages;
+// extern int MaxEmptyPages();
+// extern int GetFirstEmptyPage();
 extern Machine* machine;	// user program memory and registers
 class SynchConsole;
 extern SynchConsole* synchconsole;
