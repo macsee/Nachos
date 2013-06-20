@@ -34,18 +34,37 @@ CPP = /lib/cpp
 INCDIR =-I../userprog -I../threads
 CFLAGS = -G 0 -c $(INCDIR) -mips1
 
-all: halt shell matmult sort
+all: halt shell matmult sort halt2 test halt3 lasa lasb
 
 start.o: start.s ../userprog/syscall.h
 	$(CPP) $(CPPFLAGS) start.s > strt.s
 	$(AS) $(ASFLAGS) -o start.o strt.s
 	rm strt.s
 
+test.o: test.c
+	$(CC) $(CFLAGS) -c test.c
+test: test.o start.o
+	$(LD) $(LDFLAGS) start.o test.o -o test.coff
+	../bin/coff2noff test.coff test
+
 halt.o: halt.c
 	$(CC) $(CFLAGS) -c halt.c
 halt: halt.o start.o
 	$(LD) $(LDFLAGS) start.o halt.o -o halt.coff
 	../bin/coff2noff halt.coff halt
+
+halt2.o: halt2.c
+	$(CC) $(CFLAGS) -c halt2.c
+halt2: halt2.o start.o
+	$(LD) $(LDFLAGS) start.o halt2.o -o halt2.coff
+	../bin/coff2noff halt2.coff halt2
+
+halt3.o: halt3.c
+	$(CC) $(CFLAGS) -c halt3.c
+halt3: halt3.o start.o
+	$(LD) $(LDFLAGS) start.o halt3.o -o halt3.coff
+	../bin/coff2noff halt3.coff halt3
+
 
 shell.o: shell.c
 	$(CC) $(CFLAGS) -c shell.c
@@ -65,6 +84,17 @@ matmult: matmult.o start.o
 	$(LD) $(LDFLAGS) start.o matmult.o -o matmult.coff
 	../bin/coff2noff matmult.coff matmult
 
+lasa.o: lasa.c
+	$(CC) $(CFLAGS) -c lasa.c
+lasa: lasa.o start.o
+	$(LD) $(LDFLAGS) start.o lasa.o -o lasa.coff
+	../bin/coff2noff lasa.coff lasa
+
+lasb.o: lasb.c
+	$(CC) $(CFLAGS) -c lasb.c
+lasb: lasb.o start.o
+	$(LD) $(LDFLAGS) start.o lasb.o -o lasb.coff
+	../bin/coff2noff lasb.coff lasb
 
 # Estas reglas sirven para compilar programas simples,
 # que consistan en un único fuente.

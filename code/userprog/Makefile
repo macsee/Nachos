@@ -29,1030 +29,1355 @@ include ../Makefile.dep
 # DEPENDENCIES MUST END AT END OF FILE
 main.o: ../threads/main.cc ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h ../threads/copyright.h /usr/include/stdlib.h \
- /usr/include/features.h /usr/include/bits/predefs.h \
- /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/system.h ../threads/thread.h \
- ../threads/synch.h ../threads/list.h ../threads/puerto.h \
- ../machine/machine.h ../threads/utility.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
- ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
-scheduler.o: ../threads/scheduler.cc ../threads/copyright.h \
- ../threads/scheduler.h ../threads/list.h ../threads/utility.h \
- ../machine/sysdep.h ../threads/copyright.h /usr/include/stdlib.h \
- /usr/include/features.h /usr/include/bits/predefs.h \
- /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/thread.h ../threads/synch.h \
- ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
- ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.4/vector /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/system.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
- ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
-synch.o: ../threads/synch.cc ../threads/copyright.h ../threads/synch.h \
- ../threads/list.h ../threads/utility.h ../machine/sysdep.h \
- ../threads/copyright.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/system.h ../threads/thread.h \
- ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
- ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.4/vector /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
- ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
-system.o: ../threads/system.cc ../threads/copyright.h ../threads/system.h \
- ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
- /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/thread.h ../threads/synch.h \
- ../threads/list.h ../threads/puerto.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
- ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h ../threads/preemptive.h
-thread.o: ../threads/thread.cc ../threads/copyright.h ../threads/thread.h \
- ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
- /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/synch.h ../threads/list.h \
- ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
- ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.4/vector /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/switch.h \
- ../threads/system.h ../threads/scheduler.h ../machine/interrupt.h \
- ../threads/list.h ../machine/stats.h ../machine/timer.h \
- ../filesys/synchconsole.h ../threads/system.h ../machine/console.h \
- ../threads/synch.h
-utility.o: ../threads/utility.cc ../threads/copyright.h \
- ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
- /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h
-threadtest.o: ../threads/threadtest.cc ../threads/copyright.h \
- ../threads/system.h ../threads/utility.h ../machine/sysdep.h \
- ../threads/copyright.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/thread.h ../threads/synch.h \
- ../threads/list.h ../threads/puerto.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
- ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
-interrupt.o: ../machine/interrupt.cc ../threads/copyright.h \
- ../machine/interrupt.h ../threads/list.h ../threads/copyright.h \
- ../threads/utility.h ../machine/sysdep.h /usr/include/stdlib.h \
- /usr/include/features.h /usr/include/bits/predefs.h \
- /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/system.h ../threads/thread.h \
- ../threads/synch.h ../threads/list.h ../threads/puerto.h \
- ../machine/machine.h ../threads/utility.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
- ../machine/interrupt.h ../machine/stats.h ../machine/timer.h \
- ../filesys/synchconsole.h ../machine/console.h ../threads/synch.h
-sysdep.o: ../machine/sysdep.cc ../threads/copyright.h \
- /usr/include/stdio.h /usr/include/features.h /usr/include/bits/predefs.h \
- /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/types.h /usr/include/bits/typesizes.h \
- /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h /usr/include/xlocale.h /usr/include/signal.h \
- /usr/include/bits/sigset.h /usr/include/bits/signum.h \
- /usr/include/time.h /usr/include/bits/siginfo.h \
- /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h \
- /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h \
- /usr/include/bits/pthreadtypes.h /usr/include/bits/sigthread.h \
- /usr/include/sys/types.h /usr/include/endian.h \
- /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
- /usr/include/sys/socket.h /usr/include/sys/uio.h /usr/include/bits/uio.h \
- /usr/include/bits/socket.h /usr/include/bits/sockaddr.h \
- /usr/include/asm/socket.h /usr/include/asm-generic/socket.h \
- /usr/include/asm/sockios.h /usr/include/asm-generic/sockios.h \
- /usr/include/sys/file.h /usr/include/fcntl.h /usr/include/bits/fcntl.h \
- /usr/include/sys/stat.h /usr/include/bits/stat.h /usr/include/sys/un.h \
- /usr/include/sys/mman.h /usr/include/bits/mman.h \
- /usr/include/sys/syscall.h /usr/include/asm/unistd.h \
- /usr/include/asm/unistd_64.h /usr/include/bits/syscall.h \
- /usr/include/unistd.h /usr/include/bits/posix_opt.h \
- /usr/include/bits/environments.h /usr/include/bits/confname.h \
- /usr/include/getopt.h /usr/include/stdlib.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/alloca.h ../machine/interrupt.h ../threads/list.h \
- ../threads/copyright.h ../threads/utility.h ../machine/sysdep.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  ../threads/system.h ../threads/thread.h ../threads/synch.h \
  ../threads/list.h ../threads/puerto.h ../machine/machine.h \
  ../threads/utility.h ../machine/translate.h ../machine/disk.h \
  ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
+ ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
+scheduler.o: ../threads/scheduler.cc ../threads/copyright.h \
+ ../threads/scheduler.h ../threads/list.h ../threads/utility.h \
+ ../machine/sysdep.h ../threads/copyright.h /usr/include/stdlib.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/thread.h ../threads/synch.h ../threads/puerto.h \
+ ../machine/machine.h ../threads/utility.h ../machine/translate.h \
+ ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/system.h \
+ ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
+synch.o: ../threads/synch.cc ../threads/copyright.h ../threads/synch.h \
+ ../threads/list.h ../threads/utility.h ../machine/sysdep.h \
+ ../threads/copyright.h /usr/include/stdlib.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/system.h ../threads/thread.h ../threads/puerto.h \
+ ../machine/machine.h ../threads/utility.h ../machine/translate.h \
+ ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
+ ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
+system.o: ../threads/system.cc ../threads/copyright.h ../threads/system.h \
+ ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
+ /usr/include/stdlib.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/thread.h ../threads/synch.h ../threads/list.h \
+ ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
+ ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h ../threads/preemptive.h
+thread.o: ../threads/thread.cc ../threads/copyright.h ../threads/thread.h \
+ ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
+ /usr/include/stdlib.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/synch.h ../threads/list.h ../threads/puerto.h \
+ ../machine/machine.h ../threads/utility.h ../machine/translate.h \
+ ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/switch.h \
+ ../threads/system.h ../threads/scheduler.h ../machine/interrupt.h \
+ ../threads/list.h ../machine/stats.h ../machine/timer.h \
+ ../filesys/synchconsole.h ../threads/system.h ../machine/console.h \
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../userprog/userfunctions.h
+utility.o: ../threads/utility.cc ../threads/copyright.h \
+ ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
+ /usr/include/stdlib.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h
+threadtest.o: ../threads/threadtest.cc ../threads/copyright.h \
+ ../threads/system.h ../threads/utility.h ../machine/sysdep.h \
+ ../threads/copyright.h /usr/include/stdlib.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/thread.h ../threads/synch.h ../threads/list.h \
+ ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
+ ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
+interrupt.o: ../machine/interrupt.cc ../threads/copyright.h \
+ ../machine/interrupt.h ../threads/list.h ../threads/copyright.h \
+ ../threads/utility.h ../machine/sysdep.h /usr/include/stdlib.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/system.h ../threads/thread.h ../threads/synch.h \
+ ../threads/list.h ../threads/puerto.h ../machine/machine.h \
+ ../threads/utility.h ../machine/translate.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../machine/stats.h ../machine/timer.h \
- ../filesys/synchconsole.h ../machine/console.h ../threads/synch.h
+ ../filesys/synchconsole.h ../machine/console.h ../threads/synch.h \
+ ../userprog/bitmap.h ../filesys/openfile.h
+sysdep.o: ../machine/sysdep.cc ../threads/copyright.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h /usr/include/signal.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/signum.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/bits/siginfo.h \
+ /usr/include/i386-linux-gnu/bits/sigaction.h \
+ /usr/include/i386-linux-gnu/bits/sigcontext.h \
+ /usr/include/i386-linux-gnu/asm/sigcontext.h /usr/include/linux/types.h \
+ /usr/include/i386-linux-gnu/asm/types.h /usr/include/asm-generic/types.h \
+ /usr/include/asm-generic/int-ll64.h \
+ /usr/include/i386-linux-gnu/asm/bitsperlong.h \
+ /usr/include/asm-generic/bitsperlong.h /usr/include/linux/posix_types.h \
+ /usr/include/linux/stddef.h \
+ /usr/include/i386-linux-gnu/asm/posix_types.h \
+ /usr/include/i386-linux-gnu/asm/posix_types_32.h \
+ /usr/include/asm-generic/posix_types.h \
+ /usr/include/i386-linux-gnu/bits/sigstack.h \
+ /usr/include/i386-linux-gnu/sys/ucontext.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h \
+ /usr/include/i386-linux-gnu/bits/sigthread.h \
+ /usr/include/i386-linux-gnu/sys/types.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/sys/socket.h \
+ /usr/include/i386-linux-gnu/sys/uio.h \
+ /usr/include/i386-linux-gnu/bits/uio.h \
+ /usr/include/i386-linux-gnu/bits/socket.h \
+ /usr/include/i386-linux-gnu/bits/sockaddr.h \
+ /usr/include/i386-linux-gnu/asm/socket.h \
+ /usr/include/asm-generic/socket.h \
+ /usr/include/i386-linux-gnu/asm/sockios.h \
+ /usr/include/asm-generic/sockios.h \
+ /usr/include/i386-linux-gnu/sys/file.h /usr/include/fcntl.h \
+ /usr/include/i386-linux-gnu/bits/fcntl.h \
+ /usr/include/i386-linux-gnu/bits/stat.h \
+ /usr/include/i386-linux-gnu/sys/un.h \
+ /usr/include/i386-linux-gnu/sys/mman.h \
+ /usr/include/i386-linux-gnu/bits/mman.h \
+ /usr/include/i386-linux-gnu/sys/time.h \
+ /usr/include/i386-linux-gnu/sys/syscall.h \
+ /usr/include/i386-linux-gnu/asm/unistd.h \
+ /usr/include/i386-linux-gnu/asm/unistd_32.h \
+ /usr/include/i386-linux-gnu/bits/syscall.h /usr/include/unistd.h \
+ /usr/include/i386-linux-gnu/bits/posix_opt.h \
+ /usr/include/i386-linux-gnu/bits/environments.h \
+ /usr/include/i386-linux-gnu/bits/confname.h /usr/include/getopt.h \
+ /usr/include/stdlib.h /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/alloca.h \
+ ../machine/interrupt.h ../threads/list.h ../threads/copyright.h \
+ ../threads/utility.h ../machine/sysdep.h ../threads/system.h \
+ ../threads/thread.h ../threads/synch.h ../threads/list.h \
+ ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
+ ../machine/interrupt.h ../machine/stats.h ../machine/timer.h \
+ ../filesys/synchconsole.h ../machine/console.h ../threads/synch.h \
+ ../userprog/bitmap.h ../filesys/openfile.h
 stats.o: ../machine/stats.cc ../threads/copyright.h ../threads/utility.h \
  ../threads/copyright.h ../machine/sysdep.h /usr/include/stdlib.h \
- /usr/include/features.h /usr/include/bits/predefs.h \
- /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../machine/stats.h
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../machine/stats.h
 timer.o: ../machine/timer.cc ../threads/copyright.h ../machine/timer.h \
  ../threads/utility.h ../threads/copyright.h ../machine/sysdep.h \
  /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/system.h ../threads/utility.h \
- ../threads/thread.h ../threads/synch.h ../threads/list.h \
- ../threads/puerto.h ../machine/machine.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/system.h ../threads/utility.h ../threads/thread.h \
+ ../threads/synch.h ../threads/list.h ../threads/puerto.h \
+ ../machine/machine.h ../machine/translate.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 preemptive.o: ../threads/preemptive.cc ../threads/preemptive.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h ../threads/copyright.h /usr/include/stdlib.h \
- /usr/include/features.h /usr/include/bits/predefs.h \
- /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/thread.h ../threads/synch.h \
- ../threads/list.h ../threads/puerto.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/thread.h ../threads/synch.h ../threads/list.h \
+ ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h /usr/include/unistd.h \
- /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
- /usr/include/bits/confname.h /usr/include/getopt.h \
- /usr/include/sys/ptrace.h /usr/include/sys/wait.h /usr/include/signal.h \
- /usr/include/bits/signum.h /usr/include/bits/siginfo.h \
- /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h \
- /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h \
- /usr/include/bits/sigthread.h /usr/include/sys/resource.h \
- /usr/include/bits/resource.h /usr/include/sys/user.h
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h /usr/include/unistd.h \
+ /usr/include/i386-linux-gnu/bits/posix_opt.h \
+ /usr/include/i386-linux-gnu/bits/environments.h \
+ /usr/include/i386-linux-gnu/bits/confname.h /usr/include/getopt.h \
+ /usr/include/i386-linux-gnu/sys/ptrace.h \
+ /usr/include/i386-linux-gnu/sys/wait.h /usr/include/signal.h \
+ /usr/include/i386-linux-gnu/bits/signum.h \
+ /usr/include/i386-linux-gnu/bits/siginfo.h \
+ /usr/include/i386-linux-gnu/bits/sigaction.h \
+ /usr/include/i386-linux-gnu/bits/sigcontext.h \
+ /usr/include/i386-linux-gnu/asm/sigcontext.h /usr/include/linux/types.h \
+ /usr/include/i386-linux-gnu/asm/types.h /usr/include/asm-generic/types.h \
+ /usr/include/asm-generic/int-ll64.h \
+ /usr/include/i386-linux-gnu/asm/bitsperlong.h \
+ /usr/include/asm-generic/bitsperlong.h /usr/include/linux/posix_types.h \
+ /usr/include/linux/stddef.h \
+ /usr/include/i386-linux-gnu/asm/posix_types.h \
+ /usr/include/i386-linux-gnu/asm/posix_types_32.h \
+ /usr/include/asm-generic/posix_types.h \
+ /usr/include/i386-linux-gnu/bits/sigstack.h \
+ /usr/include/i386-linux-gnu/sys/ucontext.h \
+ /usr/include/i386-linux-gnu/bits/sigthread.h \
+ /usr/include/i386-linux-gnu/sys/resource.h \
+ /usr/include/i386-linux-gnu/bits/resource.h \
+ /usr/include/i386-linux-gnu/sys/user.h
 puerto.o: ../threads/puerto.cc ../threads/synch.h ../threads/copyright.h \
  ../threads/list.h ../threads/utility.h ../machine/sysdep.h \
  ../threads/copyright.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/system.h ../threads/thread.h \
- ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
- ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.4/vector /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/system.h ../threads/thread.h ../threads/puerto.h \
+ ../machine/machine.h ../threads/utility.h ../machine/translate.h \
+ ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../threads/system.h \
- ../machine/console.h ../threads/synch.h
+ ../machine/console.h ../threads/synch.h ../userprog/bitmap.h \
+ ../filesys/openfile.h
 addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/thread.h ../threads/synch.h \
- ../threads/list.h ../threads/puerto.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/thread.h ../threads/synch.h ../threads/list.h \
+ ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h ../userprog/addrspace.h ../bin/noff.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../userprog/addrspace.h
 bitmap.o: ../userprog/bitmap.cc ../threads/copyright.h \
  ../userprog/bitmap.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../filesys/openfile.h
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../filesys/openfile.h
 exception.o: ../userprog/exception.cc ../threads/copyright.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/thread.h ../threads/synch.h \
- ../threads/list.h ../threads/puerto.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/thread.h ../threads/synch.h ../threads/list.h \
+ ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h ../userprog/syscall.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../userprog/syscall.h ../userprog/userfunctions.h
 progtest.o: ../userprog/progtest.cc ../threads/copyright.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/thread.h ../threads/synch.h \
- ../threads/list.h ../threads/puerto.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/thread.h ../threads/synch.h ../threads/list.h \
+ ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h ../userprog/addrspace.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../userprog/addrspace.h
 console.o: ../machine/console.cc ../threads/copyright.h \
  ../machine/console.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/system.h ../threads/utility.h \
- ../threads/thread.h ../threads/synch.h ../threads/list.h \
- ../threads/puerto.h ../machine/machine.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/system.h ../threads/utility.h ../threads/thread.h \
+ ../threads/synch.h ../threads/list.h ../threads/puerto.h \
+ ../machine/machine.h ../machine/translate.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 machine.o: ../machine/machine.cc ../threads/copyright.h \
  ../machine/machine.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../machine/translate.h ../machine/disk.h \
- ../threads/system.h ../threads/utility.h ../threads/thread.h \
- ../threads/synch.h ../threads/list.h ../threads/puerto.h \
- ../machine/machine.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../machine/translate.h ../machine/disk.h ../threads/system.h \
+ ../threads/utility.h ../threads/thread.h ../threads/synch.h \
+ ../threads/list.h ../threads/puerto.h ../machine/machine.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../bin/noff.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 mipssim.o: ../machine/mipssim.cc ../threads/copyright.h \
  ../machine/machine.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../machine/translate.h ../machine/disk.h \
- ../machine/mipssim.h ../threads/system.h ../threads/utility.h \
- ../threads/thread.h ../threads/synch.h ../threads/list.h \
- ../threads/puerto.h ../machine/machine.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../userprog/syscall.h \
- /usr/include/c++/4.4/vector /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../machine/translate.h ../machine/disk.h ../machine/mipssim.h \
+ ../threads/system.h ../threads/utility.h ../threads/thread.h \
+ ../threads/synch.h ../threads/list.h ../threads/puerto.h \
+ ../machine/machine.h ../userprog/addrspace.h ../filesys/filesys.h \
+ ../filesys/openfile.h ../bin/noff.h ../userprog/syscall.h \
+ /usr/include/c++/4.7/vector /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 translate.o: ../machine/translate.cc ../threads/copyright.h \
  ../machine/machine.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \
- /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
- /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
- /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
  ../threads/system.h ../threads/utility.h ../threads/thread.h \
  ../threads/synch.h ../threads/list.h ../threads/puerto.h \
- ../machine/machine.h ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ ../machine/machine.h ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 synchconsole.o: ../filesys/synchconsole.cc ../filesys/synchconsole.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h ../threads/copyright.h /usr/include/stdlib.h \
- /usr/include/features.h /usr/include/bits/predefs.h \
- /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
- /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stddef.h \
- /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/endian.h /usr/include/bits/endian.h \
- /usr/include/bits/byteswap.h /usr/include/xlocale.h \
- /usr/include/sys/types.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/time.h \
- /usr/include/sys/select.h /usr/include/bits/select.h \
- /usr/include/bits/sigset.h /usr/include/bits/time.h \
- /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
- /usr/include/alloca.h /usr/include/stdio.h /usr/include/libio.h \
- /usr/include/_G_config.h /usr/include/wchar.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.4.3/include/stdarg.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
- /usr/include/string.h ../threads/thread.h ../threads/synch.h \
- ../threads/list.h ../threads/puerto.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
- ../userprog/syscall.h /usr/include/c++/4.4/vector \
- /usr/include/c++/4.4/bits/stl_algobase.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
- /usr/include/c++/4.4/cstddef /usr/include/c++/4.4/bits/functexcept.h \
- /usr/include/c++/4.4/exception_defines.h \
- /usr/include/c++/4.4/bits/cpp_type_traits.h \
- /usr/include/c++/4.4/ext/type_traits.h \
- /usr/include/c++/4.4/ext/numeric_traits.h \
- /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
- /usr/include/c++/4.4/bits/concept_check.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
- /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
- /usr/include/c++/4.4/bits/stl_iterator.h \
- /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/allocator.h \
- /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
- /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/stl_construct.h \
- /usr/include/c++/4.4/bits/stl_uninitialized.h \
- /usr/include/c++/4.4/bits/stl_vector.h \
- /usr/include/c++/4.4/initializer_list \
- /usr/include/c++/4.4/bits/stl_bvector.h \
- /usr/include/c++/4.4/bits/vector.tcc ../threads/scheduler.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/thread.h ../threads/synch.h ../threads/list.h \
+ ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
+ ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../machine/timer.h ../filesys/synchconsole.h ../userprog/bitmap.h \
+ ../filesys/openfile.h ../machine/console.h ../threads/synch.h
+userfunctions.o: ../userprog/userfunctions.cc ../userprog/userfunctions.h \
+ ../threads/system.h ../threads/copyright.h ../threads/utility.h \
+ ../machine/sysdep.h ../threads/copyright.h /usr/include/stdlib.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/sys/types.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/wchar.h /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ ../threads/thread.h ../threads/synch.h ../threads/list.h \
+ ../threads/puerto.h ../machine/machine.h ../threads/utility.h \
+ ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../bin/noff.h \
+ ../userprog/syscall.h /usr/include/c++/4.7/vector \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.7/bits/functexcept.h \
+ /usr/include/c++/4.7/bits/exception_defines.h \
+ /usr/include/c++/4.7/bits/cpp_type_traits.h \
+ /usr/include/c++/4.7/ext/type_traits.h \
+ /usr/include/c++/4.7/ext/numeric_traits.h \
+ /usr/include/c++/4.7/bits/stl_pair.h /usr/include/c++/4.7/bits/move.h \
+ /usr/include/c++/4.7/bits/concept_check.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.7/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.7/bits/stl_iterator.h \
+ /usr/include/c++/4.7/debug/debug.h /usr/include/c++/4.7/bits/allocator.h \
+ /usr/include/c++/4.7/i686-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.7/ext/new_allocator.h /usr/include/c++/4.7/new \
+ /usr/include/c++/4.7/exception \
+ /usr/include/c++/4.7/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/4.7/bits/stl_construct.h \
+ /usr/include/c++/4.7/ext/alloc_traits.h \
+ /usr/include/c++/4.7/bits/stl_uninitialized.h \
+ /usr/include/c++/4.7/bits/stl_vector.h \
+ /usr/include/c++/4.7/bits/stl_bvector.h \
+ /usr/include/c++/4.7/bits/range_access.h \
+ /usr/include/c++/4.7/bits/vector.tcc ../threads/scheduler.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
- ../threads/synch.h
+ ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h
 # DEPENDENCIES MUST END AT END OF FILE
 # IF YOU PUT STUFF HERE IT WILL GO AWAY
 # see make depend above

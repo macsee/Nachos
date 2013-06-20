@@ -16,6 +16,7 @@ int
 main()
 {	
 	char buffer[128];
+	int size;
 	Create("file1");
 	int file_id = Open("file1");
 	Write("Hello World\n",12,file_id);
@@ -23,12 +24,13 @@ main()
 	Write("Ingrese nombre de archivo: ",27,ConsoleOutput);
 	Read(buffer, 5, ConsoleInput );
 	file_id = Open(buffer);
-	Read(buffer, 15, file_id );
+	size = Read(buffer, 15, file_id );
 	//file_id = Open(buffer);
 	//Read(buffer, 15, file_id );
 	//Close(file_id);
-	Write(buffer,15,ConsoleOutput);
+	Write(buffer,size,ConsoleOutput);
 	//Exec("../test/file_test");
-    Halt();
+    //Halt();
+    Exit(12);
     /* not reached */
 }

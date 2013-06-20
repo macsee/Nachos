@@ -205,17 +205,17 @@ ThreadTest()
 */
 
 // Prueba del Join()
-/*
+
 void
 ThreadTest()
 {
-        Thread* t1 = new Thread ("Hijo",false,2);
+        Thread* t1 = new Thread ("Hijo",true,2);
         t1->Fork (SimpleThread, (void*)"Hijo");
-        //t1->Join();
-        printf("****** Soy el Padre... %s\n *******", currentThread->getName());
+        t1->Join();
+        printf("****** Soy el Padre... %s*******\n", currentThread->getName());
 }
-*/
 
+/*
 void
 ThreadTest()
 {
@@ -230,4 +230,4 @@ ThreadTest()
     
     DEBUG('t', "Exiting SimpleTest");
 }
-
+*/

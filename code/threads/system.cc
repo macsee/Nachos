@@ -24,7 +24,6 @@ Timer *timer;				// the hardware timer device,
 // 2007, Jose Miguel Santos Espino
 PreemptiveScheduler* preemptiveScheduler = NULL;
 const long long DEFAULT_TIME_SLICE = 50000;
-bool listPages[NumPhysPages];
 
 #ifdef FILESYS_NEEDED
 FileSystem  *fileSystem;
@@ -38,6 +37,7 @@ SynchDisk   *synchDisk;
 Machine *machine;	// user program memory and registers
 SynchConsole *synchconsole;
 std::vector<TablaPid> PidTable;
+BitMap* listPages;
 #endif
 
 #ifdef NETWORK
@@ -92,9 +92,9 @@ Initialize(int argc, char **argv)
     const char* debugArgs = "";
     bool randomYield = false;
 
-	for (int i=0; i<sizeof(listPages); i++) {
-		listPages[i] = true;
-	}
+	// for (int i=0; i<sizeof(listPages); i++) {
+	// 	listPages[i] = true;
+	// }
 // 2007, Jose Miguel Santos Espino
     bool preemptiveScheduling = false;
     long long timeSlice;
@@ -173,7 +173,8 @@ Initialize(int argc, char **argv)
     stats = new Statistics();			// collect statistics
     interrupt = new Interrupt;			// start up interrupt handling
     scheduler = new Scheduler();		// initialize the ready queue
-    if (randomYield)				// start the timer (if needed)
+    //if (randomYield)				// start the timer (if needed)
+    // Comentado para crear cambios de contexto utilizando el timer
         timer = new Timer(TimerInterruptHandler, 0, randomYield);
 
     threadToBeDestroyed = NULL;
@@ -198,6 +199,7 @@ Initialize(int argc, char **argv)
 #ifdef USER_PROGRAM
     machine = new Machine(debugUserProg);	// this must come first
 	synchconsole = new SynchConsole(NULL,NULL);
+    listPages = new BitMap(NumPhysPages);   
 #endif
 
 #ifdef FILESYS
@@ -256,11 +258,9 @@ int
 AddThreadToTable (Thread* t)
 {
 	TablaPid tpid;
-    int i = 0;
-
     std::vector<TablaPid>:: iterator it;
-
-    for( it = PidTable.begin(); it != PidTable.end() ; it++ ) {
+/*
+    for( it = PidTable.begin(); it < PidTable.end() ; it++ ) {
         if (it->thread == NULL) { 
             // it es un puntero a elementos de un vector, en este caso, a FileDescriptors (fd). Para Mauro
             it->thread = t;
@@ -269,71 +269,99 @@ AddThreadToTable (Thread* t)
         }
         i++;
     }    
-
+*/
     tpid.thread = t;
     tpid.retorno = NULL;
 
 	PidTable.push_back(tpid);
-    return i;
+    t->setPid(PidTable.size()-1);
+    DEBUG('f', ">>>>>>>>>>>>>>>> Se crea thread con PID = %d\n", PidTable.size()-1);
+    return PidTable.size()-1;
 }
 
 bool
 RemoveThreadFromTable (int pid)
 {
-    if (  pid < 0 || pid >= PidTable.size() ) {
-        DEBUG('f', "Error al intentar remover thread. PID %d inexistente\n", pid);
+    if (  pid < 0 || pid > PidTable.size() ) {
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar remover thread. PID %d inexistente\n", pid);
         return false;
     }
 
     if ( PidTable[pid].thread == NULL ) {
-        DEBUG('f', "Error al intentar remover thread. PID %d no valido\n", pid);
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar remover thread. PID %d no valido\n", pid);
         return false;
     }
 
     PidTable[pid].thread = NULL;
-    PidTable[pid].retorno = NULL;
+    DEBUG('f', ">>>>>>>>>>>>>>>> Se elimina thread con PID = %d\n", pid);
     return true;
 }
 
-TablaPid 
+TablaPid* 
 GetThreadFromTable (int pid)
 {
-    if (  pid < 0 || pid >= PidTable.size() ) {
-        DEBUG('f', "Error al intentar remover thread. PID %d inexistente\n", pid);
-		ASSERT(false);
+    if (  pid < 0 || pid > PidTable.size() ) {
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar obtener thread. PID %d inexistente\n", pid);
+		return NULL;
     }
 
     if ( PidTable[pid].thread == NULL ) {
-        DEBUG('f', "Error al intentar remover thread. PID %d no valido\n", pid);
-		ASSERT(false);
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar obtener thread. PID %d no valido\n", pid);
+		return NULL;
     }
 
     else {
-        return PidTable[pid];
+        return &PidTable[pid];
     }
+}
+
+void
+SetRetornoInTable (int pid, int ret)
+{
+    if (  pid < 0 || pid >= PidTable.size() ) {
+        DEBUG('f', ">>>>>>>>>>>>>>>> Error al intentar setear retorno en thread. PID %d inexistente\n", pid);
+        ASSERT(false);
+    }
+
+    PidTable[pid].retorno = ret;    
+}
+
+bool
+MoreThreadsToRun ()
+{
+    std::vector<TablaPid>:: iterator it;
+    bool resultado = false;
+    for( it = PidTable.begin(); it < PidTable.end() ; it++) {
+        if (it->thread != NULL) {
+            resultado = true;
+        }
+    }
+    return resultado;    
 }
 
 #endif
 
-int 
-MaxEmptyPages()
-{
-    int n = 0;
-    for (int i = 0; i < NumPhysPages; ++i)
-    {
-        if (listPages[i])
-            n++;
-    }
-    return n;
-}
+// int 
+// MaxEmptyPages()
+// {
+//     int n = 0;
+//     for (int i = 0; i < NumPhysPages; ++i)
+//     {
+//         if (listPages[i])
+//             n++;
+//     }
+//     return n;
+// }
 
-int
-GetFirstEmptyPage()
-{
-    for (int i = 0; i < NumPhysPages; ++i)
-    {
-        if (listPages[i])
-            return i;
-    }
-    return -1;
-}
+// int
+// GetFirstEmptyPage()
+// {
+//     for (int i = 0; i < NumPhysPages; ++i)
+//     {
+//         if (listPages[i]){
+//             listPages[i] = false;
+//             return i;
+//         }    
+//     }
+//     return -1;
+// }
