@@ -1,6 +1,8 @@
 #include "userfunctions.h"
 #include "system.h"
 
+#define WRITEMEM(d,s,z) if (!machine->WriteMem(d,s,z)) ASSERT(machine->WriteMem(d,s,z));
+#define READMEM(d,s,z) if (!machine->ReadMem(d,s,z)) ASSERT(machine->ReadMem(d,s,z));
 
 void 
 readStrFromUsr(int usrAddr, char* outStr)
@@ -10,15 +12,16 @@ readStrFromUsr(int usrAddr, char* outStr)
 
   while (value != '\0')
   {
-    if (machine->ReadMem(usrAddr + i, 1, &value)) {
+    //if (machine->ReadMem(usrAddr + i, 1, &value)) {
+      READMEM(usrAddr + i, 1, &value);
       outStr[i] = (char)value;
       i++;  
-    }
-    else {
+    //}
+    /*else {
       DEBUG('f', "readStrFromUsr: Error al leer de memoria: %d\n", usrAddr);
       outStr = NULL;
       break;
-    }  
+    }*/  
   }
 }
 
@@ -30,15 +33,16 @@ readBuffFromUsr(int usrAddr, char *outBuff, int byteCount)
 
   while (i < byteCount)
   {
-    if (machine->ReadMem(usrAddr + i, 1, &value)) {
+    //if (machine->ReadMem(usrAddr + i, 1, &value)) {
+      READMEM(usrAddr + i, 1, &value);
       outBuff[i] = (char)value;
       i++;
-    }
-    else {
+    //}
+    /*else {
       DEBUG('f', "readBuffFromUsr: Error al leer de memoria: %d\n", usrAddr);
       outBuff = NULL;
       break;
-    }  
+    }*/ 
   }
 }
 
@@ -49,12 +53,12 @@ writeStrToUsr(char *str, int usrAddr)
 
   while (str[i] != '\0')
   {
-    if (machine->WriteMem(usrAddr + i, 1, (int) str[i]))
-      i++;
-    else {
+    WRITEMEM(usrAddr + i, 1, (int) str[i]);
+    i++;
+    /*else {
       DEBUG('f', "writeStrToUsr: Error al escribir en memoria: %d\n", usrAddr);
       break;
-    }
+    }*/
   }
 
   machine->WriteMem(usrAddr + i, 1, '\0');
@@ -67,12 +71,13 @@ writeBuffToUsr(char *str, int usrAddr, int byteCount)
 
   while (i < byteCount)
   {
-    if (machine->WriteMem(usrAddr + i, 1, (int) str[i]))
+    WRITEMEM(usrAddr + i, 1, (int) str[i]);
+    //if (machine->WriteMem(usrAddr + i, 1, (int) str[i]))
       i++;
-    else {
+    /*else {
       DEBUG('f', "writeBuffToUsr: Error al escribir en memoria: %d\n", usrAddr);
       break;
-    }
+    }*/
   }
 }
 

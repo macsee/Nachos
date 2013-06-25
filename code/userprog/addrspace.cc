@@ -1,15 +1,15 @@
 // addrspace.cc 
-//	Routines to manage address spaces (executing user programs).
+//  Routines to manage address spaces (executing user programs).
 //
-//	In order to run a user program, you must:
+//  In order to run a user program, you must:
 //
-//	1. link with the -N -T 0 option 
-//	2. run coff2noff to convert the object file to Nachos format
-//		(Nachos object code format is essentially just a simpler
-//		version of the UNIX executable object code format)
-//	3. load the NOFF file into the Nachos file system
-//		(if you haven't implemented the file system yet, you
-//		don't need to do this last step)
+//  1. link with the -N -T 0 option 
+//  2. run coff2noff to convert the object file to Nachos format
+//      (Nachos object code format is essentially just a simpler
+//      version of the UNIX executable object code format)
+//  3. load the NOFF file into the Nachos file system
+//      (if you haven't implemented the file system yet, you
+//      don't need to do this last step)
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
 // All rights reserved.  See copyright.h for copyright notice and limitation 
@@ -18,42 +18,41 @@
 #include "copyright.h"
 #include "system.h"
 #include "addrspace.h"
-
 //----------------------------------------------------------------------
 // SwapHeader
-// 	Do little endian to big endian conversion on the bytes in the 
-//	object file header, in case the file was generated on a little
-//	endian machine, and we're now running on a big endian machine.
+//  Do little endian to big endian conversion on the bytes in the 
+//  object file header, in case the file was generated on a little
+//  endian machine, and we're now running on a big endian machine.
 //----------------------------------------------------------------------
 
 static void 
 SwapHeader (NoffHeader *noffH)
 {
-	noffH->noffMagic = WordToHost(noffH->noffMagic);
-	noffH->code.size = WordToHost(noffH->code.size);
-	noffH->code.virtualAddr = WordToHost(noffH->code.virtualAddr);
-	noffH->code.inFileAddr = WordToHost(noffH->code.inFileAddr);
-	noffH->initData.size = WordToHost(noffH->initData.size);
-	noffH->initData.virtualAddr = WordToHost(noffH->initData.virtualAddr);
-	noffH->initData.inFileAddr = WordToHost(noffH->initData.inFileAddr);
-	noffH->uninitData.size = WordToHost(noffH->uninitData.size);
-	noffH->uninitData.virtualAddr = WordToHost(noffH->uninitData.virtualAddr);
-	noffH->uninitData.inFileAddr = WordToHost(noffH->uninitData.inFileAddr);
+    noffH->noffMagic = WordToHost(noffH->noffMagic);
+    noffH->code.size = WordToHost(noffH->code.size);
+    noffH->code.virtualAddr = WordToHost(noffH->code.virtualAddr);
+    noffH->code.inFileAddr = WordToHost(noffH->code.inFileAddr);
+    noffH->initData.size = WordToHost(noffH->initData.size);
+    noffH->initData.virtualAddr = WordToHost(noffH->initData.virtualAddr);
+    noffH->initData.inFileAddr = WordToHost(noffH->initData.inFileAddr);
+    noffH->uninitData.size = WordToHost(noffH->uninitData.size);
+    noffH->uninitData.virtualAddr = WordToHost(noffH->uninitData.virtualAddr);
+    noffH->uninitData.inFileAddr = WordToHost(noffH->uninitData.inFileAddr);
 }
 
 //----------------------------------------------------------------------
 // AddrSpace::AddrSpace
-// 	Create an address space to run a user program.
-//	Load the program from a file "executable", and set everything
-//	up so that we can start executing user instructions.
+//  Create an address space to run a user program.
+//  Load the program from a file "executable", and set everything
+//  up so that we can start executing user instructions.
 //
-//	Assumes that the object code file is in NOFF format.
+//  Assumes that the object code file is in NOFF format.
 //
-//	First, set up the translation from program memory to physical 
-//	memory.  For now, this is really simple (1:1), since we are
-//	only uniprogramming, and we have a single unsegmented page table
+//  First, set up the translation from program memory to physical 
+//  memory.  For now, this is really simple (1:1), since we are
+//  only uniprogramming, and we have a single unsegmented page table
 //
-//	"executable" is the file containing the object code to load into memory
+//  "executable" is the file containing the object code to load into memory
 //----------------------------------------------------------------------
 
 AddrSpace::AddrSpace(OpenFile *executable)
@@ -62,43 +61,48 @@ AddrSpace::AddrSpace(OpenFile *executable)
 
     executable->ReadAt((char *)&noffH, sizeof(noffH), 0);
     if ((noffH.noffMagic != NOFFMAGIC) && 
-		(WordToHost(noffH.noffMagic) == NOFFMAGIC))
-    	SwapHeader(&noffH);
+        (WordToHost(noffH.noffMagic) == NOFFMAGIC))
+        SwapHeader(&noffH);
     ASSERT(noffH.noffMagic == NOFFMAGIC);
 
     exec = executable;
 
 // how big is address space?
     size = noffH.code.size + noffH.initData.size + noffH.uninitData.size 
-			+ UserStackSize;	// we need to increase the size
-						// to leave room for the stack
+            + UserStackSize;    // we need to increase the size
+                        // to leave room for the stack
     numPages = divRoundUp(size, PageSize);
     size = numPages * PageSize;
     
     ASSERT(numPages <= listPages->NumClear());
-    //ASSERT(numPages <= NumPhysPages);		// check we're not trying
-						// to run anything too big --
-						// at least until we have
-						// virtual memory
+    //ASSERT(numPages <= NumPhysPages);     // check we're not trying
+                        // to run anything too big --
+                        // at least until we have
+                        // virtual memory
 
     DEBUG('a', "Initializing address space, num pages %d, size %d\n", 
-					numPages, size);
+                    numPages, size);
 
     // then, copy in the code and data segments into memory
     
 // first, set up the translation 
     pageTable = new TranslationEntry[numPages];
     for (i = 0; i < numPages; i++) {
-	pageTable[i].virtualPage = i;	// for now, virtual page # = phys page #
-	pageTable[i].physicalPage = listPages->Find();
-	pageTable[i].valid = true;
-	pageTable[i].use = false;
-	pageTable[i].dirty = false;
-	pageTable[i].readOnly = false;  // if the code segment was entirely on 
-					// a separate page, we could set its 
-					// pages to be read-only
+    pageTable[i].virtualPage = i;   // for now, virtual page # = phys page #
+#ifdef USE_TLB
+    pageTable[i].physicalPage = -1; //listPages->Find();
+#else
+    pageTable[i].physicalPage = listPages->Find();
+#endif
+    pageTable[i].valid = true;
+    pageTable[i].use = false;
+    pageTable[i].dirty = false;
+    pageTable[i].readOnly = false;  // if the code segment was entirely on 
+                    // a separate page, we could set its 
+                    // pages to be read-only
+#ifndef USE_TLB   
     bzero(&machine->mainMemory[pageTable[i].physicalPage * PageSize], PageSize);
-
+#endif
 }
     
 // zero out the entire address space, to zero the unitialized data segment 
@@ -109,21 +113,21 @@ AddrSpace::AddrSpace(OpenFile *executable)
 // then, copy in the code and data segments into memory
     if (noffH.code.size > 0) {
         DEBUG('a', "Initializing code segment, at 0x%x, size %d\n", 
-			noffH.code.virtualAddr, noffH.code.size);
+            noffH.code.virtualAddr, noffH.code.size);
         executable->ReadAt(&(machine->mainMemory[noffH.code.virtualAddr]),
             noffH.code.size, noffH.code.inFileAddr); 
     }
     if (noffH.initData.size > 0) {
         DEBUG('a', "Initializing data segment, at 0x%x, size %d\n", 
-			noffH.initData.virtualAddr, noffH.initData.size);
+            noffH.initData.virtualAddr, noffH.initData.size);
         executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
-			noffH.initData.size, noffH.initData.inFileAddr);
+            noffH.initData.size, noffH.initData.inFileAddr);
     }*/
 }
 
 //----------------------------------------------------------------------
 // AddrSpace::~AddrSpace
-// 	Dealloate an address space.  Nothing for now!
+//  Dealloate an address space.  Nothing for now!
 //----------------------------------------------------------------------
 
 AddrSpace::~AddrSpace()
@@ -138,12 +142,12 @@ AddrSpace::~AddrSpace()
 
 //----------------------------------------------------------------------
 // AddrSpace::InitRegisters
-// 	Set the initial values for the user-level register set.
+//  Set the initial values for the user-level register set.
 //
-// 	We write these directly into the "machine" registers, so
-//	that we can immediately jump to user code.  Note that these
-//	will be saved/restored into the currentThread->userRegisters
-//	when this thread is context switched out.
+//  We write these directly into the "machine" registers, so
+//  that we can immediately jump to user code.  Note that these
+//  will be saved/restored into the currentThread->userRegisters
+//  when this thread is context switched out.
 //----------------------------------------------------------------------
 
 void
@@ -152,10 +156,10 @@ AddrSpace::InitRegisters()
     int i;
 
     for (i = 0; i < NumTotalRegs; i++)
-	machine->WriteRegister(i, 0);
+    machine->WriteRegister(i, 0);
 
     // Initial program counter -- must be location of "Start"
-    machine->WriteRegister(PCReg, 0);	
+    machine->WriteRegister(PCReg, 0);   
 
     // Need to also tell MIPS where next instruction is, because
     // of branch delay possibility
@@ -170,10 +174,10 @@ AddrSpace::InitRegisters()
 
 //----------------------------------------------------------------------
 // AddrSpace::SaveState
-// 	On a context switch, save any machine state, specific
-//	to this address space, that needs saving.
+//  On a context switch, save any machine state, specific
+//  to this address space, that needs saving.
 //
-//	For now, nothing!
+//  For now, nothing!
 //----------------------------------------------------------------------
 
 void AddrSpace::SaveState() 
@@ -181,14 +185,55 @@ void AddrSpace::SaveState()
 
 //----------------------------------------------------------------------
 // AddrSpace::RestoreState
-// 	On a context switch, restore the machine state so that
-//	this address space can run.
+//  On a context switch, restore the machine state so that
+//  this address space can run.
 //
 //      For now, tell the machine where to find the page table.
 //----------------------------------------------------------------------
 
 void AddrSpace::RestoreState() 
 {
+#ifdef USE_TLB
+    //for (int i = 0; i < TLBSize; i++)
+    //    machine->tlb[i].valid = false;
+#else
     machine->pageTable = pageTable;
     machine->pageTableSize = numPages;
+#endif
 }
+
+#ifdef USE_TLB
+
+bool AddrSpace::is_code (int i) {
+    return (i >= noffH.code.virtualAddr && i < noffH.code.virtualAddr + noffH.code.size);
+}
+
+bool AddrSpace::is_data (int i) {
+    return (i >= noffH.initData.virtualAddr && i < noffH.initData.virtualAddr + noffH.initData.size);
+}
+
+void AddrSpace::demandLoading(int vpage) 
+{
+    DEBUG('f', "Virtual page %d demanded for loading\n", vpage);
+    char byte;
+    pageTable[vpage].physicalPage = listPages->Find();
+    for (int i = vpage*PageSize; i < (vpage+1)*PageSize; i++)
+    {
+        if (is_code(i)) {
+            exec->ReadAt(&byte,1,noffH.code.inFileAddr + (noffH.code.virtualAddr - i));
+            machine->WriteMem(i,1,byte);
+        }
+        else if (is_data(i)) {
+            exec->ReadAt(&byte,1,noffH.initData.inFileAddr + (noffH.initData.virtualAddr - i));
+            machine->WriteMem(i,1,byte);
+        }
+        else {
+            machine->WriteMem(i,1,0);
+        }
+    }
+    
+}
+
+#endif
+
+//TranslationEntry AddrSpace::getPage(int page) { return pageTable[page]; }

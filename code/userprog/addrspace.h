@@ -43,6 +43,16 @@ class AddrSpace {
     int getNumPages () {
       return numPages;
     }
+#ifdef USE_TLB
+    bool is_code(int i);
+    bool is_data(int i);
+    void demandLoading(int vpage);
+    TranslationEntry getPage(int page) { return pageTable[page]; }
+    //int getTLBentry();
+    //int removePageFromTLB();
+    TranslationEntry lastPageUsed;
+    int lastTLBentry;
+#endif
   private:
     TranslationEntry *pageTable;	// Assume linear page table translation
 					// for now!

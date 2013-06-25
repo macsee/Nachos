@@ -27,19 +27,23 @@
 #include "synchconsole.h"
 #include "userfunctions.h"
 
+#ifdef USE_TLB
+#include "../vm/vm_utils.h"
+#endif
+
 class Thread;
 
 /* Funciones definidas para el ejercicio 1 de la práctica 3
  */
 
-#define INCREMENTAR_PC						\
-	int pc;									\
-	pc = machine->ReadRegister(PCReg);		\
-	machine->WriteRegister(PrevPCReg, pc);	\
-	pc = machine->ReadRegister(NextPCReg);	\
-	machine->WriteRegister(PCReg, pc);		\
-	pc += 4;								\
-	machine->WriteRegister(NextPCReg, pc);	
+#define INCREMENTAR_PC                      \
+    int pc;                                 \
+    pc = machine->ReadRegister(PCReg);      \
+    machine->WriteRegister(PrevPCReg, pc);  \
+    pc = machine->ReadRegister(NextPCReg);  \
+    machine->WriteRegister(PCReg, pc);      \
+    pc += 4;                                \
+    machine->WriteRegister(NextPCReg, pc);  
 
 
 void
@@ -59,7 +63,6 @@ RunProcess (void* arg)
 
     char* code = new char[codeSize];
     exec->ReadAt(code,codeSize, codeinFileAddr);
-
     writeBuffToUsr(code, codeVirtAddr, codeSize);
     delete code;
 
@@ -230,7 +233,7 @@ ExceptionHandler(ExceptionType which)
                     DEBUG('f', "CREATE[Error]: Error al crear archivo: %s\n", buffer);
                     break;   
                 }    
-        		//ASSERT (fileSystem->Create(buffer, 128));
+                //ASSERT (fileSystem->Create(buffer, 128));
 
                 if (!fileSystem->Create(buffer, 128)) {
                     DEBUG('f', "CREATE[Error]: No se puede crear el archivo\n");
@@ -240,7 +243,7 @@ ExceptionHandler(ExceptionType which)
                 DEBUG('f', "CREATE: Se creó el archivo: %s\n", buffer);
 
                 delete buffer;
-        		    
+                    
                 break;
                 //    writeStrToUsr("Hola", addrStr);
                 //    readBuffFromUsr(addrStr, buffer, 10);
@@ -463,4 +466,15 @@ ExceptionHandler(ExceptionType which)
         }
         INCREMENTAR_PC;
     }
+    else if (which == PageFaultException) {
+        int virAddrReq = machine->ReadRegister(BadVAddrReg);
+        DEBUG('f', "Page Fault Exception, virtual address %d not found.\n", virAddrReq);
+
+        #ifdef USE_TLB
+            pageFaultHandler(virAddrReq);
+        #endif
+    }
+    else if (which == ReadOnlyException) {
+        printf("Se produjo una excepción de tipo ReadOnlyException\n");
+    }    
 }
