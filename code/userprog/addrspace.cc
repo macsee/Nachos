@@ -18,6 +18,7 @@
 #include "copyright.h"
 #include "system.h"
 #include "addrspace.h"
+#include "userfunctions.h"
 //----------------------------------------------------------------------
 // SwapHeader
 //  Do little endian to big endian conversion on the bytes in the 
@@ -204,6 +205,12 @@ void AddrSpace::RestoreState()
 
 #ifdef USE_TLB
 
+TranslationEntry AddrSpace::getPage(int page) { 
+    if (pageTable[page].physicalPage < 0)
+        pageTable[page].physicalPage = listPages->Find();
+    return pageTable[page]; 
+}
+
 bool AddrSpace::is_code (int i) {
     return (i >= noffH.code.virtualAddr && i < noffH.code.virtualAddr + noffH.code.size);
 }
@@ -216,11 +223,13 @@ void AddrSpace::demandLoading(int vpage)
 {
     DEBUG('f', "Virtual page %d demanded for loading\n", vpage);
     char byte;
-    pageTable[vpage].physicalPage = listPages->Find();
+    //pageTable[vpage].physicalPage = listPages->Find();
+
     for (int i = vpage*PageSize; i < (vpage+1)*PageSize; i++)
     {
         if (is_code(i)) {
             exec->ReadAt(&byte,1,noffH.code.inFileAddr + (noffH.code.virtualAddr - i));
+            //printf("Byte: %c - i: %d\n",byte, i );
             machine->WriteMem(i,1,byte);
         }
         else if (is_data(i)) {
@@ -231,7 +240,6 @@ void AddrSpace::demandLoading(int vpage)
             machine->WriteMem(i,1,0);
         }
     }
-    
 }
 
 #endif

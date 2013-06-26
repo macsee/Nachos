@@ -60,7 +60,7 @@ RunProcess (void* arg)
 
     currentThread->space->InitRegisters(); 
     currentThread->space->RestoreState();
-
+/*
     char* code = new char[codeSize];
     exec->ReadAt(code,codeSize, codeinFileAddr);
     writeBuffToUsr(code, codeVirtAddr, codeSize);
@@ -77,7 +77,7 @@ RunProcess (void* arg)
     exec->ReadAt(data,dataSize, datainFileAddr);
     writeBuffToUsr (data, dataVirtAddr, dataSize);
     delete data;
-
+*/
     int sp = PageSize*currentThread->space->getNumPages();
     int argc = currentThread->getArgc();
     char** argv = currentThread->getArgv();

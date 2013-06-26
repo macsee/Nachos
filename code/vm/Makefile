@@ -871,7 +871,7 @@ addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
  ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
  ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
- ../userprog/addrspace.h
+ ../userprog/addrspace.h ../userprog/userfunctions.h
 bitmap.o: ../userprog/bitmap.cc ../threads/copyright.h \
  ../userprog/bitmap.h ../threads/utility.h ../threads/copyright.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \

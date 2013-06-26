@@ -1,3 +1,4 @@
+#ifdef USE_TLB
 #include "vm_utils.h"
 
 void pageFaultHandler(int virAddrReq) {
@@ -8,9 +9,9 @@ void pageFaultHandler(int virAddrReq) {
 	
 	int page = getTLBentry();
 
-    currentThread->space->demandLoading(virPageReq);   
-
     machine->tlb[page] = currentThread->space->getPage(virPageReq);     
+
+    currentThread->space->demandLoading(virPageReq);   
 
     DEBUG('f', "Virtual Page: %d\n", virPageReq);           
     DEBUG('f', "Direccion virtual: %d\n", virAddrReq);
@@ -43,3 +44,4 @@ void flushTLB()
 		machine->tlb[i].valid = false;
 	}
 }
+#endif
