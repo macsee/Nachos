@@ -4,6 +4,15 @@ int
 main(int argc, char** argv)
 {	
 	char buffer;
+	// char num = '0'+argc;
+	// char num2 = '0';
+	// if (&argv < 1000) {
+	// 	num2 = num2 + 1;
+	// }
+	// Write(&num,1,ConsoleOutput);
+	// Write("\n",1,ConsoleOutput);
+	// Write(&num2,1,ConsoleOutput);
+	// Write("\n",1,ConsoleOutput);
 
 	if (argc < 2) {
 		Write("Modo de uso: cp [origen] [destino]\n", 35, ConsoleOutput);

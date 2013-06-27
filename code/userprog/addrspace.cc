@@ -133,9 +133,10 @@ AddrSpace::AddrSpace(OpenFile *executable)
 
 AddrSpace::~AddrSpace()
 {
-    for (int i = 0; i < sizeof(pageTable); ++i)
+    for (int i = 0; i < numPages; ++i)
     {
-        listPages->Clear(pageTable[i].physicalPage);
+		if (pageTable[i].physicalPage >= 0)
+        	listPages->Clear(pageTable[i].physicalPage);
     }
     delete pageTable;
     delete exec; // Agregado para borrar el executable
@@ -195,8 +196,8 @@ void AddrSpace::SaveState()
 void AddrSpace::RestoreState() 
 {
 #ifdef USE_TLB
-    //for (int i = 0; i < TLBSize; i++)
-    //    machine->tlb[i].valid = false;
+    for (int i = 0; i < TLBSize; i++)
+        machine->tlb[i].valid = false;
 #else
     machine->pageTable = pageTable;
     machine->pageTableSize = numPages;
@@ -206,10 +207,14 @@ void AddrSpace::RestoreState()
 #ifdef USE_TLB
 
 TranslationEntry AddrSpace::getPage(int page) { 
-    if (pageTable[page].physicalPage < 0)
+    if (pageTable[page].physicalPage < 0){
         pageTable[page].physicalPage = listPages->Find();
+		currentThread->space->demandLoading(page, pageTable[page].physicalPage);
+	}
     return pageTable[page]; 
 }
+
+void AddrSpace::setPhysPage (int vpage) { pageTable[vpage].physicalPage = listPages->Find(); }
 
 bool AddrSpace::is_code (int i) {
     return (i >= noffH.code.virtualAddr && i < noffH.code.virtualAddr + noffH.code.size);
@@ -219,25 +224,28 @@ bool AddrSpace::is_data (int i) {
     return (i >= noffH.initData.virtualAddr && i < noffH.initData.virtualAddr + noffH.initData.size);
 }
 
-void AddrSpace::demandLoading(int vpage) 
+void AddrSpace::demandLoading(int vpage, int ppage) 
 {
     DEBUG('f', "Virtual page %d demanded for loading\n", vpage);
     char byte;
-    //pageTable[vpage].physicalPage = listPages->Find();
 
     for (int i = vpage*PageSize; i < (vpage+1)*PageSize; i++)
     {
         if (is_code(i)) {
-            exec->ReadAt(&byte,1,noffH.code.inFileAddr + (noffH.code.virtualAddr - i));
+            exec->ReadAt(&byte,1,noffH.code.inFileAddr + i - noffH.code.virtualAddr);
             //printf("Byte: %c - i: %d\n",byte, i );
-            machine->WriteMem(i,1,byte);
+		   machine->mainMemory[ppage*PageSize+i-vpage*PageSize] = byte; 
+           //machine->WriteMem(i,1,byte);
         }
         else if (is_data(i)) {
-            exec->ReadAt(&byte,1,noffH.initData.inFileAddr + (noffH.initData.virtualAddr - i));
-            machine->WriteMem(i,1,byte);
+            exec->ReadAt(&byte,1,noffH.initData.inFileAddr + i - noffH.initData.virtualAddr);
+   		   machine->mainMemory[ppage*PageSize+i-vpage*PageSize] = byte; 
+
+ //machine->WriteMem(i,1,byte);
         }
         else {
-            machine->WriteMem(i,1,0);
+		   machine->mainMemory[ppage*PageSize+i-vpage*PageSize] = 0; 
+//            machine->WriteMem(i,1,0);
         }
     }
 }

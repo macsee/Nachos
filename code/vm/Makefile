@@ -331,7 +331,7 @@ thread.o: ../threads/thread.cc ../threads/copyright.h ../threads/thread.h \
  ../threads/list.h ../machine/stats.h ../machine/timer.h \
  ../filesys/synchconsole.h ../threads/system.h ../machine/console.h \
  ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
- ../userprog/userfunctions.h
+ ../userprog/userfunctions.h ../vm/vm_utils.h
 utility.o: ../threads/utility.cc ../threads/copyright.h \
  ../threads/utility.h ../machine/sysdep.h ../threads/copyright.h \
  /usr/include/stdlib.h /usr/include/features.h \
@@ -960,7 +960,7 @@ exception.o: ../userprog/exception.cc ../threads/copyright.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
  ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
  ../userprog/syscall.h ../userprog/userfunctions.h \
- ../userprog/../vm/vm_utils.h
+ ../userprog/../vm/vm_utils.h ../userprog/addrspace.h
 progtest.o: ../userprog/progtest.cc ../threads/copyright.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../machine/sysdep.h /usr/include/stdlib.h /usr/include/features.h \

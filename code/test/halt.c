@@ -31,10 +31,10 @@ main()
 	// ret ='a'+Join(pid);
 	// Write("Finalizando Halt\n",18,ConsoleOutput);
 	// Write(&ret,1,ConsoleOutput);
-	char *argv[] = {"../userprog/file12\0","../userprog/file12\0","../userprog/file12\0","../userprog/file12\0"};
+	char *argv[] = {"chau\0"};
 	//char** i = &h;
 	
-	int pid = Exec("../test/cat", 4, argv, 1);
+	int pid = Exec("cat", 1, argv, 1);
 	Join(pid);
     Halt();
     /* not reached */

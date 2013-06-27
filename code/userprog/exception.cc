@@ -29,6 +29,7 @@
 
 #ifdef USE_TLB
 #include "../vm/vm_utils.h"
+#include "addrspace.h"
 #endif
 
 class Thread;
@@ -78,6 +79,10 @@ RunProcess (void* arg)
     writeBuffToUsr (data, dataVirtAddr, dataSize);
     delete data;
 */
+	// Calcular cuantas paginas vamos a necesitar
+	// Inicializarlas
+	// Copiarlas a la TLB
+	// 
     int sp = PageSize*currentThread->space->getNumPages();
     int argc = currentThread->getArgc();
     char** argv = currentThread->getArgv();
@@ -87,24 +92,46 @@ RunProcess (void* arg)
     machine->WriteRegister(4, argc);
 
     //printf("El stack en el comienzo esta en : %d\n", sp);
-    
+#ifdef USE_TLB
+	int cantPages = 0;
+
+	for (int i = 0; i < argc; i++)
+		cantPages += strlen(argv[i])+1 + 4;
+
+	//printf("Cantidad de bytes de los argumentos: %d\n",cantPages);
+	
+	cantPages = divRoundUp(cantPages,PageSize);
+
+	//printf("Cantidad de paginas de los argumentos: %d\n",cantPages);
+
+	for (int i = cantPages; i > 0; i--)
+		space->setPhysPage(currentThread->space->getNumPages() - i);
+
+#endif
+
      for (int i = argc-1; i >= 0; i--)
     {
         //printf("El argumento nro %d, es %s\n", i, argv[i]);
         sp -= strlen(argv[i])+1; //hacemos lugar para copiar el arg i-esimo
-        writeStrToUsr(argv[i], sp); //copiamos a mem el arg i-esimo
+	    writeStrToUsr(argv[i], sp); //copiamos a mem el arg i-esimo
         local_addr[i] = sp; //direccion donde comienza el arg i-esimo
         //printf("El stack esta ahora en: %d\n", sp);
     }
     sp-=sp%4; // ESTO ES PARA QUE FUNCIONE TODO!!!! Necesito que el stack esté apuntando a una dirección que sea múltiplo de 4.
-
+    
+    // int dir;
     for ( int i = argc-1; i >= 0; i-- ) 
     {
         sp -= 4; // hacemos lugar para escribir la direccion de memoria donde se encuentra el arg i-esimo
         machine->WriteMem(sp, 4, local_addr[i]); // escribimos la direccion de memoria del arg i-esimo
+        
+        // machine->ReadMem(sp,4,&dir);
+        // char buff[128];
+        // readStrFromUsr(dir, buff);
+        // printf("%d --- %s\n", sp, buff);
         //printf("Direccion de arg%d = %d\n", i, local_addr[i]);
     }
-
+    //printf("%s\n", );
     machine->WriteRegister(5, sp);
 
     if (argc > 0) {
@@ -172,7 +199,7 @@ ExceptionHandler(ExceptionType which)
                 // Eliminar el Thread
                 SetRetornoInTable (currentThread->getPid(), arg1);
                 //TablaPid *tbPid = GetThreadFromTable(currentThread->getPid());
-                DEBUG('f', "EXIT: thread con PID = %d hace EXIT. Retorno %d\n", currentThread->getPid(), arg1);
+                DEBUG('u', "EXIT: thread con PID = %d hace EXIT. Retorno %d\n", currentThread->getPid(), arg1);
                 currentThread->Finish();
                 //Cleanup(); 
                 break;

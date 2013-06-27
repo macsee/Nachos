@@ -10,9 +10,7 @@ void pageFaultHandler(int virAddrReq) {
 	int page = getTLBentry();
 
     machine->tlb[page] = currentThread->space->getPage(virPageReq);     
-
-    currentThread->space->demandLoading(virPageReq);   
-
+   
     DEBUG('f', "Virtual Page: %d\n", virPageReq);           
     DEBUG('f', "Direccion virtual: %d\n", virAddrReq);
     DEBUG('f', "Pagina de la TLB: %d\n\n", page);            
@@ -34,7 +32,7 @@ int getTLBentry()
     if (page < 0)
         page = rand() % TLBSize; // Política de elección de página de TLB
         
-    return page;           
+    return page;           // Copiar la page a la pagetable actualizada
 }
 
 void flushTLB()

@@ -46,8 +46,9 @@ class AddrSpace {
 #ifdef USE_TLB
     bool is_code(int i);
     bool is_data(int i);
-    void demandLoading(int vpage);
+    void demandLoading(int vpage, int ppage);
     TranslationEntry getPage(int page);
+	void setPhysPage (int vpage);
     //int getTLBentry();
     //int removePageFromTLB();
     TranslationEntry lastPageUsed;

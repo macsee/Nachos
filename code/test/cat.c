@@ -7,8 +7,8 @@ main(int argc, char** argv)
 	int i;
 	//char num = '0'+argc;
 	//Write(&num,1,ConsoleOutput);
-	//Write("\n",1,ConsoleOutput);
-
+	// Write("\n",1,ConsoleOutput);
+	//Write(argv[0],5,ConsoleOutput);
 	if (argc < 1) {
 		Write("Modo de uso: cat [archivo1] [archivo2] .. [archivoN]\n", 53, ConsoleOutput);
 		Exit(-1);

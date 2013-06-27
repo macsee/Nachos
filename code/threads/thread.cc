@@ -24,6 +24,9 @@
 # ifdef USER_PROGRAM
 #include "userfunctions.h"
 #endif
+#ifdef USE_TLB
+#include "vm_utils.h"
+#endif
 // this is put at the top of the execution stack,
 // for detecting stack overflows
 const unsigned STACK_FENCEPOST = 0xdeadbeef;
@@ -212,7 +215,7 @@ void Thread::Join ()
 	ASSERT(joinable);
 	int estado;
     joinPuerto->Receive(&estado);
-	delete joinPuerto;
+	//delete joinPuerto;
 }
 
 //----------------------------------------------------------------------
@@ -286,7 +289,10 @@ Thread::Sleep ()
     {
         interrupt->Idle();	// no one to run, wait for an interrupt
     }
-
+	
+#ifdef USE_TLB
+	//flushTLB();
+#endif
     scheduler->Run(nextThread); // returns when we've been signalled
 }
 
