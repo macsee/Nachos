@@ -32,6 +32,8 @@ class AddrSpace {
     void SaveState();			// Save/restore address space-specific
     void RestoreState();		// info on a context switch
 
+    int getVPage(int ppage);
+
     NoffHeader getNoffH () {
       return noffH;
     }
@@ -49,6 +51,9 @@ class AddrSpace {
     void demandLoading(int vpage, int ppage);
     TranslationEntry getPage(int page);
 	void setPhysPage (int vpage);
+    void GetSwapFile(int pid);
+    void SaveToSwap(int vpage);
+    void GetFromSwap(int vpage);
     //int getTLBentry();
     //int removePageFromTLB();
     TranslationEntry lastPageUsed;
@@ -61,6 +66,9 @@ class AddrSpace {
 					// address space
     OpenFile* exec;
     NoffHeader noffH;
+    #ifdef USE_TLB
+        OpenFile* swap;
+    #endif
 };
 
 #endif // ADDRSPACE_H

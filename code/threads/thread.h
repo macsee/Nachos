@@ -160,6 +160,8 @@ private:
     void StackAllocate(VoidFunctionPtr func, void* arg);
     // Allocate a stack for thread.
     // Used internally by Fork()
+
+
 #ifdef USER_PROGRAM
 // A thread running a user program actually has *two* sets of CPU registers --
 // one for its state while executing user code, one for its state
@@ -172,7 +174,8 @@ private:
     char** argv;
     int argc;
 public:
-    void setPid(int i) { pid = i; }
+    void setPid(int i);
+    
     int getPid() { return pid; }
 	int AddFileToTable (OpenFile* op);
 	bool RemoveFileFromTable (OpenFileId of);

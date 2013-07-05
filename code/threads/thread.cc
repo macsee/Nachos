@@ -26,6 +26,7 @@
 #endif
 #ifdef USE_TLB
 #include "vm_utils.h"
+#include "filesys.h"
 #endif
 // this is put at the top of the execution stack,
 // for detecting stack overflows
@@ -73,6 +74,7 @@ Thread::Thread(const char* threadName, bool isJoinable, int prioridad)
     tablaDesc.push_back(console_out);
 
 #endif
+
 }
 
 //----------------------------------------------------------------------
@@ -98,8 +100,6 @@ Thread::~Thread()
     #ifdef USER_PROGRAM
         delete space;
     #endif
-
-
 }
 
 //----------------------------------------------------------------------
@@ -290,9 +290,6 @@ Thread::Sleep ()
         interrupt->Idle();	// no one to run, wait for an interrupt
     }
 	
-#ifdef USE_TLB
-	//flushTLB();
-#endif
     scheduler->Run(nextThread); // returns when we've been signalled
 }
 
@@ -481,6 +478,13 @@ Thread::SetArgs(int arg1, int arg2)
    }
 
    
+}
+
+void Thread::setPid(int i) { 
+    pid = i;
+#ifdef USE_TLB
+    space->GetSwapFile(pid);
+#endif
 }
 
 #endif

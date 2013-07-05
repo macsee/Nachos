@@ -35,7 +35,14 @@ extern Timer *timer;				// the hardware alarm clock
 #ifdef USER_PROGRAM
 #include "machine.h"
 #include "synchconsole.h"
-#include "bitmap.h"
+#ifdef USE_TLB
+	#include "coremap.h"
+	class Coremap;
+	extern Coremap* coreMap;
+#else
+	#include "bitmap.h"
+	extern BitMap* listPages;
+#endif
 struct TablaPid {
 	Thread* thread;
 	int retorno;
@@ -46,7 +53,7 @@ extern TablaPid* GetThreadFromTable (int pid);
 extern void SetRetornoInTable (int pid, int ret);
 extern bool MoreThreadsToRun ();
 
-extern BitMap* listPages;
+
 // extern int MaxEmptyPages();
 // extern int GetFirstEmptyPage();
 extern Machine* machine;	// user program memory and registers

@@ -19,6 +19,7 @@
 #include "system.h"
 #include "addrspace.h"
 #include "userfunctions.h"
+
 //----------------------------------------------------------------------
 // SwapHeader
 //  Do little endian to big endian conversion on the bytes in the 
@@ -75,7 +76,10 @@ AddrSpace::AddrSpace(OpenFile *executable)
     numPages = divRoundUp(size, PageSize);
     size = numPages * PageSize;
     
+#ifndef USE_TLB
     ASSERT(numPages <= listPages->NumClear());
+#endif
+    
     //ASSERT(numPages <= NumPhysPages);     // check we're not trying
                         // to run anything too big --
                         // at least until we have
@@ -135,8 +139,13 @@ AddrSpace::~AddrSpace()
 {
     for (int i = 0; i < numPages; ++i)
     {
-		if (pageTable[i].physicalPage >= 0)
-        	listPages->Clear(pageTable[i].physicalPage);
+		if (pageTable[i].physicalPage >= 0) {
+#ifdef USE_TLB
+            coreMap->Clear(pageTable[i].physicalPage);
+#else
+            listPages->Clear(pageTable[i].physicalPage);
+#endif  
+        }	
     }
     delete pageTable;
     delete exec; // Agregado para borrar el executable
@@ -185,6 +194,60 @@ AddrSpace::InitRegisters()
 void AddrSpace::SaveState() 
 {}
 
+#ifdef USE_TLB
+
+    //GetSwapFile se llama desde getPid
+void AddrSpace::GetSwapFile(int pid){
+    if (swap == NULL)
+    {
+        char* buffer = new char[128];
+        sprintf (buffer, "swap-%d.asid", pid);
+        fileSystem->Create(buffer, numPages * PageSize); //Creo archivo SWAP     
+        swap = fileSystem->Open(buffer); //devuelvo el puntero al archivo abierto
+    }
+}
+
+
+void AddrSpace::SaveToSwap(int vpage){
+
+    //Asigno valores a la pageTable del thread saliente
+    pageTable[vpage].valid = false;
+    pageTable[vpage].physicalPage = -1;
+
+    DEBUG('k', "Grabando en Swap\n");
+
+    char page[PageSize];
+    for (int i = 0; i < PageSize; i++)
+    {
+        page[i] = machine->mainMemory[pageTable[vpage].physicalPage * PageSize + i];
+    }
+    swap->WriteAt(page, PageSize, vpage*PageSize);
+}
+
+void AddrSpace::GetFromSwap(int vpage){
+    //DEBUG('k', "Revirtiendo Swap\n");
+
+    char page[PageSize];
+    swap->ReadAt(page, PageSize, vpage*PageSize);
+    for (int i = 0; i < PageSize; i++)
+    {
+        machine->mainMemory[pageTable[vpage].physicalPage * PageSize + i] = page[i];
+    }
+}
+
+#endif
+
+int AddrSpace::getVPage(int ppage) {
+  if (ppage < 0)
+    return -1;
+  else
+    for (int i = 0; i < numPages; i++) {
+        if (pageTable[i].physicalPage == ppage)
+            return i;
+    }
+   
+  return -1;
+}
 //----------------------------------------------------------------------
 // AddrSpace::RestoreState
 //  On a context switch, restore the machine state so that
@@ -193,7 +256,8 @@ void AddrSpace::SaveState()
 //      For now, tell the machine where to find the page table.
 //----------------------------------------------------------------------
 
-void AddrSpace::RestoreState() 
+void 
+AddrSpace::RestoreState() 
 {
 #ifdef USE_TLB
     for (int i = 0; i < TLBSize; i++)
@@ -206,16 +270,25 @@ void AddrSpace::RestoreState()
 
 #ifdef USE_TLB
 
-TranslationEntry AddrSpace::getPage(int page) { 
-    if (pageTable[page].physicalPage < 0){
-        pageTable[page].physicalPage = listPages->Find();
-		currentThread->space->demandLoading(page, pageTable[page].physicalPage);
+TranslationEntry 
+AddrSpace::getPage(int vpage) { 
+    if (pageTable[vpage].physicalPage < 0) {   
+        pageTable[vpage].physicalPage = coreMap->GetPPage(vpage);
+        if (!pageTable[vpage].valid) {
+            pageTable[vpage].valid = true;
+            GetFromSwap(vpage);
+        }
+        else
+            currentThread->space->demandLoading(vpage, pageTable[vpage].physicalPage);
+        // pageTable[page].physicalPage = listPages->Find();
 	}
-    return pageTable[page]; 
+    return pageTable[vpage]; 
 }
 
-void AddrSpace::setPhysPage (int vpage) { pageTable[vpage].physicalPage = listPages->Find(); }
-
+void AddrSpace::setPhysPage (int vpage) { 
+    // pageTable[vpage].physicalPage = listPages->Find();
+    pageTable[vpage].physicalPage = coreMap->GetPPage(vpage);
+}
 bool AddrSpace::is_code (int i) {
     return (i >= noffH.code.virtualAddr && i < noffH.code.virtualAddr + noffH.code.size);
 }

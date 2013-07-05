@@ -37,7 +37,11 @@ SynchDisk   *synchDisk;
 Machine *machine;	// user program memory and registers
 SynchConsole *synchconsole;
 std::vector<TablaPid> PidTable;
-BitMap* listPages;
+#ifdef USE_TLB
+    Coremap* coreMap;
+#else
+    BitMap* listPages;
+#endif
 #endif
 
 #ifdef NETWORK
@@ -199,7 +203,11 @@ Initialize(int argc, char **argv)
 #ifdef USER_PROGRAM
     machine = new Machine(debugUserProg);	// this must come first
 	synchconsole = new SynchConsole(NULL,NULL);
+#ifdef USE_TLB
+    coreMap = new Coremap();
+#else
     listPages = new BitMap(NumPhysPages);   
+#endif
 #endif
 
 #ifdef FILESYS
