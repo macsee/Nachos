@@ -28,7 +28,7 @@ main()
 	//Read(buffer, 15, file_id );
 	//Close(file_id);
 	Write(buffer,14,ConsoleOutput);*/
-	pid = Exec("../test/test");
+	//pid = Exec("../test/test");
 	Write("Finalizando Halt\n",18,ConsoleOutput);
     //Halt();
     /* not reached */

@@ -6,14 +6,15 @@ void pageFaultHandler(int virAddrReq) {
 	stats->numTLBMiss++;
 	stats->numMemAccess--; // Se debe restar el accesso a memoria ya que en un pagefault se re intenta leer esa dirccion de memoria hasta que se tiene éxito.
 	int virPageReq = virAddrReq/PageSize;
-	
+
 	int page = getTLBentry();
 
     machine->tlb[page] = currentThread->space->getPage(virPageReq);     
    
-    DEBUG('f', "Virtual Page: %d\n", virPageReq);           
+    //DEBUG('f', "Virtual Page: %d\n", virPageReq);           
     DEBUG('f', "Direccion virtual: %d\n", virAddrReq);
-    DEBUG('f', "Pagina de la TLB: %d\n\n", page);            
+    DEBUG('f', "Pagina de la TLB: %d\n", page);
+    DEBUG('f', "Physical page: %d\n\n", machine->tlb[page].physicalPage);            
 
 }
 

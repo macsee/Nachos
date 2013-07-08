@@ -210,11 +210,11 @@ void AddrSpace::GetSwapFile(int pid){
 
 void AddrSpace::SaveToSwap(int vpage){
 
+    DEBUG('k', "<<======== Swapping in virtual page %d from physical page %d\n", vpage, pageTable[vpage].physicalPage);
+
     //Asigno valores a la pageTable del thread saliente
     pageTable[vpage].valid = false;
     pageTable[vpage].physicalPage = -1;
-
-    DEBUG('k', "Grabando en Swap\n");
 
     char page[PageSize];
     for (int i = 0; i < PageSize; i++)
@@ -222,13 +222,15 @@ void AddrSpace::SaveToSwap(int vpage){
         page[i] = machine->mainMemory[pageTable[vpage].physicalPage * PageSize + i];
     }
     swap->WriteAt(page, PageSize, vpage*PageSize);
+    printf("Contenido: %d\n", swap->Length());
 }
 
 void AddrSpace::GetFromSwap(int vpage){
-    //DEBUG('k', "Revirtiendo Swap\n");
+    DEBUG('k', "========>> Swapping back virtual page %d in physical page %d\n",vpage, pageTable[vpage].physicalPage);
 
     char page[PageSize];
     swap->ReadAt(page, PageSize, vpage*PageSize);
+    printf("Contenido: %s\n", page);
     for (int i = 0; i < PageSize; i++)
     {
         machine->mainMemory[pageTable[vpage].physicalPage * PageSize + i] = page[i];
@@ -273,7 +275,9 @@ AddrSpace::RestoreState()
 TranslationEntry 
 AddrSpace::getPage(int vpage) { 
     if (pageTable[vpage].physicalPage < 0) {   
+
         pageTable[vpage].physicalPage = coreMap->GetPPage(vpage);
+
         if (!pageTable[vpage].valid) {
             pageTable[vpage].valid = true;
             GetFromSwap(vpage);
@@ -282,6 +286,9 @@ AddrSpace::getPage(int vpage) {
             currentThread->space->demandLoading(vpage, pageTable[vpage].physicalPage);
         // pageTable[page].physicalPage = listPages->Find();
 	}
+    else
+        DEBUG('k', "Loading virtual page to TLB from phys page %d\n", pageTable[vpage].physicalPage);
+
     return pageTable[vpage]; 
 }
 
@@ -299,7 +306,7 @@ bool AddrSpace::is_data (int i) {
 
 void AddrSpace::demandLoading(int vpage, int ppage) 
 {
-    DEBUG('f', "Virtual page %d demanded for loading\n", vpage);
+    DEBUG('f', "Virtual page %d demanded for loading in physical page %d\n", vpage, ppage);
     char byte;
 
     for (int i = vpage*PageSize; i < (vpage+1)*PageSize; i++)

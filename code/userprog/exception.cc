@@ -495,7 +495,7 @@ ExceptionHandler(ExceptionType which)
     }
     else if (which == PageFaultException) {
         int virAddrReq = machine->ReadRegister(BadVAddrReg);
-        DEBUG('f', "Page Fault Exception, virtual address %d not found.\n", virAddrReq);
+        DEBUG('f', "Page Fault Exception, virtual address %d not found in TLB.\n", virAddrReq);
 
         #ifdef USE_TLB
             pageFaultHandler(virAddrReq);
