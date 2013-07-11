@@ -49,11 +49,12 @@ class AddrSpace {
     bool is_code(int i);
     bool is_data(int i);
     void demandLoading(int vpage, int ppage);
-    TranslationEntry getPage(int page);
+    TranslationEntry* getPage(int page);
 	void setPhysPage (int vpage);
     void GetSwapFile(int pid);
     void SaveToSwap(int vpage);
     void GetFromSwap(int vpage);
+    void UpdatepageTable (int vpage, int ppage);
     //int getTLBentry();
     //int removePageFromTLB();
     TranslationEntry lastPageUsed;

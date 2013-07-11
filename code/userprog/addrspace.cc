@@ -194,6 +194,27 @@ AddrSpace::InitRegisters()
 void AddrSpace::SaveState() 
 {}
 
+//----------------------------------------------------------------------
+// AddrSpace::RestoreState
+//  On a context switch, restore the machine state so that
+//  this address space can run.
+//
+//      For now, tell the machine where to find the page table.
+//----------------------------------------------------------------------
+
+void 
+AddrSpace::RestoreState() 
+{
+#ifdef USE_TLB
+    for (int i = 0; i < TLBSize; i++)
+        machine->tlb[i].valid = false;
+#else
+    machine->pageTable = pageTable;
+    machine->pageTableSize = numPages;
+#endif
+}
+
+
 #ifdef USE_TLB
 
     //GetSwapFile se llama desde getPid
@@ -222,80 +243,30 @@ void AddrSpace::SaveToSwap(int vpage){
         page[i] = machine->mainMemory[pageTable[vpage].physicalPage * PageSize + i];
     }
     swap->WriteAt(page, PageSize, vpage*PageSize);
-    printf("Contenido: %d\n", swap->Length());
 }
 
 void AddrSpace::GetFromSwap(int vpage){
-    DEBUG('k', "========>> Swapping back virtual page %d in physical page %d\n",vpage, pageTable[vpage].physicalPage);
+    DEBUG('k', "========>> Swapping back virtual page %d into physical page %d\n",vpage, pageTable[vpage].physicalPage);
 
     char page[PageSize];
     swap->ReadAt(page, PageSize, vpage*PageSize);
-    printf("Contenido: %s\n", page);
     for (int i = 0; i < PageSize; i++)
     {
         machine->mainMemory[pageTable[vpage].physicalPage * PageSize + i] = page[i];
     }
+    pageTable[vpage].valid = true;
 }
 
-#endif
-
-int AddrSpace::getVPage(int ppage) {
-  if (ppage < 0)
-    return -1;
-  else
-    for (int i = 0; i < numPages; i++) {
-        if (pageTable[i].physicalPage == ppage)
-            return i;
-    }
-   
-  return -1;
-}
-//----------------------------------------------------------------------
-// AddrSpace::RestoreState
-//  On a context switch, restore the machine state so that
-//  this address space can run.
-//
-//      For now, tell the machine where to find the page table.
-//----------------------------------------------------------------------
-
-void 
-AddrSpace::RestoreState() 
-{
-#ifdef USE_TLB
-    for (int i = 0; i < TLBSize; i++)
-        machine->tlb[i].valid = false;
-#else
-    machine->pageTable = pageTable;
-    machine->pageTableSize = numPages;
-#endif
-}
-
-#ifdef USE_TLB
-
-TranslationEntry 
-AddrSpace::getPage(int vpage) { 
-    if (pageTable[vpage].physicalPage < 0) {   
-
-        pageTable[vpage].physicalPage = coreMap->GetPPage(vpage);
-
-        if (!pageTable[vpage].valid) {
-            pageTable[vpage].valid = true;
-            GetFromSwap(vpage);
-        }
-        else
-            currentThread->space->demandLoading(vpage, pageTable[vpage].physicalPage);
-        // pageTable[page].physicalPage = listPages->Find();
-	}
-    else
-        DEBUG('k', "Loading virtual page to TLB from phys page %d\n", pageTable[vpage].physicalPage);
-
-    return pageTable[vpage]; 
+TranslationEntry* 
+AddrSpace::getPage(int vpage) {
+    return &pageTable[vpage];
 }
 
 void AddrSpace::setPhysPage (int vpage) { 
     // pageTable[vpage].physicalPage = listPages->Find();
-    pageTable[vpage].physicalPage = coreMap->GetPPage(vpage);
+    pageTable[vpage].physicalPage = coreMap->GetPageLRU();
 }
+
 bool AddrSpace::is_code (int i) {
     return (i >= noffH.code.virtualAddr && i < noffH.code.virtualAddr + noffH.code.size);
 }
@@ -306,7 +277,7 @@ bool AddrSpace::is_data (int i) {
 
 void AddrSpace::demandLoading(int vpage, int ppage) 
 {
-    DEBUG('f', "Virtual page %d demanded for loading in physical page %d\n", vpage, ppage);
+    DEBUG('f', "Virtual page %d demanded. To be loaded in physical page %d\n\n", vpage, ppage);
     char byte;
 
     for (int i = vpage*PageSize; i < (vpage+1)*PageSize; i++)
@@ -330,6 +301,9 @@ void AddrSpace::demandLoading(int vpage, int ppage)
     }
 }
 
+void AddrSpace::UpdatepageTable(int vpage, int ppage) {
+    pageTable[vpage].physicalPage = ppage;
+}
 #endif
 
 //TranslationEntry AddrSpace::getPage(int page) { return pageTable[page]; }

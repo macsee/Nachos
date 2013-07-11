@@ -132,9 +132,11 @@ RunProcess (void* arg)
         //printf("Direccion de arg%d = %d\n", i, local_addr[i]);
     }
     //printf("%s\n", );
-    machine->WriteRegister(5, sp);
+    //machine->WriteRegister(5, sp);
 
     if (argc > 0) {
+
+        machine->WriteRegister(5, sp);
 
         for (int i = 0; i < NumTotalRegs; i++)
            DEBUG('j', "registers[%d] = %d\n", i, machine->ReadRegister(i) );
@@ -498,10 +500,18 @@ ExceptionHandler(ExceptionType which)
         DEBUG('f', "Page Fault Exception, virtual address %d not found in TLB.\n", virAddrReq);
 
         #ifdef USE_TLB
+            printf("***********************ANTES DE CARGAR***********************\n");
+            coreMap->PrintCoremap();
             pageFaultHandler(virAddrReq);
+            printf("*************************************************************\n\n");
         #endif
     }
     else if (which == ReadOnlyException) {
         printf("Se produjo una excepción de tipo ReadOnlyException\n");
-    }    
+        ASSERT(false);
+    }
+    else if (which == BusErrorException) {
+        printf("Se produjo una excepción de tipo BusErrorException\n");
+        ASSERT(false);
+    }        
 }

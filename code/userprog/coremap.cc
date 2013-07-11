@@ -17,50 +17,29 @@ Coremap::Coremap(){
 }
 
 int
-Coremap::GetPPage(int vpage){
+Coremap::GetPageLRU(){
 	int minim = mapaDeNucleo[0].count;
 	int k = 0;
 
-	for (int i = 1; i < NumPhysPages; ++i)
+	for (int i = 0; i < NumPhysPages; i++)
 	{
-		if (minim >= mapaDeNucleo[i].count){
+		if (minim >= mapaDeNucleo[i].count) {
+
 			minim = mapaDeNucleo[i].count;
 			k = i;
 			if (minim == 0)
 				break;
+
 		}
 	}
 	
-	if (mapaDeNucleo[k].count > 0){ 
-		//Verifico si el lugar estaba ocupado por otra pag
-		DEBUG('k', "Iniciando Swapping\n");
-
-		//Verifico que la pag a sacar sea del Thread que esta intentando hacer el swap y la busco en la TLB para quitarla
-		if (mapaDeNucleo[k].thread->getPid() == currentThread->getPid())
-		{
-			for (int i = 0; i < TLBSize; i++)
-			{
-				if (machine->tlb[i].virtualPage == vpage)
-					machine->tlb[i].valid = false;
-			}
-			
-		}
-		
-
-		mapaDeNucleo[k].thread->space->SaveToSwap(mapaDeNucleo[k].virtualPage);	
-
-	}
+	return k;
 	//Si Valid = True => Buscar si 
 	//							PhysPage > 0 => en MainMemory
 	//							PhysPage = -1 => DemandLoading 
 	//Si Valid = False (Phys no deberia ser < 0)=> La PhysPage esta en swap
 
 	//Asigno los valores la entrada de mapaDeNucleo elegida
-	mapaDeNucleo[k].thread = currentThread;
-	mapaDeNucleo[k].virtualPage = vpage;
-	mapaDeNucleo[k].count ++;
-	
-	return k;
 }
 
 
@@ -72,6 +51,45 @@ void
 Coremap::Clear(int ppage){
 	mapaDeNucleo[ppage].virtualPage = -1;
 	mapaDeNucleo[ppage].thread = NULL;
+}
+
+
+AddrSpace* Coremap::GetOwner(int ppage) {
+
+	return mapaDeNucleo[ppage].thread->space;
+}
+
+int Coremap::GetVpage(int ppage) {
+
+	return mapaDeNucleo[ppage].virtualPage;
+}
+
+bool Coremap::IsFree(int ppage) {
+	return (mapaDeNucleo[ppage].thread == NULL);
+}
+
+void Coremap::Update(int ppage, int vpage) {
+	mapaDeNucleo[ppage].virtualPage = vpage;
+	mapaDeNucleo[ppage].thread = currentThread;
+	mapaDeNucleo[ppage].count ++;
+}
+
+void Coremap::PrintCoremap() {
+
+	for (int i = 0; i < NumPhysPages; ++i) {
+
+		if (mapaDeNucleo[i].thread == NULL)
+			printf("Coremap[%d] = {owner : NULL | count : %d}\n", i, mapaDeNucleo[i].count);
+		else
+			printf("Coremap[%d] = {owner : %d | count : %d}\n", i, mapaDeNucleo[i].thread->getPid(), mapaDeNucleo[i].count);
+		// mapaDeNucleo[i]=Core(NULL,0,-1);
+	}
+
+}
+
+Core* Coremap::GetCoremapEntry(int ppage) {
+
+	return &mapaDeNucleo[ppage];
 }
 
 #endif

@@ -18,10 +18,16 @@ class Coremap {
 		Coremap();
 		~Coremap();
 		void Clear(int ppage);
-		int GetPPage(int vpage);  //Devuelve la DF que libera de la MM 
+		int GetPageLRU();  //Devuelve la DF que libera de la MM 
 		int GetVPage(int ppage); //Devuelve la DV asociada
 		// Addrspace* GetOwner(int process);
-		AddrSpace* GetSpace(int process);   
+		AddrSpace* GetSpace(int process);
+		AddrSpace* GetOwner(int ppage);
+		int GetVpage (int ppage);
+		bool IsFree(int ppage);
+		void Update(int ppage, int vpage);
+		void PrintCoremap();
+		Core* GetCoremapEntry(int ppage);   
 	private:
 		//List<*Thread>owners; //NO ESTA USADO
 		Core* mapaDeNucleo;	//arreglo de estructuras Core
