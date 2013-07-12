@@ -304,6 +304,12 @@ void AddrSpace::demandLoading(int vpage, int ppage)
 void AddrSpace::UpdatepageTable(int vpage, int ppage) {
     pageTable[vpage].physicalPage = ppage;
 }
+
+void AddrSpace::PrintpageTable() {
+    for (int i = 0; i < numPages; i++) {
+        printf("PageTable[%d] = {PhysicalPage %d | Valid %d}\n", i, pageTable[i].physicalPage, pageTable[i].valid);
+    }
+}
 #endif
 
 //TranslationEntry AddrSpace::getPage(int page) { return pageTable[page]; }

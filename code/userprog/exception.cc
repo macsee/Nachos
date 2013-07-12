@@ -500,10 +500,8 @@ ExceptionHandler(ExceptionType which)
         DEBUG('f', "Page Fault Exception, virtual address %d not found in TLB.\n", virAddrReq);
 
         #ifdef USE_TLB
-            printf("***********************ANTES DE CARGAR***********************\n");
-            coreMap->PrintCoremap();
+            //coreMap->PrintCoremap();
             pageFaultHandler(virAddrReq);
-            printf("*************************************************************\n\n");
         #endif
     }
     else if (which == ReadOnlyException) {
@@ -513,5 +511,10 @@ ExceptionHandler(ExceptionType which)
     else if (which == BusErrorException) {
         printf("Se produjo una excepción de tipo BusErrorException\n");
         ASSERT(false);
-    }        
+    }
+    else if (which == IllegalInstrException) {
+        printf("Se produjo una excepción de tipo IllegalInstrException\n");
+        ASSERT(false);
+    } 
+           
 }

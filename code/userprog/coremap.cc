@@ -79,9 +79,9 @@ void Coremap::PrintCoremap() {
 	for (int i = 0; i < NumPhysPages; ++i) {
 
 		if (mapaDeNucleo[i].thread == NULL)
-			printf("Coremap[%d] = {owner : NULL | count : %d}\n", i, mapaDeNucleo[i].count);
+			DEBUG('k',"Coremap[%d] = {owner : NULL | count : %d}\n", i, mapaDeNucleo[i].count);
 		else
-			printf("Coremap[%d] = {owner : %d | count : %d}\n", i, mapaDeNucleo[i].thread->getPid(), mapaDeNucleo[i].count);
+			DEBUG('k',"Coremap[%d] = {owner : %d | count : %d}\n", i, mapaDeNucleo[i].thread->getPid(), mapaDeNucleo[i].count);
 		// mapaDeNucleo[i]=Core(NULL,0,-1);
 	}
 

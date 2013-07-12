@@ -19,7 +19,7 @@ void pageFaultHandler(int virAddrReq) {
     if (page_entry->physicalPage < 0) {
         // Si nunca se cargó buscamos una pagina en memoria.
         phys_page = coreMap->GetPageLRU();
-        
+        DEBUG('k', "Physical page %d selected by algorithm!\n",phys_page);
         // Si la phys_page esta libre no hacemos nada.
         // De lo contrario tenemos que swapear.
         if (!coreMap->IsFree(phys_page)) {
@@ -33,6 +33,8 @@ void pageFaultHandler(int virAddrReq) {
             if (index >= 0)
                 clearTLBEntry(index);
         }
+        else
+            DEBUG('k', "No swapping needed!\n");
 
 
         // Actualizamos la entrada de la
@@ -45,11 +47,11 @@ void pageFaultHandler(int virAddrReq) {
         // Chequeamos si la pagina solicitada estaba 
         // swapeada anteriormente.
         if (page_entry->valid) {
-            // si no esta swapeada cargamos normalmente
+            // si no estaba swapeada cargamos normalmente
             currentSpace->demandLoading(virPageReq, phys_page);
         }
         else {
-            // si esta swapeada la traemos
+            // si estaba swapeada la traemos
             currentSpace->GetFromSwap(virPageReq);
         }
     }
@@ -59,11 +61,14 @@ void pageFaultHandler(int virAddrReq) {
     machine->tlb[page] =  *page_entry; //currentSpace->getPage(virPageReq);//page_entry;    
    
     //DEBUG('f', "Virtual Page: %d\n", virPageReq);
-    printf("***********************DESPUES DE CARGAR*********************\n");           
     DEBUG('f', "Direccion virtual: %d\n", virAddrReq);
     DEBUG('f', "Pagina de la TLB: %d\n", page);
-    DEBUG('f', "Physical page: %d\n\n", machine->tlb[page].physicalPage);            
-    coreMap->PrintCoremap();
+    DEBUG('f', "Physical page: %d\n", machine->tlb[page].physicalPage);
+    DEBUG('f',"***************************************************************\n\n");           
+    //currentSpace->PrintpageTable();
+    //printf("\n");            
+    //coreMap->PrintCoremap();
+    //printf("\n");
 }
 
 int getTLBentry() 

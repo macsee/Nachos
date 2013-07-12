@@ -55,6 +55,7 @@ class AddrSpace {
     void SaveToSwap(int vpage);
     void GetFromSwap(int vpage);
     void UpdatepageTable (int vpage, int ppage);
+    void PrintpageTable();
     //int getTLBentry();
     //int removePageFromTLB();
     TranslationEntry lastPageUsed;
