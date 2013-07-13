@@ -514,6 +514,8 @@ ExceptionHandler(ExceptionType which)
     }
     else if (which == IllegalInstrException) {
         printf("Se produjo una excepción de tipo IllegalInstrException\n");
+        for (int i = 0; i < TLBSize; i++)
+            printf("TLB[%d] = {Physical: %d | Virtual: %d | Valid: %d}\n", i, machine->tlb[i].physicalPage, machine->tlb[i].virtualPage ,machine->tlb[i].valid);
         ASSERT(false);
     } 
            

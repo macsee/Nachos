@@ -234,15 +234,17 @@ void AddrSpace::SaveToSwap(int vpage){
     DEBUG('k', "<<======== Swapping in virtual page %d from physical page %d\n", vpage, pageTable[vpage].physicalPage);
 
     //Asigno valores a la pageTable del thread saliente
-    pageTable[vpage].valid = false;
-    pageTable[vpage].physicalPage = -1;
 
     char page[PageSize];
     for (int i = 0; i < PageSize; i++)
     {
         page[i] = machine->mainMemory[pageTable[vpage].physicalPage * PageSize + i];
+        //printf("Value: %d\n", pageTable[vpage].physicalPage * PageSize + i);
     }
     swap->WriteAt(page, PageSize, vpage*PageSize);
+
+    pageTable[vpage].valid = false;
+    pageTable[vpage].physicalPage = -1;
 }
 
 void AddrSpace::GetFromSwap(int vpage){
@@ -253,6 +255,7 @@ void AddrSpace::GetFromSwap(int vpage){
     for (int i = 0; i < PageSize; i++)
     {
         machine->mainMemory[pageTable[vpage].physicalPage * PageSize + i] = page[i];
+        //printf("Value: %d\n", pageTable[vpage].physicalPage * PageSize + i);
     }
     pageTable[vpage].valid = true;
 }
@@ -309,6 +312,11 @@ void AddrSpace::PrintpageTable() {
     for (int i = 0; i < numPages; i++) {
         printf("PageTable[%d] = {PhysicalPage %d | Valid %d}\n", i, pageTable[i].physicalPage, pageTable[i].valid);
     }
+}
+
+void AddrSpace::CopyTLBtoPageTable(int index) {
+    TranslationEntry entry = machine->tlb[index];
+    pageTable[entry.virtualPage] = entry; 
 }
 #endif
 

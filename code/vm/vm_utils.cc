@@ -10,6 +10,7 @@ void pageFaultHandler(int virAddrReq) {
     AddrSpace* currentSpace = currentThread->space;
     int phys_page = -1;
     int owner_vpage = -1;
+    int page = -1;
 
     TranslationEntry* page_entry = currentSpace->getPage(virPageReq);
    
@@ -17,7 +18,7 @@ void pageFaultHandler(int virAddrReq) {
     // Debemos chequear si ya estaba cargada en memoria.
 
     if (page_entry->physicalPage < 0) {
-        // Si nunca se cargó buscamos una pagina en memoria.
+        // Si no esta cargada en memoria, buscamos alguna pagina.
         phys_page = coreMap->GetPageLRU();
         DEBUG('k', "Physical page %d selected by algorithm!\n",phys_page);
         // Si la phys_page esta libre no hacemos nada.
@@ -25,17 +26,18 @@ void pageFaultHandler(int virAddrReq) {
         if (!coreMap->IsFree(phys_page)) {
             owner_space = coreMap->GetOwner(phys_page);
             owner_vpage = coreMap->GetVpage(phys_page);
+
+            // chequeamos si la phys_page estaba en la TLB
+            // y si es así la marcamos para quitar, pero antes la copiamos.
+            page = getTLBindex(phys_page);
+            if (page >= 0)
+                owner_space->CopyTLBtoPageTable(page);
+
             owner_space->SaveToSwap(owner_vpage); // Guardamos en SWAP
         
-            // chequeamos si la phys_page estaba en la TLB
-            // y si es así la quitamos.
-            int index = getTLBindex(phys_page);
-            if (index >= 0)
-                clearTLBEntry(index);
         }
         else
             DEBUG('k', "No swapping needed!\n");
-
 
         // Actualizamos la entrada de la
         // pagetable con la physpage nueva
@@ -56,14 +58,16 @@ void pageFaultHandler(int virAddrReq) {
         }
     }
 
-    // Pedimos una pagina a la TLB y luego copiamos ahi.
-	int page = getTLBentry();
+    // Pedimos una pagina a la TLB si es que no se liberó en el swap y luego copiamos ahi.
+    if (page < 0)
+	   page = getTLBentry();
+
     machine->tlb[page] =  *page_entry; //currentSpace->getPage(virPageReq);//page_entry;    
    
     //DEBUG('f', "Virtual Page: %d\n", virPageReq);
     DEBUG('f', "Direccion virtual: %d\n", virAddrReq);
     DEBUG('f', "Pagina de la TLB: %d\n", page);
-    DEBUG('f', "Physical page: %d\n", machine->tlb[page].physicalPage);
+    DEBUG('f', "Physical page: %d\n", phys_page);//machine->tlb[page].physicalPage);
     DEBUG('f',"***************************************************************\n\n");           
     //currentSpace->PrintpageTable();
     //printf("\n");            
@@ -83,10 +87,12 @@ int getTLBentry()
         }    
     }
 
-    if (page < 0)
+    if (page == -1) {
         page = rand() % TLBSize; // Política de elección de página de TLB
+        currentThread->space->CopyTLBtoPageTable(page);  // Copiamos la page a la pagetable actualizada antes de sobreescribirla 
+    }
         
-    return page;           // Copiar la page a la pagetable actualizada
+    return page;           
 }
 
 void flushTLB()
