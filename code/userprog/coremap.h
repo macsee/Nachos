@@ -4,6 +4,7 @@
 #include "system.h"
 #include "machine.h"
 #include "addrspace.h"
+class Thread;
 
 struct Core
 {
@@ -19,6 +20,7 @@ class Coremap {
 		~Coremap();
 		void Clear(int ppage);
 		int GetPageLRU();  //Devuelve la DF que libera de la MM 
+		void GetPage(int vpage, Thread* thread);
 		int GetVPage(int ppage); //Devuelve la DV asociada
 		// Addrspace* GetOwner(int process);
 		AddrSpace* GetSpace(int process);
@@ -26,11 +28,21 @@ class Coremap {
 		int GetVpage (int ppage);
 		bool IsFree(int ppage);
 		void Update(int ppage, int vpage);
+		void UpdateArgs(int ppage, int vpage, Thread* thread);
 		void PrintCoremap();
-		Core* GetCoremapEntry(int ppage);   
+		Core* GetCoremapEntry(int ppage);
+		void IncCount(int ppage) { 
+			printf("Incrementamos el count de %d\n", ppage);
+			mapaDeNucleo[ppage].count ++; 
+		}
+		int GetPageFifo() { 
+			printf("Politica Fifo devuelve nextPage=%d\n", nextPage);
+			return nextPage; 
+		}
 	private:
 		//List<*Thread>owners; //NO ESTA USADO
 		Core* mapaDeNucleo;	//arreglo de estructuras Core
+		int nextPage;
 };
 
 

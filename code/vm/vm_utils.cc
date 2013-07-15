@@ -32,6 +32,8 @@ void pageFaultHandler(int virAddrReq) {
             page = getTLBindex(phys_page);
             if (page >= 0)
                 owner_space->CopyTLBtoPageTable(page);
+                // No seria conveniente chequear el campo dirty para ver si conviene guardar la pagina??
+                
 
             owner_space->SaveToSwap(owner_vpage); // Guardamos en SWAP
         
@@ -56,6 +58,11 @@ void pageFaultHandler(int virAddrReq) {
             // si estaba swapeada la traemos
             currentSpace->GetFromSwap(virPageReq);
         }
+    }
+    else {
+        // caso en que la pagina ya esta en main memory
+        // incremento el contador de uso
+        coreMap->IncCount(page_entry->physicalPage);
     }
 
     // Pedimos una pagina a la TLB si es que no se liberó en el swap y luego copiamos ahi.
@@ -116,6 +123,4 @@ void clearTLBEntry(int index) {
 
     machine->tlb[index].valid = false;
 }
-
-
 #endif

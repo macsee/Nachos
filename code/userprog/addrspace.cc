@@ -267,7 +267,8 @@ AddrSpace::getPage(int vpage) {
 
 void AddrSpace::setPhysPage (int vpage) { 
     // pageTable[vpage].physicalPage = listPages->Find();
-    pageTable[vpage].physicalPage = coreMap->GetPageLRU();
+    // pageTable[vpage].physicalPage = coreMap->GetPageLRU();
+    coreMap->GetPage(vpage, owner);
 }
 
 bool AddrSpace::is_code (int i) {

@@ -467,7 +467,11 @@ ExceptionHandler(ExceptionType which)
                 else
                     thread = new Thread(buffer, true);        
 
-                space = new AddrSpace(executable);    
+                space = new AddrSpace(executable);
+                // Parche para errores coreMap argumentos.
+                #ifdef USE_TLB
+                space->SetOwner(thread);
+                #endif
                 thread->space = space;
 
                 if (arg2 > 0) {

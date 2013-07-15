@@ -74,7 +74,6 @@ Thread::Thread(const char* threadName, bool isJoinable, int prioridad)
     tablaDesc.push_back(console_out);
 
 #endif
-
 }
 
 //----------------------------------------------------------------------

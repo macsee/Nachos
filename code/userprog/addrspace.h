@@ -16,6 +16,7 @@
 #include "copyright.h"
 #include "filesys.h"
 #include "noff.h"
+class Thread;
 
 #define UserStackSize		1024 	// increase this as necessary!
 
@@ -61,6 +62,8 @@ class AddrSpace {
     //int removePageFromTLB();
     TranslationEntry lastPageUsed;
     int lastTLBentry;
+    void SetOwner(Thread* t) { owner = t; }
+    Thread* GetOwner() { return owner; }
 #endif
   private:
     TranslationEntry *pageTable;	// Assume linear page table translation
@@ -71,6 +74,7 @@ class AddrSpace {
     NoffHeader noffH;
     #ifdef USE_TLB
         OpenFile* swap;
+        Thread* owner;
     #endif
 };
 
