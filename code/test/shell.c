@@ -44,7 +44,7 @@ main()
 			}
 
 			if (proc[0] == 'q') {
-				Halt();
+				Exit(1);
 			}
 			
 			if (argc >= 1) {

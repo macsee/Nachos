@@ -1451,7 +1451,7 @@ coremap.o: ../userprog/coremap.cc ../threads/system.h \
  ../machine/timer.h ../filesys/synchconsole.h ../machine/console.h \
  ../threads/synch.h ../userprog/bitmap.h ../filesys/openfile.h \
  ../filesys/synchdisk.h ../machine/disk.h ../userprog/coremap.h \
- ../userprog/addrspace.h
+ ../userprog/addrspace.h ../vm/vm_utils.h
 directory.o: ../filesys/directory.cc ../threads/copyright.h \
  ../threads/utility.h ../threads/copyright.h ../machine/sysdep.h \
  /usr/include/stdlib.h /usr/include/features.h \

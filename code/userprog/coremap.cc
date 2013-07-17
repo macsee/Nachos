@@ -25,7 +25,7 @@ Coremap::GetPageLRU(){
 
 	for (int i = 0; i < NumPhysPages; i++)
 	{
-		if (minim >= mapaDeNucleo[i].count) {
+		if (minim > mapaDeNucleo[i].count) {
 
 			minim = mapaDeNucleo[i].count;
 			k = i;
@@ -34,7 +34,7 @@ Coremap::GetPageLRU(){
 
 		}
 	}
-	printf("Politica LRU devuelve min count=%d de k=%d\n", mapaDeNucleo[k].count, k);
+	// printf("Politica LRU devuelve min count=%d de k=%d\n", mapaDeNucleo[k].count, k);
 	return k;
 	//Si Valid = True => Buscar si 
 	//							PhysPage > 0 => en MainMemory
@@ -75,6 +75,8 @@ void Coremap::Update(int ppage, int vpage) {
 	mapaDeNucleo[ppage].thread = currentThread;
 	mapaDeNucleo[ppage].count ++;
 	// mapaDeNucleo[ppage].count = 1;
+	 // printf(">>> Meto la pagina %d - Pos = %d Count = %d\n", vpage, ppage, mapaDeNucleo[ppage].count);
+	
 	nextPage = (nextPage+1)%NumPhysPages;
 }
 
@@ -102,42 +104,42 @@ Core* Coremap::GetCoremapEntry(int ppage) {
 	return &mapaDeNucleo[ppage];
 }
 
-void Coremap::GetPage(int vpage, Thread* thread) {
+// void Coremap::GetPage(int vpage) {
     
-    AddrSpace* owner_space;
-    int phys_page = -1;
-    int owner_vpage = -1;
-    int page = -1;
+//     AddrSpace* owner_space;
+//     int phys_page = -1;
+//     int owner_vpage = -1;
+//     int page = -1;
 
-    TranslationEntry* page_entry = thread->space->getPage(vpage);
+//     TranslationEntry* page_entry = currentThread->space->getPage(vpage);
    
-    phys_page = coreMap->GetPageLRU();
-    DEBUG('k', "Physical page %d selected by algorithm!\n",phys_page);
-    // Si la phys_page esta libre no hacemos nada.
-    // De lo contrario tenemos que swapear.
-    if (!coreMap->IsFree(phys_page)) {
-        owner_space = coreMap->GetOwner(phys_page);
-        owner_vpage = coreMap->GetVpage(phys_page);
+//     phys_page = coreMap->GetPageLRU();
+//     DEBUG('k', "Physical page %d selected by algorithm!\n",phys_page);
+//     // Si la phys_page esta libre no hacemos nada.
+//     // De lo contrario tenemos que swapear.
+//     if (!coreMap->IsFree(phys_page)) {
+//         owner_space = coreMap->GetOwner(phys_page);
+//         owner_vpage = coreMap->GetVpage(phys_page);
 
-        // chequeamos si la phys_page estaba en la TLB
-        // y si es así la marcamos para quitar, pero antes la copiamos.
-        page = getTLBindex(phys_page);
-        if (page >= 0)
-            owner_space->CopyTLBtoPageTable(page);
-            // No seria conveniente chequear el campo dirty para ver si conviene guardar la pagina??
+//         // chequeamos si la phys_page estaba en la TLB
+//         // y si es así la marcamos para quitar, pero antes la copiamos.
+//         page = getTLBindex(phys_page);
+//         if (page >= 0)
+//             owner_space->CopyTLBtoPageTable(page);
+//             // No seria conveniente chequear el campo dirty para ver si conviene guardar la pagina??
             
 
-        owner_space->SaveToSwap(owner_vpage); // Guardamos en SWAP
+//         owner_space->SaveToSwap(owner_vpage); // Guardamos en SWAP
     
-    }
-    else
-        DEBUG('k', "No swapping needed!\n");
+//     }
+//     else
+//         DEBUG('k', "No swapping needed!\n");
 
-    page_entry->physicalPage = phys_page;
+//     page_entry->physicalPage = phys_page;
 
-    // Actualizamos el Coremap con los datos nuevos
-    coreMap->UpdateArgs(phys_page, vpage, thread);
+//     // Actualizamos el Coremap con los datos nuevos
+//     coreMap->Update(phys_page, vpage);
     
-}
+// }
 
 #endif

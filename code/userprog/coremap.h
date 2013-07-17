@@ -20,7 +20,7 @@ class Coremap {
 		~Coremap();
 		void Clear(int ppage);
 		int GetPageLRU();  //Devuelve la DF que libera de la MM 
-		void GetPage(int vpage, Thread* thread);
+		void GetPage(int vpage);
 		int GetVPage(int ppage); //Devuelve la DV asociada
 		// Addrspace* GetOwner(int process);
 		AddrSpace* GetSpace(int process);
@@ -32,11 +32,11 @@ class Coremap {
 		void PrintCoremap();
 		Core* GetCoremapEntry(int ppage);
 		void IncCount(int ppage) { 
-			printf("Incrementamos el count de %d\n", ppage);
 			mapaDeNucleo[ppage].count ++; 
+			// printf("+++ Encontre la pag %d - Pos = %d Count = %d\n", mapaDeNucleo[ppage].virtualPage, ppage, mapaDeNucleo[ppage].count);
 		}
 		int GetPageFifo() { 
-			printf("Politica Fifo devuelve nextPage=%d\n", nextPage);
+			// printf("Politica Fifo devuelve nextPage=%d\n", nextPage);
 			return nextPage; 
 		}
 	private:

@@ -96,6 +96,15 @@ Thread::~Thread()
 
     if (stack != NULL)
         DeallocBoundedArray((char *) stack, StackSize * sizeof(HostMemoryAddress));
+
+    #ifdef USE_TLB
+        char* buffer = new char[128];
+        sprintf (buffer, "swap-%d.asid", pid);
+
+        fileSystem->Remove(buffer);
+        // printf("Destruyendo %s\n", buffer);
+    #endif 
+
     #ifdef USER_PROGRAM
         delete space;
     #endif

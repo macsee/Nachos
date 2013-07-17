@@ -19,7 +19,9 @@
 #include "system.h"
 #include "addrspace.h"
 #include "userfunctions.h"
-
+#ifdef USE_TLB
+    #include "vm_utils.h"
+#endif
 //----------------------------------------------------------------------
 // SwapHeader
 //  Do little endian to big endian conversion on the bytes in the 
@@ -149,6 +151,7 @@ AddrSpace::~AddrSpace()
     }
     delete pageTable;
     delete exec; // Agregado para borrar el executable
+
 }
 
 //----------------------------------------------------------------------
@@ -268,7 +271,40 @@ AddrSpace::getPage(int vpage) {
 void AddrSpace::setPhysPage (int vpage) { 
     // pageTable[vpage].physicalPage = listPages->Find();
     // pageTable[vpage].physicalPage = coreMap->GetPageLRU();
-    coreMap->GetPage(vpage, owner);
+    // coreMap->GetPage(vpage);
+    AddrSpace* owner_space;
+    int phys_page = -1;
+    int owner_vpage = -1;
+    int page = -1;
+
+    TranslationEntry* page_entry = getPage(vpage);
+   
+    phys_page = coreMap->GetPageLRU();
+    DEBUG('k', "Physical page %d selected by algorithm!\n",phys_page);
+    // Si la phys_page esta libre no hacemos nada.
+    // De lo contrario tenemos que swapear.
+    if (!coreMap->IsFree(phys_page)) {
+        owner_space = coreMap->GetOwner(phys_page);
+        owner_vpage = coreMap->GetVpage(phys_page);
+
+        // chequeamos si la phys_page estaba en la TLB
+        // y si es así la marcamos para quitar, pero antes la copiamos.
+        page = getTLBindex(phys_page);
+        if (page >= 0)
+            owner_space->CopyTLBtoPageTable(page);
+            // No seria conveniente chequear el campo dirty para ver si conviene guardar la pagina??
+            
+
+        owner_space->SaveToSwap(owner_vpage); // Guardamos en SWAP
+    
+    }
+    else
+        DEBUG('k', "No swapping needed!\n");
+
+    page_entry->physicalPage = phys_page;
+
+    // Actualizamos el Coremap con los datos nuevos
+    coreMap->Update(phys_page, vpage);
 }
 
 bool AddrSpace::is_code (int i) {
