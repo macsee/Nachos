@@ -61,6 +61,7 @@ RunProcess (void* arg)
 
     currentThread->space->InitRegisters(); 
     currentThread->space->RestoreState();
+
 /*
     char* code = new char[codeSize];
     exec->ReadAt(code,codeSize, codeinFileAddr);
@@ -104,8 +105,11 @@ RunProcess (void* arg)
 
 	//printf("Cantidad de paginas de los argumentos: %d\n",cantPages);
 
-	for (int i = cantPages; i > 0; i--)
-		space->setPhysPage(currentThread->space->getNumPages() - i);
+	for (int i = cantPages; i > 0; i--) {
+        int vpage = currentThread->space->getNumPages() - i;
+		int pag = space->setPhysPage(vpage);
+        //printf("Argumentos : vpage = %d - ppage = %d\n", vpage, pag );
+    }    
 
 #endif
 
@@ -124,11 +128,11 @@ RunProcess (void* arg)
     {
         sp -= 4; // hacemos lugar para escribir la direccion de memoria donde se encuentra el arg i-esimo
         machine->WriteMem(sp, 4, local_addr[i]); // escribimos la direccion de memoria del arg i-esimo
-        
-        // machine->ReadMem(sp,4,&dir);
-        // char buff[128];
-        // readStrFromUsr(dir, buff);
-        // printf("%d --- %s\n", sp, buff);
+        //int dir;
+        //machine->ReadMem(sp,4,&dir);
+        //char buff[128];
+        //readStrFromUsr(dir, buff);
+        //printf("Arg %d --- %s\n", i, buff);
         //printf("Direccion de arg%d = %d\n", i, local_addr[i]);
     }
     //printf("%s\n", );
@@ -470,6 +474,8 @@ ExceptionHandler(ExceptionType which)
                 space = new AddrSpace(executable);    
                 thread->space = space;
 
+                int pid = AddThreadToTable(thread); //
+
                 if (arg2 > 0) {
                     thread->SetArgs(arg2, arg3);
                 }
@@ -479,9 +485,10 @@ ExceptionHandler(ExceptionType which)
 
                 thread->Fork(RunProcess, (void*) space);
 
+                // int pid = AddThreadToTable(thread);
                 //delete executable;      // close file
                 //delete buffer;
-                int pid = AddThreadToTable(thread);
+                
                 machine->WriteRegister(2, pid);
                 break;
             }

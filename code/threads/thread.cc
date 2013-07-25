@@ -28,6 +28,10 @@
 #include "vm_utils.h"
 #include "filesys.h"
 #endif
+
+#define WRITEMEM(d,s,z) if (!machine->WriteMem(d,s,z)) ASSERT(machine->WriteMem(d,s,z));
+#define READMEM(d,s,z) if (!machine->ReadMem(d,s,z)) ASSERT(machine->ReadMem(d,s,z));
+
 // this is put at the top of the execution stack,
 // for detecting stack overflows
 const unsigned STACK_FENCEPOST = 0xdeadbeef;
@@ -98,6 +102,10 @@ Thread::~Thread()
     if (stack != NULL)
         DeallocBoundedArray((char *) stack, StackSize * sizeof(HostMemoryAddress));
     #ifdef USER_PROGRAM
+        #ifdef USE_TLB
+            coreMap->CleanEntries(this); // Quitamos de la memoria fisica las referencias al thread
+            fileSystem->Remove(space->swapfile);
+        #endif
         delete space;
     #endif
 }
@@ -460,16 +468,21 @@ Thread::GetFileIDFromTable (OpenFileId of)
 void 
 Thread::SetArgs(int arg1, int arg2)
 {
-   argv = new char*[argc];
    argc = arg1;
+   argv = new char*[argc];
    int dir;
+
 
     //machine->ReadMem(arg2, 4, &dir);
     //printf("LALALA : %d\n", dir);
 
+    //machine->ReadMem(arg2, 4, &dir);
+    //printf("LOLOLO : %d\n", dir);
+
    for (int i = 0; i < argc; ++i)
    {
-       machine->ReadMem(arg2 + 4*i, 4, &dir);
+       //machine->ReadMem(arg2 + 4*i, 4, &dir);
+        READMEM(arg2 + 4*i, 4, &dir);
        // printf("dir%d: %d\n", i, dir);
        char* ptr = new char[128];
        readStrFromUsr(dir, ptr);

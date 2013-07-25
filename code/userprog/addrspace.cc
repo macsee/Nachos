@@ -19,6 +19,9 @@
 #include "system.h"
 #include "addrspace.h"
 #include "userfunctions.h"
+#ifdef USE_TLB
+    #include "vm_utils.h"
+#endif    
 
 //----------------------------------------------------------------------
 // SwapHeader
@@ -128,6 +131,9 @@ AddrSpace::AddrSpace(OpenFile *executable)
         executable->ReadAt(&(machine->mainMemory[noffH.initData.virtualAddr]),
             noffH.initData.size, noffH.initData.inFileAddr);
     }*/
+    #ifdef USE_TLB
+        swap = NULL;
+    #endif
 }
 
 //----------------------------------------------------------------------
@@ -142,6 +148,7 @@ AddrSpace::~AddrSpace()
 		if (pageTable[i].physicalPage >= 0) {
 #ifdef USE_TLB
             coreMap->Clear(pageTable[i].physicalPage);
+            //delete swapfile;
 #else
             listPages->Clear(pageTable[i].physicalPage);
 #endif  
@@ -221,10 +228,10 @@ AddrSpace::RestoreState()
 void AddrSpace::GetSwapFile(int pid){
     if (swap == NULL)
     {
-        char* buffer = new char[128];
-        sprintf (buffer, "swap-%d.asid", pid);
-        fileSystem->Create(buffer, numPages * PageSize); //Creo archivo SWAP     
-        swap = fileSystem->Open(buffer); //devuelvo el puntero al archivo abierto
+        swapfile = new char[128];
+        sprintf (swapfile, "swap-%d.asid", pid);
+        fileSystem->Create(swapfile, numPages * PageSize); //Creo archivo SWAP     
+        swap = fileSystem->Open(swapfile); //devuelvo el puntero al archivo abierto
     }
 }
 
@@ -265,9 +272,53 @@ AddrSpace::getPage(int vpage) {
     return &pageTable[vpage];
 }
 
-void AddrSpace::setPhysPage (int vpage) { 
+int AddrSpace::setPhysPage (int vpage) { 
     // pageTable[vpage].physicalPage = listPages->Find();
-    pageTable[vpage].physicalPage = coreMap->GetPageLRU();
+
+    stats->numTLBMiss++;
+    stats->numMemAccess--; // Se debe restar el accesso a memoria ya que en un pagefault se re intenta leer esa dirccion de memoria hasta que se tiene éxito.
+    AddrSpace* owner_space;
+    //AddrSpace* currentSpace = currentThread->space;
+    int phys_page = -1;
+    int owner_vpage = -1;
+    int page = -1;
+
+    //TranslationEntry* page_entry = pageTable[vpage];
+   
+    // La pag no está en TLB. 
+    // Debemos chequear si ya estaba cargada en memoria.
+
+        // Si no esta cargada en memoria, buscamos alguna pagina.
+        // phys_page = coreMap->GetPageFIFO();
+        phys_page = coreMap->GetPageLRU();
+        DEBUG('k', "Physical page %d selected by algorithm!\n",phys_page);
+        // Si la phys_page esta libre no hacemos nada.
+        // De lo contrario tenemos que swapear.
+        if (!coreMap->IsFree(phys_page)) {
+            owner_space = coreMap->GetOwner(phys_page);
+            owner_vpage = coreMap->GetVpage(phys_page);
+
+            // chequeamos si la phys_page estaba en la TLB
+            // y si es así la marcamos para quitar, pero antes la copiamos.
+            page = getTLBindex(phys_page);
+            if (page >= 0)
+                owner_space->CopyTLBtoPageTable(page);
+
+            owner_space->SaveToSwap(owner_vpage); // Guardamos en SWAP
+        
+        }
+        else
+            DEBUG('k', "No swapping needed!\n");
+
+        // Actualizamos la entrada de la
+        // pagetable con la physpage nueva
+        pageTable[vpage].physicalPage = phys_page;
+        //page_entry->physicalPage = phys_page;
+
+        // Actualizamos el Coremap con los datos nuevos
+        coreMap->Update(phys_page, vpage);
+
+        return phys_page;
 }
 
 bool AddrSpace::is_code (int i) {

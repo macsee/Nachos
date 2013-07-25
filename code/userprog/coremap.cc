@@ -14,6 +14,22 @@ Coremap::Coremap(){
 		mapaDeNucleo[i].thread = NULL;
 		// mapaDeNucleo[i]=Core(NULL,0,-1);
 	}
+	numpage = 0;
+}
+
+int
+Coremap::GetPageFIFO() {
+	int pagina;
+
+	if (numpage < NumPhysPages) {
+		pagina = numpage;
+	}
+	else {
+		numpage = 0;
+		pagina = numpage;
+	}
+	numpage++;
+	return pagina;
 }
 
 int
@@ -71,7 +87,8 @@ bool Coremap::IsFree(int ppage) {
 void Coremap::Update(int ppage, int vpage) {
 	mapaDeNucleo[ppage].virtualPage = vpage;
 	mapaDeNucleo[ppage].thread = currentThread;
-	mapaDeNucleo[ppage].count ++;
+	//mapaDeNucleo[ppage].count ++;
+	 mapaDeNucleo[ppage].count = 1;
 }
 
 void Coremap::PrintCoremap() {
@@ -90,6 +107,18 @@ void Coremap::PrintCoremap() {
 Core* Coremap::GetCoremapEntry(int ppage) {
 
 	return &mapaDeNucleo[ppage];
+}
+
+void Coremap::CleanEntries(Thread* thread) {
+
+	for (int i = 0; i < NumPhysPages; ++i) {
+
+		if (mapaDeNucleo[i].thread == thread){
+			mapaDeNucleo[i].virtualPage = -1;
+			mapaDeNucleo[i].thread = NULL;
+			mapaDeNucleo[i].count = 0;
+		}
+	}	
 }
 
 #endif

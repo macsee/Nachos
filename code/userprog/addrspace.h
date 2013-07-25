@@ -50,7 +50,7 @@ class AddrSpace {
     bool is_data(int i);
     void demandLoading(int vpage, int ppage);
     TranslationEntry* getPage(int page);
-	void setPhysPage (int vpage);
+	int setPhysPage (int vpage);
     void GetSwapFile(int pid);
     void SaveToSwap(int vpage);
     void GetFromSwap(int vpage);
@@ -61,6 +61,7 @@ class AddrSpace {
     //int removePageFromTLB();
     TranslationEntry lastPageUsed;
     int lastTLBentry;
+    char* swapfile;
 #endif
   private:
     TranslationEntry *pageTable;	// Assume linear page table translation

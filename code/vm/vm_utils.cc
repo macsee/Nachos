@@ -20,6 +20,7 @@ void pageFaultHandler(int virAddrReq) {
     if (page_entry->physicalPage < 0) {
         // Si no esta cargada en memoria, buscamos alguna pagina.
         phys_page = coreMap->GetPageLRU();
+        // phys_page = coreMap->GetPageFIFO();
         DEBUG('k', "Physical page %d selected by algorithm!\n",phys_page);
         // Si la phys_page esta libre no hacemos nada.
         // De lo contrario tenemos que swapear.
@@ -56,6 +57,8 @@ void pageFaultHandler(int virAddrReq) {
             // si estaba swapeada la traemos
             currentSpace->GetFromSwap(virPageReq);
         }
+    } else {
+        coreMap->IncCount(page_entry->physicalPage);
     }
 
     // Pedimos una pagina a la TLB si es que no se liberó en el swap y luego copiamos ahi.
@@ -67,7 +70,7 @@ void pageFaultHandler(int virAddrReq) {
     //DEBUG('f', "Virtual Page: %d\n", virPageReq);
     DEBUG('f', "Direccion virtual: %d\n", virAddrReq);
     DEBUG('f', "Pagina de la TLB: %d\n", page);
-    DEBUG('f', "Physical page: %d\n", phys_page);//machine->tlb[page].physicalPage);
+    DEBUG('f', "Physical page: %d\n", page_entry->physicalPage);//machine->tlb[page].physicalPage);
     DEBUG('f',"***************************************************************\n\n");           
     //currentSpace->PrintpageTable();
     //printf("\n");            
