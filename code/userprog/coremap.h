@@ -20,6 +20,7 @@ class Coremap {
 		void Clear(int ppage);
 		int GetPageFIFO();
 		int GetPageLRU();  //Devuelve la DF que libera de la MM 
+		int GetPageLRUPerfecto();
 		int GetVPage(int ppage); //Devuelve la DV asociada
 		// Addrspace* GetOwner(int process);
 		AddrSpace* GetSpace(int process);
@@ -30,7 +31,13 @@ class Coremap {
 		void PrintCoremap();
 		Core* GetCoremapEntry(int ppage);
 		void CleanEntries(Thread* thread);
-		void IncCount(int ppage){ mapaDeNucleo[ppage].count ++; }
+		void IncCount(int ppage){ 
+			for (int i = 0; i < NumPhysPages; ++i)
+			{
+				if (i != ppage && mapaDeNucleo[i].count != 0)
+					mapaDeNucleo[i].count ++;
+			}
+		}
 	private:
 		//List<*Thread>owners; //NO ESTA USADO
 		Core* mapaDeNucleo;	//arreglo de estructuras Core

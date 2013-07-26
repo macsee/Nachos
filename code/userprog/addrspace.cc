@@ -290,7 +290,7 @@ int AddrSpace::setPhysPage (int vpage) {
 
         // Si no esta cargada en memoria, buscamos alguna pagina.
         // phys_page = coreMap->GetPageFIFO();
-        phys_page = coreMap->GetPageLRU();
+        phys_page = coreMap->GetPageLRUPerfecto();
         DEBUG('k', "Physical page %d selected by algorithm!\n",phys_page);
         // Si la phys_page esta libre no hacemos nada.
         // De lo contrario tenemos que swapear.

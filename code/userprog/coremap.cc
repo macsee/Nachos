@@ -58,6 +58,26 @@ Coremap::GetPageLRU(){
 	//Asigno los valores la entrada de mapaDeNucleo elegida
 }
 
+int
+Coremap::GetPageLRUPerfecto(){
+	int maximo = 0;
+	int k = 0;
+
+
+	for (int i = 0; i < NumPhysPages; i++)
+	{
+		if (maximo < mapaDeNucleo[i].count) {
+			maximo = mapaDeNucleo[i].count;
+			k = i;
+		} else {
+			mapaDeNucleo[i].count ++;
+		}
+	}
+
+	PrintCoremap();
+	printf("Uso la pagina %d\n", k);
+	return k;
+}
 
 Coremap::~Coremap(){
 	delete mapaDeNucleo;
@@ -88,7 +108,7 @@ void Coremap::Update(int ppage, int vpage) {
 	mapaDeNucleo[ppage].virtualPage = vpage;
 	mapaDeNucleo[ppage].thread = currentThread;
 	//mapaDeNucleo[ppage].count ++;
-	 mapaDeNucleo[ppage].count = 1;
+	 mapaDeNucleo[ppage].count = 0;
 }
 
 void Coremap::PrintCoremap() {
@@ -96,9 +116,9 @@ void Coremap::PrintCoremap() {
 	for (int i = 0; i < NumPhysPages; ++i) {
 
 		if (mapaDeNucleo[i].thread == NULL)
-			DEBUG('k',"Coremap[%d] = {owner : NULL | count : %d}\n", i, mapaDeNucleo[i].count);
+			DEBUG('h',"Coremap[%d] = {owner : NULL | count : %d}\n", i, mapaDeNucleo[i].count);
 		else
-			DEBUG('k',"Coremap[%d] = {owner : %d | count : %d}\n", i, mapaDeNucleo[i].thread->getPid(), mapaDeNucleo[i].count);
+			DEBUG('h',"Coremap[%d] = {owner : %d | count : %d}\n", i, mapaDeNucleo[i].thread->getPid(), mapaDeNucleo[i].count);
 		// mapaDeNucleo[i]=Core(NULL,0,-1);
 	}
 

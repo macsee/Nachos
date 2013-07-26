@@ -19,7 +19,7 @@ void pageFaultHandler(int virAddrReq) {
 
     if (page_entry->physicalPage < 0) {
         // Si no esta cargada en memoria, buscamos alguna pagina.
-        phys_page = coreMap->GetPageLRU();
+        phys_page = coreMap->GetPageLRUPerfecto();
         // phys_page = coreMap->GetPageFIFO();
         DEBUG('k', "Physical page %d selected by algorithm!\n",phys_page);
         // Si la phys_page esta libre no hacemos nada.
@@ -58,6 +58,7 @@ void pageFaultHandler(int virAddrReq) {
             currentSpace->GetFromSwap(virPageReq);
         }
     } else {
+        printf("*********************Llamo a incount con %d***************\n", page_entry->physicalPage);
         coreMap->IncCount(page_entry->physicalPage);
     }
 
